@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
+import { FeaturedClients } from "./components/FeaturedClients";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -1794,6 +1795,7 @@ function PortfolioPage({ onViewProjects }: { onViewProjects: () => void }) {
     <div className="bg-black">
       <HeroSection onViewProjects={onViewProjects} />
       <MarqueeSection />
+      
       <PortfolioProjectsSection onViewAll={onViewProjects} />
       <SkillsSection />
       <ExperienceSection />
