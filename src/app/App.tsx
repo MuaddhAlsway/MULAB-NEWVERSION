@@ -660,7 +660,7 @@ function Preloader({ onDone }: { onDone: () => void }) {
 
 // ─── Navigation ───────────────────────────────────────────────────────────────
 
-function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (page: string) => void }) {
+function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (page: string, project?: FullProject) => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -803,7 +803,42 @@ function MarqueeSection() {
   );
 }
 
-function PortfolioProjectsSection({ onViewAll }: { onViewAll: () => void }) {
+function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: () => void; onProjectClick?: (project: FullProject) => void }) {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
+
+  const checkScroll = () => {
+    if (scrollContainerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+      setCanScrollLeft(scrollLeft > 0);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+    }
+  };
+
+  useEffect(() => {
+    checkScroll();
+    const container = scrollContainerRef.current;
+    if (container) {
+      container.addEventListener("scroll", checkScroll);
+      window.addEventListener("resize", checkScroll);
+      return () => {
+        container.removeEventListener("scroll", checkScroll);
+        window.removeEventListener("resize", checkScroll);
+      };
+    }
+  }, []);
+
+  const scroll = (direction: "left" | "right") => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 400;
+      scrollContainerRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth"
+      });
+    }
+  };
+
   return (
     <section id="work" className="py-24 md:py-36 bg-black">
       <div className="px-6 md:px-12 lg:px-20 mb-12">
@@ -819,32 +854,78 @@ function PortfolioProjectsSection({ onViewAll }: { onViewAll: () => void }) {
           </div>
         </FadeIn>
       </div>
-      <div className="flex gap-5 overflow-x-auto pb-8 px-6 md:px-12 lg:px-20 snap-x snap-mandatory" style={{ scrollbarWidth: "none" }}>
-        {ALL_PROJECTS.slice(0, 5).map((project, i) => (
-          <motion.div key={project.id} initial={{ opacity: 0, x: 40 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-            className="flex-shrink-0 w-[82vw] md:w-[44vw] lg:w-[36vw] snap-start">
-            <div className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] h-full">
-              <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
-                <img src={project.image} alt={project.alt} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
-              </div>
-              <div className="p-5 md:p-6">
-                <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-display text-white font-bold" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
-                  <span className="font-mono text-[10px] text-white/25">{project.year}</span>
+
+      {/* Scroll Container with Controls */}
+      <div className="relative group">
+        {/* Left Scroll Button */}
+        {canScrollLeft && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => scroll("left")}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-black/60 hover:bg-black border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 backdrop-blur-sm"
+          >
+            <ChevronLeft size={20} className="text-white/60 group-hover:text-white transition-colors" />
+          </motion.button>
+        )}
+
+        {/* Right Scroll Button */}
+        {canScrollRight && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => scroll("right")}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-black/60 hover:bg-black border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 backdrop-blur-sm"
+          >
+            <ArrowUpRight size={20} className="text-white/60 group-hover:text-white transition-colors rotate-45" />
+          </motion.button>
+        )}
+
+        {/* Scrollable Container */}
+        <div
+          ref={scrollContainerRef}
+          className="flex gap-5 overflow-x-auto pb-8 px-6 md:px-12 lg:px-20 snap-x snap-mandatory scroll-smooth"
+          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
+        >
+          {ALL_PROJECTS.slice(0, 5).map((project, i) => (
+            <motion.div
+              key={project.id}
+              initial={{ opacity: 0, x: 40 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+              className="flex-shrink-0 w-[82vw] md:w-[44vw] lg:w-[36vw] snap-start cursor-pointer"
+              onClick={() => onProjectClick?.(project)}
+            >
+              <div className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] h-full transition-all duration-300">
+                <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
+                  <img src={project.image} alt={project.alt} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
                 </div>
-                <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4">{project.category}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.slice(0, 3).map((t) => (
-                    <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">{t}</span>
-                  ))}
+                <div className="p-5 md:p-6">
+                  <div className="flex items-start justify-between mb-3">
+                    <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
+                    <span className="font-mono text-[10px] text-white/25">{project.year}</span>
+                  </div>
+                  <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4">{project.category}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.slice(0, 3).map((t) => (
+                      <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">{t}</span>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          </motion.div>
-        ))}
+            </motion.div>
+          ))}
+        </div>
+      </div>
+
+      {/* Scroll Indicator for Mobile */}
+      <div className="flex md:hidden items-center justify-center mt-6">
+        <p className="font-mono text-[10px] text-white/30">← Scroll for more →</p>
       </div>
     </section>
   );
@@ -1752,9 +1833,9 @@ function ProjectDetailPage({ project, onBack }: { project: FullProject; onBack: 
 }
 
 // Full Projects Page
-function ProjectsPage({ onBack, onViewProject }: { onBack: () => void; onViewProject: (project: FullProject) => void }) {
+function ProjectsPage({ onBack, onViewProject, initialSelectedProject }: { onBack: () => void; onViewProject: (project: FullProject) => void; initialSelectedProject?: FullProject | null }) {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedProject, setSelectedProject] = useState<any | null>(null);
+  const [selectedProject, setSelectedProject] = useState<FullProject | null>(initialSelectedProject || null);
 
   const filteredProjects = activeCategory === "All"
     ? ALL_PROJECTS
@@ -1763,7 +1844,10 @@ function ProjectsPage({ onBack, onViewProject }: { onBack: () => void; onViewPro
   const featuredProject = ALL_PROJECTS[0];
 
   const handleProjectClick = (project: FullProject) => {
-    onViewProject(project);
+    setSelectedProject(project);
+    // Also update URL to include project slug
+    const slug = createSlug(project.title);
+    window.history.pushState(null, "", `/portfolio/${slug}`);
   };
 
   useEffect(() => {
@@ -1772,31 +1856,52 @@ function ProjectsPage({ onBack, onViewProject }: { onBack: () => void; onViewPro
 
   return (
     <div style={{ background: "#050505", minHeight: "100vh" }}>
-      <ProjectsHero />
-      <FeaturedProjectSection project={featuredProject} onOpen={() => handleProjectClick(featuredProject)} />
-      <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
-      <ProjectsGrid projects={filteredProjects} onOpen={handleProjectClick} />
-      <ProjectsListView projects={filteredProjects} onOpen={handleProjectClick} />
-      <MetricsSection />
-      <TechVisualization />
-      <ProjectsCTA />
-
-      <AnimatePresence>
-        {selectedProject && <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} onViewFull={() => handleProjectClick(selectedProject)} />}
-      </AnimatePresence>
+      {selectedProject ? (
+        // Project Details View
+        <>
+          <div className="px-6 md:px-12 lg:px-20 py-8 border-b border-white/[0.06]">
+            <button
+              onClick={() => {
+                setSelectedProject(null);
+                window.history.pushState(null, "", "/portfolio");
+              }}
+              className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/40 hover:text-white transition-colors"
+            >
+              ← Back to Projects
+            </button>
+          </div>
+          <ProjectDetailPage project={selectedProject} onBack={() => {
+            setSelectedProject(null);
+            window.history.pushState(null, "", "/portfolio");
+          }} />
+        </>
+      ) : (
+        // Projects List View
+        <>
+          <ProjectsHero />
+          <FeaturedProjectSection project={featuredProject} onOpen={() => handleProjectClick(featuredProject)} />
+          <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
+          <ProjectsGrid projects={filteredProjects} onOpen={handleProjectClick} />
+          <ProjectsListView projects={filteredProjects} onOpen={handleProjectClick} />
+          <MetricsSection />
+          <TechVisualization />
+          <ProjectsCTA />
+        </>
+      )}
     </div>
   );
 }
 
 // ─── Main Portfolio Page ──────────────────────────────────────────────────────
 
-function PortfolioPage({ onViewProjects }: { onViewProjects: () => void }) {
+function PortfolioPage({ onViewProjects, onProjectClick }: { onViewProjects: () => void; onProjectClick?: (project: FullProject) => void }) {
   return (
     <div className="bg-black">
       <HeroSection onViewProjects={onViewProjects} />
       <MarqueeSection />
       
-      <PortfolioProjectsSection onViewAll={onViewProjects} />
+      <FeaturedClients />
+      <PortfolioProjectsSection onViewAll={onViewProjects} onProjectClick={onProjectClick} />
       <SkillsSection />
       <ExperienceSection />
       <TestimonialsSection />
@@ -1816,15 +1921,33 @@ export default function App() {
   // Initialize from URL on mount
   useEffect(() => {
     const path = window.location.pathname;
-    const projectSlug = path.replace(/^\/|\/$/g, ''); // Remove leading/trailing slashes
     
-    if (projectSlug) {
+    // Handle /portfolio route
+    if (path === '/portfolio' || path === '/portfolio/') {
+      setCurrentPage("projects");
+      return;
+    }
+    
+    // Handle project detail routes like /portfolio/project-name
+    const projectMatch = path.match(/^\/portfolio\/([^/]+)\/?$/);
+    if (projectMatch) {
+      const projectSlug = projectMatch[1];
+      console.log("Looking for project with slug:", projectSlug);
       const project = findProjectBySlug(projectSlug);
+      console.log("Found project:", project);
       if (project) {
-        setCurrentPage("project-detail");
+        setCurrentPage("projects");
         setSelectedProject(project);
+        return;
+      } else {
+        // If project not found, go to projects page
+        setCurrentPage("projects");
+        return;
       }
     }
+    
+    // Default to home
+    setCurrentPage("home");
   }, []);
 
   const handlePreloaderDone = useCallback(() => {
@@ -1834,12 +1957,15 @@ export default function App() {
 
   const handleNavigate = useCallback((page: string, project?: FullProject) => {
     setCurrentPage(page);
-    if (project) {
+    if (page === "project-detail" && project) {
       setSelectedProject(project);
       // Update URL with project slug
       const slug = createSlug(project.title);
-      window.history.pushState(null, "", `/${slug}`);
-    } else {
+      window.history.pushState(null, "", `/portfolio/${slug}`);
+    } else if (page === "projects") {
+      // Navigate to /portfolio
+      window.history.pushState(null, "", "/portfolio");
+    } else if (page === "home") {
       // Reset URL to home
       window.history.pushState(null, "", "/");
     }
@@ -1856,15 +1982,20 @@ export default function App() {
 
       {showContent && (
         <>
-          <Nav currentPage={currentPage} onNavigate={() => handleNavigate("home")} />
+          <Nav currentPage={currentPage} onNavigate={handleNavigate} />
           <AnimatePresence mode="wait">
             {currentPage === "home" ? (
               <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <PortfolioPage onViewProjects={() => handleNavigate("projects")} />
+                <PortfolioPage onViewProjects={() => handleNavigate("projects")} onProjectClick={(project) => {
+                  const slug = createSlug(project.title);
+                  window.history.pushState(null, "", `/portfolio/${slug}`);
+                  setCurrentPage("projects");
+                  setSelectedProject(project);
+                }} />
               </motion.div>
             ) : currentPage === "projects" ? (
               <motion.div key="projects" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <ProjectsPage onBack={() => handleNavigate("home")} onViewProject={(project) => handleNavigate("project-detail", project)} />
+                <ProjectsPage onBack={() => handleNavigate("home")} onViewProject={(project) => handleNavigate("project-detail", project)} initialSelectedProject={selectedProject} />
               </motion.div>
             ) : currentPage === "project-detail" && selectedProject ? (
               <motion.div key="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
