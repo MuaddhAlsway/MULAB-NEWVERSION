@@ -78,7 +78,7 @@ const transformProject = (p: Project, idx: number) => ({
   featured: p.id <= 3,
 });
 
-const ALL_PROJECTS = importedProjects.map(transformProject);
+const ALL_PROJECTS = importedProjects.map((p) => transformProject(p as any, importedProjects.indexOf(p)));
 
 // Fallback projects if import fails
 const FALLBACK_PROJECTS = [
@@ -372,11 +372,12 @@ const FALLBACK_PROJECTS = [
   },
 ];
 
-const CATEGORIES = ["All", "Full Stack", "HTML/CSS/JS", "HTML/CSS", "C Programming"];
+const CATEGORIES = ["All", "Full Stack", "Pure Backend", "HTML/CSS/JS", "HTML/CSS", "C Programming"];
 
 const CATEGORY_MAP: Record<string, string> = {
   "All": "all",
   "Full Stack": "fullstack",
+  "Pure Backend": "purebackend",
   "HTML/CSS/JS": "htmlcssjs",
   "HTML/CSS": "htmlcss",
   "C Programming": "c",
@@ -594,7 +595,7 @@ function ParticleCanvas() {
 
 function FadeIn({ children, delay = 0, className, style }: { children: React.ReactNode; delay?: number; className?: string; style?: React.CSSProperties }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-80px" });
+  const inView = useInView(ref, { once: false, margin: "-80px" });
   return (
     <motion.div ref={ref} animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 40 }} transition={{ duration: 0.8, delay, ease: [0.16, 1, 0.3, 1] }} className={className} style={style}>
       {children}
@@ -894,7 +895,7 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
               key={project.id}
               initial={{ opacity: 0, x: 40 }}
               whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
+              viewport={{ once: false, margin: "-100px" }}
               transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
               className="flex-shrink-0 w-[82vw] md:w-[44vw] lg:w-[36vw] snap-start cursor-pointer"
               onClick={() => onProjectClick?.(project)}
@@ -992,7 +993,7 @@ function SkillsSection() {
                   <span className="font-mono text-[11px] text-white/30">{skill.pct}%</span>
                 </div>
                 <div className="h-px bg-white/[0.06] rounded-full overflow-hidden">
-                  <motion.div className="h-full bg-white rounded-full" initial={{ width: 0 }} whileInView={{ width: `${skill.pct}%` }} viewport={{ once: true }} transition={{ duration: 1.2, delay: 0.2 + i * 0.06, ease: [0.16, 1, 0.3, 1] }} />
+                  <motion.div className="h-full bg-white rounded-full" initial={{ width: 0 }} whileInView={{ width: `${skill.pct}%` }} viewport={{ once: false }} transition={{ duration: 1.2, delay: 0.2 + i * 0.06, ease: [0.16, 1, 0.3, 1] }} />
                 </div>
               </div>
             </FadeIn>
@@ -1035,6 +1036,167 @@ function ExperienceSection() {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const STORY_TIMELINE = [
+  {
+    day: "Day 1",
+    title: "🚀 My Backend Learning Journey",
+    subtitle: "Pure Backend Focus",
+    content: "I recently started a new path in my learning journey: Pure Backend Development using Node.js and Express 🟢⚡ After researching how to improve my skills, I realized I needed one thing most: Focus without distractions. So I decided to build backend projects without frontend — just pure APIs, logic, and server-side development.\n\nMy goal is simple: Master backend fundamentals first, understand how APIs really work, and build strong foundations before moving to full-stack.\n\nI believe real growth comes step by step: Small projects → Consistency → Practice → Mastery. At the beginning, it was confusing. I didn't know the exact path. But I learned something important: Every developer starts from zero — clarity comes through building, not waiting.\n\nNow my learning approach is: Pure backend projects (Node.js + Express) 🟢, Learning from structured courses (like Udemy) 📚, Constant practice and improvement 🔁, Later → full-stack integration with frontend 🌐.\n\nBecause backend mastery is not about speed — it's about depth. It's a journey, not a shortcut. And I'm committed to it. 🚀",
+    icon: "🚀"
+  },
+  {
+    day: "Day 2",
+    title: "🚀 Building an Advanced Authentication System",
+    subtitle: "Depth Over Speed",
+    content: "Today, I built an authentication system at an advanced level. The first version was simple, but the second version pushed me much deeper into backend complexity and real-world thinking.\n\nRight now, my focus is not on blindly following tutorials. I'm intentionally choosing a different path: Pure Backend Development. My goal is to master the fundamentals behind how systems really work — not just the surface-level implementation, but the logic, structure, and decisions happening behind the scenes.\n\nThis journey will take time, but that's exactly the point. I'm choosing depth over speed — understanding why things work, not just how to build them.\n\n💡 My learning approach now looks like this:\n\n1. Brainstorm the idea before writing any code\n2. Understand why the system matters in real backend engineering\n3. Identify what I can learn beyond courses (Udemy / tutorials)\n4. Design architecture first (diagrams, logic flow, system structure)\n5. Build step by step\n6. Face real bugs and unexpected issues during development\n7. Document everything I learn from those problems\n8. Reuse that knowledge in future projects to avoid repeating mistakes\n\nEvery project I build is upgrading my level as a backend developer. Real growth happens when you step out of comfort and build things without knowing every answer in advance. That's where real understanding starts — when you're forced to figure it out.\n\nInstead of chasing the \"final result\" from tutorials, I'm learning how every step connects to the system as a whole. Because backend mastery doesn't come from copying execution — it comes from understanding the system deeply enough to build it yourself.\n\n🔥 This is just the beginning of my backend journey. I'm committed to improving, breaking things, fixing them, and becoming stronger with every project.",
+    icon: "🔐"
+  },
+  {
+    day: "Day 3",
+    title: "🚀 My Journey Today — A Shift in How I Think",
+    subtitle: "From Passive Learning to Active Building",
+    content: "When I look back, I realize I'm not the same developer I was before. My thinking has changed. It's no longer just about learning concepts or finishing courses — it's about how I approach problems.\n\nThe real change is this: I stopped waiting to \"finish the material\" before building. Instead, I started building first. Because becoming a backend engineer through passive learning is not enough. You have to figure it out while building.\n\nThis approach changed everything for me:\n\nNow I learn in an active way. I build piece by piece until the bigger picture slowly starts to form. And along the way, I don't just consume knowledge — I generate questions. And those questions matter. Because the right questions push you into a level you can't reach through tutorials alone.\n\nI realized something important: You don't become a backend engineer by waiting for clarity. You become one by going through confusion, mistakes, and repeated attempts until you discover your own way of building.\n\nThis is what I call pure backend thinking:\n\n✅ Build before you fully understand\n✅ Learn through breakdowns and real bugs\n✅ Let problems guide the next step\n✅ Improve through repetition and iteration\n✅ Slowly connect the system until the full picture appears\n\nI'm still in the process. Still learning. Still pushing. But now I understand the direction. And that alone changes everything.\n\n🔥 This is not just learning anymore — this is building myself as a backend engineer. The transformation is real, and it starts with action, not perfection.",
+    icon: "🧠"
+  }
+];
+
+function StorySection() {
+  const [activeDay, setActiveDay] = useState(0);
+  const story = STORY_TIMELINE[activeDay];
+
+  return (
+    <section id="story" className="py-24 md:py-36 bg-black">
+      <div className="px-6 md:px-12 lg:px-20">
+        <FadeIn className="mb-20">
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">The Journey</p>
+          <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>From Zero to Backend</h2>
+        </FadeIn>
+
+        {/* Timeline Cards */}
+        <div className="mb-16">
+          <div className="flex gap-3 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide">
+            {STORY_TIMELINE.map((item, i) => (
+              <motion.button
+                key={i}
+                onClick={() => setActiveDay(i)}
+                className={cn(
+                  "flex-shrink-0 px-6 py-3 rounded-full border font-mono text-[11px] uppercase tracking-[0.12em] transition-all duration-300 whitespace-nowrap",
+                  activeDay === i
+                    ? "bg-white text-black border-white"
+                    : "border-white/[0.08] text-white/40 hover:text-white hover:border-white/25 bg-transparent"
+                )}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                {item.day}
+              </motion.button>
+            ))}
+          </div>
+        </div>
+
+        {/* Main Story Card */}
+        <div className="max-w-4xl">
+          <motion.div
+            key={activeDay}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="p-8 md:p-12 rounded-3xl border border-white/[0.06] bg-gradient-to-br from-white/[0.05] to-white/[0.01] hover:border-white/15 transition-all duration-300"
+          >
+            {/* Icon and Day */}
+            <div className="flex items-start justify-between mb-8">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/25 mb-2">{story.day}</p>
+                <div className="flex items-center gap-4">
+                  <span className="text-5xl">{story.icon}</span>
+                  <div>
+                    <h3 className="font-display text-white font-bold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em" }}>
+                      {story.title}
+                    </h3>
+                    <p className="font-mono text-[11px] text-white/35 uppercase tracking-wider mt-1">{story.subtitle}</p>
+                  </div>
+                </div>
+              </div>
+              {/* Progress indicator */}
+              <div className="flex gap-1">
+                {STORY_TIMELINE.map((_, i) => (
+                  <motion.div
+                    key={i}
+                    className="w-1.5 h-1.5 rounded-full"
+                    animate={{
+                      backgroundColor: i === activeDay ? "#ffffff" : "rgba(255,255,255,0.2)"
+                    }}
+                    transition={{ duration: 0.3 }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Story Content */}
+            <div className="space-y-6 mb-8">
+              {story.content.split('\n\n').map((paragraph, i) => (
+                <p
+                  key={i}
+                  className="text-white/70 leading-relaxed whitespace-pre-wrap"
+                  style={{ fontSize: "clamp(16px, 1.1vw, 18px)" }}
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {/* Navigation Buttons */}
+            <div className="flex gap-4 items-center justify-between">
+              <motion.button
+                onClick={() => setActiveDay(Math.max(0, activeDay - 1))}
+                disabled={activeDay === 0}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 font-mono text-[11px] uppercase tracking-wider"
+                whileHover={{ x: -4 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                ← Previous
+              </motion.button>
+
+              <div className="font-mono text-[11px] text-white/40 uppercase tracking-wider">
+                {activeDay + 1} / {STORY_TIMELINE.length}
+              </div>
+
+              <motion.button
+                onClick={() => setActiveDay(Math.min(STORY_TIMELINE.length - 1, activeDay + 1))}
+                disabled={activeDay === STORY_TIMELINE.length - 1}
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/30 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 font-mono text-[11px] uppercase tracking-wider"
+                whileHover={{ x: 4 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Next →
+              </motion.button>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-20">
+          {[
+            { label: "Learning Path", value: "Backend First" },
+            { label: "Focus", value: "Depth Over Speed" },
+            { label: "Mindset", value: "Journey, Not Sprint" }
+          ].map((stat, i) => (
+            <FadeIn key={i} delay={i * 0.1}>
+              <div className="p-6 rounded-2xl border border-white/[0.06] bg-card text-center hover:border-white/15 transition-all duration-300">
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/30 mb-2">{stat.label}</p>
+                <p className="font-display text-white font-bold" style={{ fontSize: "clamp(20px, 1.5vw, 24px)", letterSpacing: "-0.02em" }}>
+                  {stat.value}
+                </p>
+              </div>
+            </FadeIn>
+          ))}
         </div>
       </div>
     </section>
@@ -1086,7 +1248,7 @@ function ContactSection() {
       <div className="relative px-6 md:px-12 lg:px-20">
         <FadeIn className="mb-6"><p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">Get In Touch</p></FadeIn>
         <div className="overflow-hidden mb-16">
-          <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: false }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-white leading-none" style={{ fontSize: "clamp(48px, 10vw, 140px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
             Let's Create<br /><span className="text-white/[0.12]">Together.</span>
           </motion.h2>
@@ -1387,7 +1549,7 @@ function FeaturedProjectSection({ project, onOpen }: { project: FullProject; onO
   }, []);
 
   return (
-    <section className="py-20 md:py-32 px-6 md:px-12 lg:px-20 border-t border-white/[0.04]" style={{ background: "#050505" }}>
+    <section className="py-12 md:py-20 px-6 md:px-12 lg:px-20 border-t border-white/[0.04]" style={{ background: "#050505" }}>
       <FadeIn className="mb-12">
         <div className="flex items-center gap-4">
           <span className="px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] font-mono text-[10px] text-white/50 uppercase tracking-widest">Featured Project</span>
@@ -1457,7 +1619,7 @@ function CategoryFilter({ active, onChange }: { active: string; onChange: (c: st
 function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (p: FullProject) => void }) {
   const filtered = projects.filter((p) => p.id !== 1); // featured project excluded
   return (
-    <section className="py-16 md:py-24 px-6 md:px-12 lg:px-20" style={{ background: "#050505" }}>
+    <section className="py-8 md:py-12 px-6 md:px-12 lg:px-20" style={{ background: "#050505" }}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filtered.map((project, i) => (
           <FadeIn key={project.id} delay={i * 0.04}>
@@ -1496,20 +1658,20 @@ function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (
 }
 
 // List view with mouse-follow preview
-function ProjectsListView({ projects, onOpen }: { projects: FullProject[]; onOpen: (p: FullProject) => void }) {
+function ProjectsListView({ projects, onOpen, showFeatured }: { projects: FullProject[]; onOpen: (p: FullProject) => void; showFeatured: boolean }) {
   const [hoveredSrc, setHoveredSrc] = useState<string | null>(null);
 
   return (
     <section className="px-6 md:px-12 lg:px-20 pb-20 border-t border-white/[0.04]" style={{ background: "#050505" }}>
       <MouseFollowPreview src={hoveredSrc || ""} visible={!!hoveredSrc} />
-      <div className="mb-10 pt-16">
+      <div className={`mb-10 ${showFeatured ? 'pt-16' : 'pt-4'}`}>
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25">All Projects</p>
       </div>
       <div>
         {projects.map((project, i) => (
           <motion.button key={project.id} onClick={() => onOpen(project)} onMouseEnter={() => setHoveredSrc(project.image)} onMouseLeave={() => setHoveredSrc(null)}
             className="group w-full flex items-center justify-between py-5 border-b border-white/[0.06] hover:border-white/15 transition-all duration-300"
-            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: i * 0.04 }}>
+            initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false }} transition={{ duration: 0.5, delay: i * 0.04 }}>
             <div className="flex items-center gap-6 md:gap-10">
               <span className="font-mono text-[10px] text-white/20 hidden sm:block">{project.num}</span>
               <h3 className="font-display text-white font-bold text-left group-hover:text-white transition-colors" style={{ fontSize: "clamp(18px, 2.5vw, 30px)", letterSpacing: "-0.03em" }}>{project.title}</h3>
@@ -1531,11 +1693,11 @@ function ProjectsListView({ projects, onOpen }: { projects: FullProject[]; onOpe
 // Metrics section
 function MetricsSection() {
   const metrics = [
-    { value: "12", label: "Projects", sub: "Delivered" },
-    { value: "4+", label: "Years", sub: "Experience" },
-    { value: "18+", label: "Technologies", sub: "Mastered" },
-    { value: "8", label: "Open Source", sub: "Repositories" },
-    { value: "3", label: "Awards", sub: "Awwwards & CSS" },
+    { value: "44+", label: "Projects", sub: "Completed" },
+    { value: "2+", label: "Years", sub: "Frontend Development Journey" },
+    { value: "10+", label: "Technologies", sub: "HTML, CSS, JavaScript, C, Python & SQL" },
+    { value: "5+", label: "Major Platforms", sub: "LinkedIn, Airbnb, Spotify, Apple & Udemy" },
+    { value: "100+", label: "Hours", sub: "CS50 & Self-Learning Experience" },
   ];
 
   return (
@@ -1545,15 +1707,15 @@ function MetricsSection() {
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-4">By the Numbers</p>
           <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Project Metrics</h2>
         </FadeIn>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
           {metrics.map((m, i) => (
             <FadeIn key={m.label} delay={i * 0.08}>
-              <div className="p-6 rounded-2xl border border-white/[0.06] bg-card hover:border-white/15 transition-all duration-300 group">
+              <div className="p-6 rounded-2xl border border-white/[0.06] bg-card hover:border-white/15 transition-all duration-300 group h-full">
                 <div className="font-display text-white font-black leading-none mb-2 group-hover:text-white transition-colors" style={{ fontSize: "clamp(36px, 4vw, 52px)", letterSpacing: "-0.04em" }}>
-                  <motion.span initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.08 }}>{m.value}</motion.span>
+                  <motion.span initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 0.6, delay: i * 0.08 }}>{m.value}</motion.span>
                 </div>
                 <div className="font-display text-white/60 font-semibold text-sm mb-1">{m.label}</div>
-                <div className="font-mono text-[10px] text-white/25 uppercase tracking-widest">{m.sub}</div>
+                <div className="font-mono text-[10px] text-white/25 uppercase tracking-widest leading-relaxed">{m.sub}</div>
               </div>
             </FadeIn>
           ))}
@@ -1624,13 +1786,13 @@ function ProjectsCTA() {
       <div className="relative px-6 md:px-12 lg:px-20">
         <FadeIn className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25">Next Chapter</p></FadeIn>
         <div className="overflow-hidden mb-6">
-          <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+          <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: false }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-white leading-none" style={{ fontSize: "clamp(32px, 7vw, 100px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
             Let's Build Something
           </motion.h2>
         </div>
         <div className="overflow-hidden mb-12">
-          <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: true }} transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+          <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: false }} transition={{ duration: 1, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display leading-none" style={{ fontSize: "clamp(32px, 7vw, 100px)", fontWeight: 800, letterSpacing: "-0.04em", color: "rgba(255,255,255,0.12)" }}>
             Extraordinary Together.
           </motion.h2>
@@ -1879,10 +2041,12 @@ function ProjectsPage({ onBack, onViewProject, initialSelectedProject }: { onBac
         // Projects List View
         <>
           <ProjectsHero />
-          <FeaturedProjectSection project={featuredProject} onOpen={() => handleProjectClick(featuredProject)} />
+          {(activeCategory === "All" || featuredProject.categorySlug === CATEGORY_MAP[activeCategory]) && (
+            <FeaturedProjectSection project={featuredProject} onOpen={() => handleProjectClick(featuredProject)} />
+          )}
           <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
           <ProjectsGrid projects={filteredProjects} onOpen={handleProjectClick} />
-          <ProjectsListView projects={filteredProjects} onOpen={handleProjectClick} />
+          <ProjectsListView projects={filteredProjects} onOpen={handleProjectClick} showFeatured={activeCategory === "All" || featuredProject.categorySlug === CATEGORY_MAP[activeCategory]} />
           <MetricsSection />
           <TechVisualization />
           <ProjectsCTA />
@@ -1904,7 +2068,8 @@ function PortfolioPage({ onViewProjects, onProjectClick }: { onViewProjects: () 
       <PortfolioProjectsSection onViewAll={onViewProjects} onProjectClick={onProjectClick} />
       <SkillsSection />
       <ExperienceSection />
-      <TestimonialsSection />
+      <StorySection />
+      {/* <TestimonialsSection /> */}
       <ContactSection />
     </div>
   );
