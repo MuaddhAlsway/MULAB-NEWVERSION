@@ -1664,7 +1664,7 @@ function ProjectsListView({ projects, onOpen, showFeatured }: { projects: FullPr
   return (
     <section className="px-6 md:px-12 lg:px-20 pb-20 border-t border-white/[0.04]" style={{ background: "#050505" }}>
       <MouseFollowPreview src={hoveredSrc || ""} visible={!!hoveredSrc} />
-      <div className={`mb-10 ${showFeatured ? 'pt-16' : 'pt-4'}`}>
+      <div className={`mb-10 ${showFeatured ? 'pt-16' : 'pt-0'}`}>
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25">All Projects</p>
       </div>
       <div>
