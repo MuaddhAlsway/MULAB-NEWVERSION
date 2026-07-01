@@ -1619,7 +1619,7 @@ function CategoryFilter({ active, onChange }: { active: string; onChange: (c: st
 function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (p: FullProject) => void }) {
   const filtered = projects.filter((p) => p.id !== 1); // featured project excluded
   return (
-    <section className="py-8 md:py-12 px-6 md:px-12 lg:px-20" style={{ background: "#050505" }}>
+    <section className="py-0 px-6 md:px-12 lg:px-20" style={{ background: "#050505" }}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filtered.map((project, i) => (
           <FadeIn key={project.id} delay={i * 0.04}>
