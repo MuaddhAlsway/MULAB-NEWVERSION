@@ -6,15 +6,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/portfolio",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/portfolio/:path*",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/(.*)",
+      "source": "/:path*",
       "destination": "/index.html"
     }
   ],
