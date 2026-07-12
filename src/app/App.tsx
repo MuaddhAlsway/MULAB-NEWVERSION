@@ -1693,7 +1693,7 @@ function ProjectsListView({ projects, onOpen, showFeatured }: { projects: FullPr
 // Metrics section
 function MetricsSection() {
   const metrics = [
-    { value: "44+", label: "Projects", sub: "Completed" },
+    { value: "51+", label: "Projects", sub: "Completed" },
     { value: "2+", label: "Years", sub: "Frontend Development Journey" },
     { value: "10+", label: "Technologies", sub: "HTML, CSS, JavaScript, C, Python & SQL" },
     { value: "5+", label: "Major Platforms", sub: "LinkedIn, Airbnb, Spotify, Apple & Udemy" },
