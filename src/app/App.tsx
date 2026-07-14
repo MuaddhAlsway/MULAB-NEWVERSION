@@ -3,6 +3,7 @@ import { motion, AnimatePresence, useInView } from "motion/react";
 import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
 import { FeaturedClients } from "./components/FeaturedClients";
+import { CaseStudyPage } from "./components/CaseStudyPage";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -2092,6 +2093,12 @@ export default function App() {
       setCurrentPage("projects");
       return;
     }
+
+    // Handle case study routes like /trq-studio
+    if (path === '/trq-studio' || path === '/trq-studio/') {
+      setCurrentPage("case-study");
+      return;
+    }
     
     // Handle project detail routes like /portfolio/project-name
     const projectMatch = path.match(/^\/portfolio\/([^/]+)\/?$/);
@@ -2130,6 +2137,9 @@ export default function App() {
     } else if (page === "projects") {
       // Navigate to /portfolio
       window.history.pushState(null, "", "/portfolio");
+    } else if (page === "case-study") {
+      // Navigate to /trq-studio
+      window.history.pushState(null, "", "/trq-studio");
     } else if (page === "home") {
       // Reset URL to home
       window.history.pushState(null, "", "/");
@@ -2165,6 +2175,10 @@ export default function App() {
             ) : currentPage === "project-detail" && selectedProject ? (
               <motion.div key="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
                 <ProjectDetailPage project={selectedProject} onBack={() => handleNavigate("projects")} />
+              </motion.div>
+            ) : currentPage === "case-study" ? (
+              <motion.div key="case-study" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+                <CaseStudyPage onBack={() => handleNavigate("home")} />
               </motion.div>
             ) : null}
           </AnimatePresence>
