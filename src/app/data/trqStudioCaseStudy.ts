@@ -742,54 +742,5 @@ Admin Navigation:
     projectManagement: 'A 1-week sprint for a full-stack bilingual platform is achievable with clear scope boundaries and technology decisions made upfront. The key is architectural decisiveness — evaluating options early, choosing confidently, and executing without second-guessing. Technology evaluation paralysis is the real time killer.'
   },
 
-  futureRoadmap: [
-    {
-      feature: 'AI-Powered Content Assistant',
-      description: 'Integrate OpenAI/GPT for automatic blog post drafting, project description generation, and bilingual content suggestions. Reduces content creation time by 60%.',
-      priority: 'High',
-      timeline: 'Q2 2025'
-    },
-    {
-      feature: 'Advanced Analytics Dashboard',
-      description: 'Real-time visitor analytics, project view heatmaps, engagement metrics, and conversion tracking. Data-driven content strategy decisions.',
-      priority: 'High',
-      timeline: 'Q2 2025'
-    },
-    {
-      feature: 'Native Mobile Applications',
-      description: 'React Native iOS and Android apps for on-the-go portfolio management and push notifications for content updates.',
-      priority: 'Medium',
-      timeline: 'Q3 2025'
-    },
-    {
-      feature: 'Multi-Language Expansion',
-      description: 'Extend i18n architecture to support French, Urdu, and Hindi — key markets for architecture firms in the GCC and South Asia.',
-      priority: 'Medium',
-      timeline: 'Q3 2025'
-    },
-    {
-      feature: 'E-Commerce Integration',
-      description: 'Enable studios to sell digital assets, design templates, and consultation bookings directly from the platform.',
-      priority: 'Low',
-      timeline: 'Q4 2025'
-    },
-    {
-      feature: 'Team Collaboration',
-      description: 'Multi-user editing with real-time presence indicators, commenting system, and approval workflows for content publishing.',
-      priority: 'Medium',
-      timeline: 'Q4 2025'
-    },
-    {
-      feature: 'Advanced SEO Suite',
-      description: 'Automated sitemap generation, structured data markup, Open Graph optimization, and search engine ranking tracking.',
-      priority: 'High',
-      timeline: 'Q2 2025'
-    },
-    {
-      feature: 'Social Media Automation',
-      description: 'Direct publishing to LinkedIn, Instagram, and Twitter. Scheduled posting, cross-platform content adaptation, and engagement analytics.',
-      priority: 'Low',
-      timeline: 'Q1 2026'
-    }
-  ]
+
 };
