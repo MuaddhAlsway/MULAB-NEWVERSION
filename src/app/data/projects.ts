@@ -19,6 +19,7 @@ export interface Project {
   liveUrl?: string;
   client?: string;
   duration?: string;
+  folderStructure?: string[];
 }
 
 export const projects: Project[] = [
