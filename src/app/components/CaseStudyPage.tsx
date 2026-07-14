@@ -1079,27 +1079,7 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
   const scale = useTransform(scrollYProgress, [0, 0.5], [0.92, 1]);
   const borderRadius = useTransform(scrollYProgress, [0, 0.4], ["24px", "0px"]);
 
-  const galleryRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
-
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!galleryRef.current) return;
-    setIsDragging(true);
-    setStartX(e.pageX - galleryRef.current.offsetLeft);
-    setScrollLeft(galleryRef.current.scrollLeft);
-  };
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !galleryRef.current) return;
-    e.preventDefault();
-    const x = e.pageX - galleryRef.current.offsetLeft;
-    galleryRef.current.scrollLeft = scrollLeft - (x - startX) * 1.5;
-  };
-  const handleMouseUp = () => setIsDragging(false);
-
-  // Duplicate image for gallery effect (same image repeated)
-  const images = [project.image, project.image, project.image, project.image];
+  const images = [project.image];
 
   return (
     <section ref={ref} className="py-12 md:py-20 border-t border-white/[0.04] overflow-hidden" style={{ background: "#050505" }}>
@@ -1108,27 +1088,19 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
         <SectionTitle>The Product</SectionTitle>
       </FadeIn>
 
-      {/* Drag-to-scroll gallery */}
-      <div
-        ref={galleryRef}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseUp}
-        className={`flex gap-6 overflow-x-auto px-6 md:px-12 lg:px-20 pb-8 scrollbar-hide ${isDragging ? "cursor-grabbing" : "cursor-grab"}`}
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-      >
+      {/* Full-bleed showcase */}
+      <div className="px-6 md:px-12 lg:px-20">
         {images.map((img, i) => (
           <motion.div key={i} style={{ scale: i === 0 ? scale : undefined, borderRadius: i === 0 ? borderRadius : undefined }}
-            className="flex-shrink-0 w-[80vw] md:w-[60vw] lg:w-[45vw] overflow-hidden shadow-2xl shadow-black/50">
-            <img src={img} alt={`${project.title} ${i + 1}`} className="w-full h-auto object-cover" style={{ maxHeight: "70vh" }} draggable={false} />
+            className="overflow-hidden shadow-2xl shadow-black/50">
+            <img src={img} alt={`${project.title} ${i + 1}`} className="w-full h-auto object-cover" style={{ maxHeight: "75vh" }} draggable={false} />
           </motion.div>
         ))}
       </div>
 
-      <FadeIn delay={0.2} className="text-center mt-4 px-6">
+      <FadeIn delay={0.2} className="text-center mt-6 px-6">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/15">
-          Drag to explore — {project.title || project.name}
+          {project.title || project.name} — Production Interface
         </p>
       </FadeIn>
     </section>
