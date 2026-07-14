@@ -20,7 +20,7 @@ const clientProjects: ClientProject[] = [
     name: 'TRQ Studio',
     description: 'Modern Portfolio & CMS Platform',
     tech: ['Next.js', 'React', 'Tailwind', 'CMS'],
-    image: '/Projects/TRQ.png',
+    image: '/Projects/mockup/TRQ.png',
     github: 'https://github.com/MuaddhAlsway/TRQ-Archicator-Studio.git',
     live: 'https://trqstudio.com/',
     brand: 'MULAB'
@@ -30,7 +30,7 @@ const clientProjects: ClientProject[] = [
     name: 'TD Logistics',
     description: 'Logistics services platform',
     tech: ['Next.js', 'TypeScript', 'SQLite', 'Tailwind'],
-    image: '/Projects/TD.png',
+    image: '/Projects/mockup/TD.png',
     github: 'https://github.com/MuaddhAlsway/TD-cloudflare-deploy.git',
     live: 'https://tdlogistics.co/',
     brand: 'MIBDAAT AL-THELATH for advertising'
@@ -40,7 +40,7 @@ const clientProjects: ClientProject[] = [
     name: "Writer's Journey",
     description: 'Book Launch Platform',
     tech: ['React', 'Express.js', 'Turso', 'Resend'],
-    image: '/Projects/WRITING.png',
+    image: '/Projects/mockup/WRITING.png',
     github: 'https://github.com/MuaddhAlsway/Writer-Website-Landing-Page.git',
     live: ' https://authorfsk.com/',
     brand: 'MIBDAAT AL-THELATH for advertising'
@@ -50,7 +50,7 @@ const clientProjects: ClientProject[] = [
     name: 'Riyadah',
     description: 'Accounting firm website',
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-    image: '/Projects/ALRYADH.png',
+    image: '/Projects/mockup/ALRYADH.png',
     github: 'https://github.com/MuaddhAlsway/Alryadah.git',
     live: 'https://bc0161e1.riyadah-certified-accountants-saudi-arabia.pages.dev/',
     brand: 'MULAB'
@@ -60,7 +60,7 @@ const clientProjects: ClientProject[] = [
     name: 'Mesaha Lakum',
     description: 'Event Management & Cultural Platform',
     tech: ['PHP', 'MySQL', 'JavaScript', 'HTML5', 'CSS3'],
-    image: '/Projects/LAKUM.png',
+    image: '/Projects/mockup/LAKUM.png',
     github: 'https://github.com/MuaddhAlsway/LAKUMPremiumVersion.git',
     live: ' https://lakumartspace.com/',
     brand: 'MIBDAAT AL-THELATH for advertising'
