@@ -2041,13 +2041,13 @@ function ProjectsPage({ onBack, onViewProject, initialSelectedProject }: { onBac
         // Projects List View
         <>
           <ProjectsHero />
+          <MetricsSection />
           {(activeCategory === "All" || featuredProject.categorySlug === CATEGORY_MAP[activeCategory]) && (
             <FeaturedProjectSection project={featuredProject} onOpen={() => handleProjectClick(featuredProject)} />
           )}
           <CategoryFilter active={activeCategory} onChange={setActiveCategory} />
           <ProjectsGrid projects={filteredProjects} onOpen={handleProjectClick} />
           <ProjectsListView projects={filteredProjects} onOpen={handleProjectClick} showFeatured={activeCategory === "All" || featuredProject.categorySlug === CATEGORY_MAP[activeCategory]} />
-          <MetricsSection />
           <TechVisualization />
           <ProjectsCTA />
         </>
