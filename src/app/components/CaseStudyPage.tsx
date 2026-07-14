@@ -1077,9 +1077,7 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const scale = useTransform(scrollYProgress, [0, 0.5], [0.92, 1]);
-  const borderRadius = useTransform(scrollYProgress, [0, 0.4], ["24px", "0px"]);
-
-  const images = [project.image];
+  const borderRadius = useTransform(scrollYProgress, [0, 0.4], ["16px", "8px"]);
 
   return (
     <section ref={ref} className="py-12 md:py-20 border-t border-white/[0.04] overflow-hidden" style={{ background: "#050505" }}>
@@ -1088,14 +1086,47 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
         <SectionTitle>The Product</SectionTitle>
       </FadeIn>
 
-      {/* Full-bleed showcase */}
+      {/* Portfolio-style card */}
       <div className="px-6 md:px-12 lg:px-20">
-        {images.map((img, i) => (
-          <motion.div key={i} style={{ scale: i === 0 ? scale : undefined, borderRadius: i === 0 ? borderRadius : undefined }}
-            className="overflow-hidden shadow-2xl shadow-black/50">
-            <img src={img} alt={`${project.title} ${i + 1}`} className="w-full h-auto object-cover" style={{ maxHeight: "75vh" }} draggable={false} />
-          </motion.div>
-        ))}
+        <motion.div style={{ scale, borderRadius }}
+          className="relative max-w-5xl mx-auto overflow-hidden border border-white/[0.06] bg-white/[0.02] shadow-2xl shadow-black/40 hover:border-white/[0.15] transition-all duration-500 group">
+          {/* Image */}
+          <div className="relative overflow-hidden">
+            <motion.img
+              src={project.image}
+              alt={project.title || project.name}
+              className="w-full h-auto object-cover"
+              style={{ maxHeight: "70vh" }}
+              whileHover={{ scale: 1.03 }}
+              transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
+              draggable={false}
+            />
+            {/* Hover overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            {/* Corner label */}
+            <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-black/50 backdrop-blur-sm border border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+              <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/50">Preview</span>
+            </div>
+          </div>
+
+          {/* Card Footer */}
+          <div className="px-6 py-4 border-t border-white/[0.04] bg-white/[0.01]">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="font-display text-white font-semibold text-sm">{project.title || project.name}</p>
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20 mt-1">{project.category || "Case Study"} — {project.year || "2025"}</p>
+              </div>
+              <div className="flex items-center gap-2">
+                {project.tech.slice(0, 3).map(t => (
+                  <span key={t} className="px-2 py-1 rounded-md border border-white/[0.06] bg-white/[0.02] font-mono text-[8px] text-white/25">{t}</span>
+                ))}
+                {project.tech.length > 3 && (
+                  <span className="px-2 py-1 rounded-md border border-white/[0.04] bg-white/[0.01] font-mono text-[8px] text-white/15">+{project.tech.length - 3}</span>
+                )}
+              </div>
+            </div>
+          </div>
+        </motion.div>
       </div>
 
       <FadeIn delay={0.2} className="text-center mt-6 px-6">
