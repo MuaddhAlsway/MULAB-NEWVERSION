@@ -1292,13 +1292,52 @@ function LinksAndCTA({ project, onBack, nextProject }: { project: CaseStudyProje
 
           {nextProject && (
             <FadeIn delay={0.2}>
-              <a href={`/case-study/${nextProject.slug}`} className="group inline-flex flex-col items-center gap-4 p-8 rounded-2xl border border-white/[0.06] bg-white/[0.02] hover:border-white/[0.15] hover:bg-white/[0.05] transition-all duration-300 max-w-md w-full mb-10" data-cursor-hover>
-                <p className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/20">Next Project</p>
-                <div className="w-20 h-20 rounded-xl overflow-hidden border border-white/[0.08]">
-                  <img src={nextProject.image} alt={nextProject.title} className="w-full h-full object-cover" />
+              <a href={`/case-study/${nextProject.slug}`} className="group block relative w-full max-w-4xl mx-auto rounded-3xl overflow-hidden border border-white/[0.06] mb-12 hover:border-white/[0.15] transition-all duration-700" data-cursor-hover>
+                {/* Background Image */}
+                <div className="relative h-[400px] md:h-[500px] overflow-hidden">
+                  <motion.img
+                    src={nextProject.image}
+                    alt={nextProject.title}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+                  />
+                  {/* Gradient overlays */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
+                  {/* Subtle glow */}
+                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ background: "radial-gradient(ellipse at center, rgba(0,216,255,0.08) 0%, transparent 60%)" }} />
                 </div>
-                <span className="font-display text-white font-bold text-lg group-hover:text-[#00D8FF] transition-colors">{nextProject.title}</span>
-                {nextProject.category && <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">{nextProject.category}</span>}
+
+                {/* Content overlay */}
+                <div className="absolute bottom-0 left-0 right-0 p-8 md:p-12">
+                  {/* Label */}
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="h-px w-8 bg-[#00D8FF]/40 group-hover:w-12 transition-all duration-500" />
+                    <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-[#00D8FF]/50">Next Project</p>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="font-display text-white font-bold leading-none mb-4" style={{ fontSize: "clamp(28px, 4vw, 52px)", letterSpacing: "-0.03em" }}>
+                    {nextProject.title}
+                  </h3>
+
+                  {/* Category + Arrow */}
+                  <div className="flex items-center justify-between">
+                    {nextProject.category && (
+                      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">{nextProject.category}</span>
+                    )}
+                    <div className="flex items-center gap-2 text-white/30 group-hover:text-[#00D8FF]/60 transition-all duration-500">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.15em]">View</span>
+                      <ArrowUpRight size={16} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform duration-300" />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Corner accent */}
+                <div className="absolute top-6 right-6 w-12 h-12 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 backdrop-blur-sm bg-white/[0.03]">
+                  <ArrowUpRight size={18} className="text-white/50 group-hover:text-[#00D8FF] transition-colors" />
+                </div>
               </a>
             </FadeIn>
           )}
