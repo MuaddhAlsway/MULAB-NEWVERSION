@@ -8,7 +8,7 @@ export const trqStudioCaseStudy = {
     projectTagline: 'Where Architecture Meets Digital Excellence',
     industry: 'Architecture & Design Studio',
     role: 'Full-Stack Developer & Solutions Architect',
-    duration: '1 week',
+    duration: '4 months',
     year: '2025',
     techStack: ['React 19.2', 'Vite 7.2', 'TypeScript 5.0+', 'Tailwind CSS 3.4', 'Express.js 4.21', 'SQLite/Turso', 'JWT', 'Bcryptjs'],
     description: `TRQ Studio is an enterprise-grade bilingual portfolio and content management platform engineered for modern architecture and design studios operating across English and Arabic-speaking markets. The platform eliminates the fragmented tooling that plagues creative agencies — replacing disconnected portfolio builders, static websites, and third-party CMS platforms with a unified, secure, and performant solution built from the ground up.

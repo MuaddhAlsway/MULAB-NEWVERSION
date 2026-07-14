@@ -1835,7 +1835,7 @@ function ProjectsCTA() {
 }
 
 // Project Detail Page (Full Screen Project View)
-function ProjectDetailPage({ project, onBack }: { project: FullProject; onBack: () => void }) {
+function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: FullProject; onBack: () => void; onViewCaseStudy: (project: FullProject) => void }) {
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: "instant" });
   }, [project]);
@@ -1989,6 +1989,23 @@ function ProjectDetailPage({ project, onBack }: { project: FullProject; onBack: 
               )}
             </div>
           </div>
+
+          {/* Case Study Button */}
+          <div className="mb-16">
+            <button onClick={() => onViewCaseStudy(project)}
+              className="group w-full flex items-center justify-between px-8 py-6 rounded-2xl border border-white/10 bg-gradient-to-r from-white/[0.03] to-white/[0.06] hover:from-white/[0.06] hover:to-white/[0.1] hover:border-white/25 transition-all duration-300">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-xl bg-white/[0.06] border border-white/10 flex items-center justify-center group-hover:bg-white/[0.1] transition-all duration-300">
+                  <FileText size={20} className="text-white/50 group-hover:text-white transition-colors" />
+                </div>
+                <div className="text-left">
+                  <p className="font-display text-white font-bold text-lg group-hover:text-white transition-colors">View Case Study</p>
+                  <p className="font-mono text-[10px] text-white/30 uppercase tracking-widest mt-1">Premium Awwwards-style breakdown</p>
+                </div>
+              </div>
+              <ArrowUpRight size={20} className="text-white/20 group-hover:text-white/60 transition-colors" />
+            </button>
+          </div>
         </div>
       </div>
     </motion.div>
@@ -1996,7 +2013,7 @@ function ProjectDetailPage({ project, onBack }: { project: FullProject; onBack: 
 }
 
 // Full Projects Page
-function ProjectsPage({ onBack, onViewProject, initialSelectedProject }: { onBack: () => void; onViewProject: (project: FullProject) => void; initialSelectedProject?: FullProject | null }) {
+function ProjectsPage({ onBack, onViewProject, initialSelectedProject, onViewCaseStudy }: { onBack: () => void; onViewProject: (project: FullProject) => void; initialSelectedProject?: FullProject | null; onViewCaseStudy: (project: FullProject) => void }) {
   const [activeCategory, setActiveCategory] = useState("All");
   const [selectedProject, setSelectedProject] = useState<FullProject | null>(initialSelectedProject || null);
 
@@ -2036,7 +2053,7 @@ function ProjectsPage({ onBack, onViewProject, initialSelectedProject }: { onBac
           <ProjectDetailPage project={selectedProject} onBack={() => {
             setSelectedProject(null);
             window.history.pushState(null, "", "/portfolio");
-          }} />
+          }} onViewCaseStudy={onViewCaseStudy} />
         </>
       ) : (
         // Projects List View
@@ -2083,6 +2100,7 @@ export default function App() {
   const [showContent, setShowContent] = useState(false);
   const [currentPage, setCurrentPage] = useState("home");
   const [selectedProject, setSelectedProject] = useState<FullProject | null>(null);
+  const [caseStudyProject, setCaseStudyProject] = useState<FullProject | null>(null);
 
   // Initialize from URL on mount
   useEffect(() => {
@@ -2097,7 +2115,21 @@ export default function App() {
     // Handle case study routes like /trq-studio
     if (path === '/trq-studio' || path === '/trq-studio/') {
       setCurrentPage("case-study");
+      const project = ALL_PROJECTS.find(p => createSlug(p.title) === 'trq-studio');
+      if (project) setCaseStudyProject(project);
       return;
+    }
+
+    // Handle generic case study routes like /case-study/project-slug
+    const caseStudyMatch = path.match(/^\/case-study\/([^/]+)\/?$/);
+    if (caseStudyMatch) {
+      const slug = caseStudyMatch[1];
+      const project = ALL_PROJECTS.find(p => createSlug(p.title) === slug);
+      if (project) {
+        setCurrentPage("case-study");
+        setCaseStudyProject(project);
+        return;
+      }
     }
     
     // Handle project detail routes like /portfolio/project-name
@@ -2138,8 +2170,14 @@ export default function App() {
       // Navigate to /portfolio
       window.history.pushState(null, "", "/portfolio");
     } else if (page === "case-study") {
-      // Navigate to /trq-studio
-      window.history.pushState(null, "", "/trq-studio");
+      // Navigate to /case-study/slug
+      if (project) {
+        const slug = createSlug(project.title);
+        window.history.pushState(null, "", `/case-study/${slug}`);
+        setCaseStudyProject(project);
+      } else {
+        window.history.pushState(null, "", "/trq-studio");
+      }
     } else if (page === "home") {
       // Reset URL to home
       window.history.pushState(null, "", "/");
@@ -2170,15 +2208,15 @@ export default function App() {
               </motion.div>
             ) : currentPage === "projects" ? (
               <motion.div key="projects" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <ProjectsPage onBack={() => handleNavigate("home")} onViewProject={(project) => handleNavigate("project-detail", project)} initialSelectedProject={selectedProject} />
+                <ProjectsPage onBack={() => handleNavigate("home")} onViewProject={(project) => handleNavigate("project-detail", project)} initialSelectedProject={selectedProject} onViewCaseStudy={(project) => handleNavigate("case-study", project)} />
               </motion.div>
             ) : currentPage === "project-detail" && selectedProject ? (
               <motion.div key="project-detail" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <ProjectDetailPage project={selectedProject} onBack={() => handleNavigate("projects")} />
+                <ProjectDetailPage project={selectedProject} onBack={() => handleNavigate("projects")} onViewCaseStudy={(project) => handleNavigate("case-study", project)} />
               </motion.div>
-            ) : currentPage === "case-study" ? (
+            ) : currentPage === "case-study" && caseStudyProject ? (
               <motion.div key="case-study" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <CaseStudyPage onBack={() => handleNavigate("home")} />
+                <CaseStudyPage project={caseStudyProject} onBack={() => handleNavigate("home")} />
               </motion.div>
             ) : null}
           </AnimatePresence>
