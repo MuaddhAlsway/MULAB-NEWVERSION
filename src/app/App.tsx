@@ -2184,8 +2184,8 @@ function PortfolioPage({ onViewProjects, onProjectClick }: { onViewProjects: () 
       <MarqueeSection />
       
       <FeaturedClients />
-      <ProductionProjectsSection onProjectClick={onProjectClick} />
       <PortfolioProjectsSection onViewAll={onViewProjects} onProjectClick={onProjectClick} />
+      <ProductionProjectsSection onProjectClick={onProjectClick} />
       <SkillsSection />
       <ExperienceSection />
       <StorySection />
