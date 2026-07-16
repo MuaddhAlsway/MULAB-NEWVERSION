@@ -805,6 +805,107 @@ function MarqueeSection() {
   );
 }
 
+function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (project: FullProject) => void }) {
+  const productionProjects = [
+    {
+      id: 4,
+      name: 'MUCOMMERANCE',
+      description: 'Full-stack luxury fashion e-commerce platform',
+      tech: ['Cloudflare Workers', 'D1', 'React 18', 'Stripe', 'Shippo'],
+      image: '/Projects/mockup/MUCOMMERANCE (2).png',
+      stats: { endpoints: '95+', tables: '16', pages: '14' }
+    },
+    {
+      id: 5,
+      name: 'Nova-Ecommerance-Platform',
+      description: 'Production e-commerce platform with logistics system',
+      tech: ['Hono', 'Turso', 'React', 'Stripe', 'Shippo'],
+      image: '/Projects/mockup/nova.png',
+      stats: { endpoints: '20+', tables: '20', carriers: '40+' }
+    }
+  ];
+
+  return (
+    <section className="py-24 md:py-36 bg-black">
+      <div className="px-6 md:px-12 lg:px-20 mb-12">
+        <FadeIn>
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Independent Work</p>
+              <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
+                Production <span className="text-white/[0.7]">Projects</span>
+              </h2>
+              <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest max-w-2xl">
+                Production-grade platforms built independently — fully functional, deployed, and ready for real-world users
+              </p>
+            </div>
+          </div>
+        </FadeIn>
+      </div>
+
+      <div className="px-6 md:px-12 lg:px-20 grid grid-cols-1 md:grid-cols-2 gap-6">
+        {productionProjects.map((project, i) => (
+          <motion.div
+            key={project.id}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="group cursor-pointer"
+            onClick={() => {
+              const fullProject = ALL_PROJECTS.find(p => p.id === project.id);
+              if (fullProject) onProjectClick?.(fullProject);
+            }}
+          >
+            <div className="relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300">
+              {/* Image */}
+              <div className="relative overflow-hidden h-64 md:h-80 bg-neutral-900">
+                <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
+                  <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">Production Ready</span>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="p-6 md:p-8">
+                <div className="flex items-start justify-between mb-4">
+                  <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
+                    {project.name}
+                  </h3>
+                </div>
+
+                <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6">
+                  {project.description}
+                </p>
+
+                {/* Stats Row */}
+                <div className="flex gap-6 mb-6 pb-6 border-b border-white/[0.06]">
+                  {Object.entries(project.stats).map(([key, value]) => (
+                    <div key={key}>
+                      <div className="font-display text-white text-xl font-bold">{value}</div>
+                      <div className="font-mono text-[9px] text-white/30 uppercase tracking-widest">{key}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Tech Stack */}
+                <div className="flex flex-wrap gap-2">
+                  {project.tech.map((t) => (
+                    <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: () => void; onProjectClick?: (project: FullProject) => void }) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -2083,6 +2184,7 @@ function PortfolioPage({ onViewProjects, onProjectClick }: { onViewProjects: () 
       <MarqueeSection />
       
       <FeaturedClients />
+      <ProductionProjectsSection onProjectClick={onProjectClick} />
       <PortfolioProjectsSection onViewAll={onViewProjects} onProjectClick={onProjectClick} />
       <SkillsSection />
       <ExperienceSection />
