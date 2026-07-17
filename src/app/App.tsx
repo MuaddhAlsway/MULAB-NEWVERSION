@@ -828,7 +828,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       name: 'Nexus Network Platform',
       description: 'Full-stack enterprise-grade LinkedIn clone with real-time messaging, analytics, courses, jobs, and admin panel',
       tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
-      image: '/Projects/mockup/Linkeidn.png',
+      image: '/Projects/mockup/Nexus.png',
       stats: { endpoints: '80+', tables: '30+', realtime: 'WS' }
     }
   ];
