@@ -839,15 +839,10 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
     }
   ];
 
-  const numCards = productionProjects.length;
-  const cardWidth = 55;
-  const gap = 3;
-  const totalWidth = numCards * (cardWidth + gap);
-  const maxTranslate = totalWidth - 100;
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${maxTranslate}vw`]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-130vw"]);
 
   return (
-    <section ref={sectionRef} className="bg-black" style={{ height: `${numCards * 100 + 50}vh` }}>
+    <section ref={sectionRef} className="bg-black" style={{ height: "400vh" }}>
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* Header */}
         <div className="px-6 md:px-12 lg:px-20 mb-8">
@@ -867,7 +862,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
         </div>
 
         {/* Horizontal Scroll Track */}
-        <motion.div style={{ x }} className="flex gap-6 pl-6 md:pl-12 lg:pl-20">
+        <motion.div style={{ x }} className="flex gap-6 pl-6 md:pl-12 lg:pl-20 will-change-transform">
           {productionProjects.map((project, i) => (
             <div
               key={project.id}
@@ -942,14 +937,10 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
   });
 
   const numCards = 5;
-  const cardWidth = 42;
-  const gap = 2;
-  const totalWidth = numCards * (cardWidth + gap);
-  const maxTranslate = totalWidth - 100;
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${maxTranslate}vw`]);
+  const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-180vw"]);
 
   return (
-    <section id="work" ref={sectionRef} className="bg-black" style={{ height: `${numCards * 100 + 50}vh` }}>
+    <section id="work" ref={sectionRef} className="bg-black" style={{ height: "500vh" }}>
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* Header */}
         <div className="px-6 md:px-12 lg:px-20 mb-8">
@@ -967,7 +958,7 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
         </div>
 
         {/* Horizontal Scroll Track */}
-        <motion.div style={{ x }} className="flex gap-5 pl-6 md:pl-12 lg:pl-20">
+        <motion.div style={{ x }} className="flex gap-5 pl-6 md:pl-12 lg:pl-20 will-change-transform">
           {ALL_PROJECTS.slice(0, numCards).map((project, i) => (
             <div
               key={project.id}
