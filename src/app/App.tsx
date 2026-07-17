@@ -847,7 +847,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${maxTranslate}vw`]);
 
   return (
-    <section ref={sectionRef} className="bg-black" style={{ height: `${numCards * 80}vh` }}>
+    <section ref={sectionRef} className="bg-black" style={{ height: `${numCards * 100 + 50}vh` }}>
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* Header */}
         <div className="px-6 md:px-12 lg:px-20 mb-8">
@@ -949,7 +949,7 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
   const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${maxTranslate}vw`]);
 
   return (
-    <section id="work" ref={sectionRef} className="bg-black" style={{ height: `${numCards * 70}vh` }}>
+    <section id="work" ref={sectionRef} className="bg-black" style={{ height: `${numCards * 100 + 50}vh` }}>
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* Header */}
         <div className="px-6 md:px-12 lg:px-20 mb-8">
