@@ -110,6 +110,19 @@ Every component was designed with security as a foundational principle, implemen
         content: 'The platform is optimized for desktop, tablet, and mobile devices, ensuring accessibility across all screen sizes.',
       },
     ],
+    screenshots: {
+      title: 'Screenshots',
+      subtitle: 'A visual walkthrough of the platform',
+      images: [
+        { src: '/Projects/FeatureClientProject/td/Home.png', alt: 'TD Logistics Homepage' },
+        { src: '/Projects/FeatureClientProject/td/2.png', alt: 'Shipment Tracking Page' },
+        { src: '/Projects/FeatureClientProject/td/3.png', alt: 'Services Overview' },
+        { src: '/Projects/FeatureClientProject/td/4.png', alt: 'Quote Request Form' },
+        { src: '/Projects/FeatureClientProject/td/5.png', alt: 'Admin Dashboard' },
+        { src: '/Projects/FeatureClientProject/td/6.png', alt: 'Blog & News Section' },
+        { src: '/Projects/FeatureClientProject/td/7.png', alt: 'Contact & Support Page' },
+      ],
+    },
     results: [
       {
         title: 'Enhanced Customer Experience',
