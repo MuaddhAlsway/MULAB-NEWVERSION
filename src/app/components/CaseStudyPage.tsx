@@ -1140,14 +1140,10 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
 }
 
 function ScreenshotsSection({ project }: { project: CaseStudyProject }) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-50%"]);
-
   const screenshots = tdLogisticsCaseStudy.sections.screenshots;
 
   return (
-    <section ref={ref} className="py-12 md:py-20 border-t border-white/[0.04] overflow-hidden" style={{ background: "#050505" }}>
+    <section className="py-12 md:py-20 border-t border-white/[0.04] overflow-hidden" style={{ background: "#050505" }}>
       <FadeIn className="mb-8 px-6 md:px-12 lg:px-20 max-w-6xl">
         <SectionLabel text="Visual Walkthrough" />
         <SectionTitle>{screenshots.title}</SectionTitle>
@@ -1156,41 +1152,47 @@ function ScreenshotsSection({ project }: { project: CaseStudyProject }) {
         </p>
       </FadeIn>
 
-      {/* Horizontal scroll gallery */}
-      <div className="relative overflow-hidden">
-        <motion.div style={{ x }} className="flex gap-6 px-6 md:px-12 lg:px-20">
-          {screenshots.images.map((img, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: false, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-shrink-0 w-[85vw] md:w-[60vw] lg:w-[45vw] group"
-            >
-              <div className="relative rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02] shadow-2xl shadow-black/40 hover:border-white/[0.15] transition-all duration-500">
-                <div className="relative overflow-hidden">
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
-                    draggable={false}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                {/* Image caption */}
-                <div className="px-4 py-3 border-t border-white/[0.04] bg-white/[0.01]">
-                  <p className="font-mono text-[10px] text-white/25 uppercase tracking-widest">{img.alt}</p>
+      {/* Infinite scroll gallery */}
+      <div className="relative w-full overflow-hidden">
+        <motion.div
+          className="flex gap-5 px-6 md:px-12 lg:px-20"
+          animate={{ x: [0, -(screenshots.images.length * 450 + 20 * screenshots.images.length)] }}
+          transition={{
+            duration: screenshots.images.length * 8,
+            repeat: Infinity,
+            ease: 'linear',
+            repeatType: 'loop'
+          }}
+        >
+          {[...Array(4)].map((_, setIndex) =>
+            screenshots.images.map((img, i) => (
+              <div
+                key={`${setIndex}-${i}`}
+                className="flex-shrink-0 w-[85vw] md:w-[60vw] lg:w-[45vw] group"
+              >
+                <div className="relative rounded-xl overflow-hidden border border-white/[0.06] bg-white/[0.02] shadow-2xl shadow-black/40 hover:border-white/[0.15] transition-all duration-500">
+                  <div className="relative overflow-hidden">
+                    <img
+                      src={img.src}
+                      alt={img.alt}
+                      className="w-full h-auto object-cover transition-transform duration-700 ease-out group-hover:scale-[1.02]"
+                      draggable={false}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  </div>
+                  <div className="px-4 py-3 border-t border-white/[0.04] bg-white/[0.01]">
+                    <p className="font-mono text-[10px] text-white/25 uppercase tracking-widest">{img.alt}</p>
+                  </div>
                 </div>
               </div>
-            </motion.div>
-          ))}
+            ))
+          )}
         </motion.div>
       </div>
 
       <FadeIn delay={0.2} className="text-center mt-6 px-6">
         <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/15">
-          Scroll to explore — {screenshots.images.length} screens
+          {screenshots.images.length} screens — auto-scrolling
         </p>
       </FadeIn>
     </section>
