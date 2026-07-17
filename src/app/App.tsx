@@ -822,6 +822,14 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       tech: ['Hono', 'Turso', 'React', 'Stripe', 'Shippo'],
       image: '/Projects/mockup/nova.png',
       stats: { endpoints: '20+', tables: '20', carriers: '40+' }
+    },
+    {
+      id: 6,
+      name: 'Nexus Network Platform',
+      description: 'Full-stack enterprise-grade LinkedIn clone with real-time messaging, analytics, courses, jobs, and admin panel',
+      tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
+      image: '/Projects/mockup/Linkeidn.png',
+      stats: { endpoints: '80+', tables: '30+', realtime: 'WS' }
     }
   ];
 
