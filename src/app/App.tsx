@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence, useInView } from "motion/react";
 import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
 import { FeaturedClients } from "./components/FeaturedClients";
@@ -806,12 +806,6 @@ function MarqueeSection() {
 }
 
 function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (project: FullProject) => void }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"]
-  });
-
   const productionProjects = [
     {
       id: 4,
@@ -839,161 +833,160 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
     }
   ];
 
-  const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-130vw"]);
-
   return (
-    <section ref={sectionRef} className="bg-black" style={{ height: "400vh" }}>
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-        {/* Header */}
-        <div className="px-6 md:px-12 lg:px-20 mb-8">
-          <FadeIn>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Independent Work</p>
-                <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
-                  Production <span className="text-white/[0.7]">Projects</span>
-                </h2>
-                <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest max-w-2xl">
-                  Production-grade platforms built independently — fully functional, deployed, and ready for real-world users
-                </p>
-              </div>
+    <section className="py-24 md:py-36 bg-black overflow-hidden">
+      <div className="px-6 md:px-12 lg:px-20 mb-12">
+        <FadeIn>
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Independent Work</p>
+              <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
+                Production <span className="text-white/[0.7]">Projects</span>
+              </h2>
+              <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest max-w-2xl">
+                Production-grade platforms built independently — fully functional, deployed, and ready for real-world users
+              </p>
             </div>
-          </FadeIn>
-        </div>
-
-        {/* Horizontal Scroll Track */}
-        <motion.div style={{ x }} className="flex gap-6 pl-6 md:pl-12 lg:pl-20 will-change-transform">
-          {productionProjects.map((project, i) => (
-            <div
-              key={project.id}
-              className="flex-shrink-0 w-[85vw] md:w-[55vw] lg:w-[48vw] cursor-pointer"
-              onClick={() => {
-                const fullProject = ALL_PROJECTS.find(p => p.id === project.id);
-                if (fullProject) onProjectClick?.(fullProject);
-              }}
-            >
-              <div className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 h-full">
-                {/* Image */}
-                <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
-                  <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
-                    <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">Production Ready</span>
-                  </div>
-                </div>
-
-                {/* Content */}
-                <div className="p-6 md:p-8">
-                  <div className="flex items-start justify-between mb-4">
-                    <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
-                      {project.name}
-                    </h3>
-                  </div>
-
-                  <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6">
-                    {project.description}
-                  </p>
-
-                  {/* Stats Row */}
-                  <div className="flex gap-6 mb-6 pb-6 border-b border-white/[0.06]">
-                    {Object.entries(project.stats).map(([key, value]) => (
-                      <div key={key}>
-                        <div className="font-display text-white text-xl font-bold">{value}</div>
-                        <div className="font-mono text-[9px] text-white/30 uppercase tracking-widest">{key}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Tech Stack */}
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((t) => (
-                      <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Scroll Progress */}
-        <div className="px-6 md:px-12 lg:px-20 mt-8">
-          <div className="h-[1px] bg-white/[0.06] w-full">
-            <motion.div className="h-full bg-white/20 origin-left" style={{ scaleX: scrollYProgress }} />
           </div>
-        </div>
+        </FadeIn>
+      </div>
+
+      <div className="relative w-full overflow-hidden">
+        <motion.div
+          className="flex gap-6 px-6 md:px-12 lg:px-20"
+          animate={{ x: [0, -(productionProjects.length * 520 + 24 * productionProjects.length)] }}
+          transition={{
+            duration: 40,
+            repeat: Infinity,
+            ease: 'linear',
+            repeatType: 'loop'
+          }}
+        >
+          {[...Array(4)].map((_, setIndex) =>
+            productionProjects.map((project) => (
+              <div
+                key={`${project.id}-${setIndex}`}
+                className="flex-shrink-0 w-[82vw] md:w-[52vw] lg:w-[48vw]"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 h-full cursor-pointer"
+                  onClick={() => {
+                    const fullProject = ALL_PROJECTS.find(p => p.id === project.id);
+                    if (fullProject) onProjectClick?.(fullProject);
+                  }}
+                >
+                  {/* Image */}
+                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
+                    <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                    <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
+                      <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">Production Ready</span>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6 md:p-8">
+                    <div className="flex items-start justify-between mb-4">
+                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
+                        {project.name}
+                      </h3>
+                    </div>
+
+                    <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6">
+                      {project.description}
+                    </p>
+
+                    {/* Stats Row */}
+                    <div className="flex gap-6 mb-6 pb-6 border-b border-white/[0.06]">
+                      {Object.entries(project.stats).map(([key, value]) => (
+                        <div key={key}>
+                          <div className="font-display text-white text-xl font-bold">{value}</div>
+                          <div className="font-mono text-[9px] text-white/30 uppercase tracking-widest">{key}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Tech Stack */}
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.map((t) => (
+                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            ))
+          )}
+        </motion.div>
       </div>
     </section>
   );
 }
 
 function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: () => void; onProjectClick?: (project: FullProject) => void }) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"]
-  });
-
-  const numCards = 5;
-  const x = useTransform(scrollYProgress, [0, 1], ["0vw", "-180vw"]);
-
   return (
-    <section id="work" ref={sectionRef} className="bg-black" style={{ height: "500vh" }}>
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-        {/* Header */}
-        <div className="px-6 md:px-12 lg:px-20 mb-8">
-          <FadeIn>
-            <div className="flex items-end justify-between">
-              <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Selected Work</p>
-                <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Projects</h2>
-              </div>
-              <button onClick={onViewAll} className="hidden md:flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/30 hover:text-white transition-colors">
-                All projects <ArrowUpRight size={12} />
-              </button>
+    <section id="work" className="py-24 md:py-36 bg-black overflow-hidden">
+      <div className="px-6 md:px-12 lg:px-20 mb-12">
+        <FadeIn>
+          <div className="flex items-end justify-between">
+            <div>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Selected Work</p>
+              <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Projects</h2>
             </div>
-          </FadeIn>
-        </div>
-
-        {/* Horizontal Scroll Track */}
-        <motion.div style={{ x }} className="flex gap-5 pl-6 md:pl-12 lg:pl-20 will-change-transform">
-          {ALL_PROJECTS.slice(0, numCards).map((project, i) => (
-            <div
-              key={project.id}
-              className="flex-shrink-0 w-[82vw] md:w-[42vw] lg:w-[36vw] cursor-pointer"
-              onClick={() => onProjectClick?.(project)}
-            >
-              <div className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] h-full transition-all duration-300">
-                <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
-                  <img src={project.image} alt={project.alt} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
-                </div>
-                <div className="p-5 md:p-6">
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
-                    <span className="font-mono text-[10px] text-white/25">{project.year}</span>
-                  </div>
-                  <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4">{project.category}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.slice(0, 3).map((t) => (
-                      <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">{t}</span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Scroll Progress */}
-        <div className="px-6 md:px-12 lg:px-20 mt-8">
-          <div className="h-[1px] bg-white/[0.06] w-full">
-            <motion.div className="h-full bg-white/20 origin-left" style={{ scaleX: scrollYProgress }} />
+            <button onClick={onViewAll} className="hidden md:flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/30 hover:text-white transition-colors">
+              All projects <ArrowUpRight size={12} />
+            </button>
           </div>
-        </div>
+        </FadeIn>
+      </div>
+
+      <div className="relative w-full overflow-hidden">
+        <motion.div
+          className="flex gap-5 px-6 md:px-12 lg:px-20"
+          animate={{ x: [0, -(5 * 400 + 20 * 5)] }}
+          transition={{
+            duration: 50,
+            repeat: Infinity,
+            ease: 'linear',
+            repeatType: 'loop'
+          }}
+        >
+          {[...Array(4)].map((_, setIndex) =>
+            ALL_PROJECTS.slice(0, 5).map((project) => (
+              <div
+                key={`${project.id}-${setIndex}`}
+                className="flex-shrink-0 w-[82vw] md:w-[44vw] lg:w-[36vw]"
+              >
+                <motion.div
+                  whileHover={{ scale: 1.02 }}
+                  className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] h-full transition-all duration-300 cursor-pointer"
+                  onClick={() => onProjectClick?.(project)}
+                >
+                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
+                    <img src={project.image} alt={project.alt} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                    <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
+                  </div>
+                  <div className="p-5 md:p-6">
+                    <div className="flex items-start justify-between mb-3">
+                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
+                      <span className="font-mono text-[10px] text-white/25">{project.year}</span>
+                    </div>
+                    <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4">{project.category}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {project.tech.slice(0, 3).map((t) => (
+                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">{t}</span>
+                      ))}
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            ))
+          )}
+        </motion.div>
       </div>
     </section>
   );
