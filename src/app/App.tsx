@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState, useCallback } from "react";
-import { motion, AnimatePresence, useInView } from "motion/react";
+import { motion, AnimatePresence, useInView, useScroll, useTransform } from "motion/react";
 import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
 import { FeaturedClients } from "./components/FeaturedClients";
@@ -806,6 +806,12 @@ function MarqueeSection() {
 }
 
 function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (project: FullProject) => void }) {
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"]
+  });
+
   const productionProjects = [
     {
       id: 4,
@@ -833,181 +839,139 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
     }
   ];
 
+  const numCards = productionProjects.length;
+  const cardWidth = 55;
+  const gap = 3;
+  const totalWidth = numCards * (cardWidth + gap);
+  const maxTranslate = totalWidth - 100;
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${maxTranslate}vw`]);
+
   return (
-    <section className="py-24 md:py-36 bg-black">
-      <div className="px-6 md:px-12 lg:px-20 mb-12">
-        <FadeIn>
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Independent Work</p>
-              <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
-                Production <span className="text-white/[0.7]">Projects</span>
-              </h2>
-              <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest max-w-2xl">
-                Production-grade platforms built independently — fully functional, deployed, and ready for real-world users
-              </p>
-            </div>
-          </div>
-        </FadeIn>
-      </div>
-
-      <div className="px-6 md:px-12 lg:px-20 grid grid-cols-1 md:grid-cols-2 gap-6">
-        {productionProjects.map((project, i) => (
-          <motion.div
-            key={project.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: false, margin: "-100px" }}
-            transition={{ duration: 0.7, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
-            className="group cursor-pointer"
-            onClick={() => {
-              const fullProject = ALL_PROJECTS.find(p => p.id === project.id);
-              if (fullProject) onProjectClick?.(fullProject);
-            }}
-          >
-            <div className="relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300">
-              {/* Image */}
-              <div className="relative overflow-hidden h-64 md:h-80 bg-neutral-900">
-                <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
-                  <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">Production Ready</span>
-                </div>
-              </div>
-
-              {/* Content */}
-              <div className="p-6 md:p-8">
-                <div className="flex items-start justify-between mb-4">
-                  <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
-                    {project.name}
-                  </h3>
-                </div>
-
-                <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6">
-                  {project.description}
+    <section ref={sectionRef} className="bg-black" style={{ height: `${numCards * 80}vh` }}>
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        {/* Header */}
+        <div className="px-6 md:px-12 lg:px-20 mb-8">
+          <FadeIn>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Independent Work</p>
+                <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
+                  Production <span className="text-white/[0.7]">Projects</span>
+                </h2>
+                <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest max-w-2xl">
+                  Production-grade platforms built independently — fully functional, deployed, and ready for real-world users
                 </p>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
 
-                {/* Stats Row */}
-                <div className="flex gap-6 mb-6 pb-6 border-b border-white/[0.06]">
-                  {Object.entries(project.stats).map(([key, value]) => (
-                    <div key={key}>
-                      <div className="font-display text-white text-xl font-bold">{value}</div>
-                      <div className="font-mono text-[9px] text-white/30 uppercase tracking-widest">{key}</div>
-                    </div>
-                  ))}
+        {/* Horizontal Scroll Track */}
+        <motion.div style={{ x }} className="flex gap-6 pl-6 md:pl-12 lg:pl-20">
+          {productionProjects.map((project, i) => (
+            <div
+              key={project.id}
+              className="flex-shrink-0 w-[85vw] md:w-[55vw] lg:w-[48vw] cursor-pointer"
+              onClick={() => {
+                const fullProject = ALL_PROJECTS.find(p => p.id === project.id);
+                if (fullProject) onProjectClick?.(fullProject);
+              }}
+            >
+              <div className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 h-full">
+                {/* Image */}
+                <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
+                  <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
+                    <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">Production Ready</span>
+                  </div>
                 </div>
 
-                {/* Tech Stack */}
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((t) => (
-                    <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
-                      {t}
-                    </span>
-                  ))}
+                {/* Content */}
+                <div className="p-6 md:p-8">
+                  <div className="flex items-start justify-between mb-4">
+                    <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
+                      {project.name}
+                    </h3>
+                  </div>
+
+                  <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6">
+                    {project.description}
+                  </p>
+
+                  {/* Stats Row */}
+                  <div className="flex gap-6 mb-6 pb-6 border-b border-white/[0.06]">
+                    {Object.entries(project.stats).map(([key, value]) => (
+                      <div key={key}>
+                        <div className="font-display text-white text-xl font-bold">{value}</div>
+                        <div className="font-mono text-[9px] text-white/30 uppercase tracking-widest">{key}</div>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Tech Stack */}
+                  <div className="flex flex-wrap gap-2">
+                    {project.tech.map((t) => (
+                      <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </motion.div>
-        ))}
+          ))}
+        </motion.div>
+
+        {/* Scroll Progress */}
+        <div className="px-6 md:px-12 lg:px-20 mt-8">
+          <div className="h-[1px] bg-white/[0.06] w-full">
+            <motion.div className="h-full bg-white/20 origin-left" style={{ scaleX: scrollYProgress }} />
+          </div>
+        </div>
       </div>
     </section>
   );
 }
 
 function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: () => void; onProjectClick?: (project: FullProject) => void }) {
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [canScrollLeft, setCanScrollLeft] = useState(false);
-  const [canScrollRight, setCanScrollRight] = useState(true);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"]
+  });
 
-  const checkScroll = () => {
-    if (scrollContainerRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
-    }
-  };
-
-  useEffect(() => {
-    checkScroll();
-    const container = scrollContainerRef.current;
-    if (container) {
-      container.addEventListener("scroll", checkScroll);
-      window.addEventListener("resize", checkScroll);
-      return () => {
-        container.removeEventListener("scroll", checkScroll);
-        window.removeEventListener("resize", checkScroll);
-      };
-    }
-  }, []);
-
-  const scroll = (direction: "left" | "right") => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = 400;
-      scrollContainerRef.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
-      });
-    }
-  };
+  const numCards = 5;
+  const cardWidth = 42;
+  const gap = 2;
+  const totalWidth = numCards * (cardWidth + gap);
+  const maxTranslate = totalWidth - 100;
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", `-${maxTranslate}vw`]);
 
   return (
-    <section id="work" className="py-24 md:py-36 bg-black">
-      <div className="px-6 md:px-12 lg:px-20 mb-12">
-        <FadeIn>
-          <div className="flex items-end justify-between">
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Selected Work</p>
-              <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Projects</h2>
+    <section id="work" ref={sectionRef} className="bg-black" style={{ height: `${numCards * 70}vh` }}>
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        {/* Header */}
+        <div className="px-6 md:px-12 lg:px-20 mb-8">
+          <FadeIn>
+            <div className="flex items-end justify-between">
+              <div>
+                <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Selected Work</p>
+                <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Projects</h2>
+              </div>
+              <button onClick={onViewAll} className="hidden md:flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/30 hover:text-white transition-colors">
+                All projects <ArrowUpRight size={12} />
+              </button>
             </div>
-            <button onClick={onViewAll} className="hidden md:flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/30 hover:text-white transition-colors">
-              All projects <ArrowUpRight size={12} />
-            </button>
-          </div>
-        </FadeIn>
-      </div>
+          </FadeIn>
+        </div>
 
-      {/* Scroll Container with Controls */}
-      <div className="relative group">
-        {/* Left Scroll Button */}
-        {canScrollLeft && (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => scroll("left")}
-            className="absolute left-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-black/60 hover:bg-black border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 backdrop-blur-sm"
-          >
-            <ChevronLeft size={20} className="text-white/60 group-hover:text-white transition-colors" />
-          </motion.button>
-        )}
-
-        {/* Right Scroll Button */}
-        {canScrollRight && (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => scroll("right")}
-            className="absolute right-0 top-1/2 -translate-y-1/2 z-40 hidden md:flex items-center justify-center w-12 h-12 rounded-full bg-black/60 hover:bg-black border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 backdrop-blur-sm"
-          >
-            <ArrowUpRight size={20} className="text-white/60 group-hover:text-white transition-colors rotate-45" />
-          </motion.button>
-        )}
-
-        {/* Scrollable Container */}
-        <div
-          ref={scrollContainerRef}
-          className="flex gap-5 overflow-x-auto pb-8 px-6 md:px-12 lg:px-20 snap-x snap-mandatory scroll-smooth"
-          style={{ scrollbarWidth: "none", WebkitOverflowScrolling: "touch" }}
-        >
-          {ALL_PROJECTS.slice(0, 5).map((project, i) => (
-            <motion.div
+        {/* Horizontal Scroll Track */}
+        <motion.div style={{ x }} className="flex gap-5 pl-6 md:pl-12 lg:pl-20">
+          {ALL_PROJECTS.slice(0, numCards).map((project, i) => (
+            <div
               key={project.id}
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: false, margin: "-100px" }}
-              transition={{ duration: 0.7, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
-              className="flex-shrink-0 w-[82vw] md:w-[44vw] lg:w-[36vw] snap-start cursor-pointer"
+              className="flex-shrink-0 w-[82vw] md:w-[42vw] lg:w-[36vw] cursor-pointer"
               onClick={() => onProjectClick?.(project)}
             >
               <div className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] h-full transition-all duration-300">
@@ -1029,14 +993,16 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
                   </div>
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </div>
-      </div>
+        </motion.div>
 
-      {/* Scroll Indicator for Mobile */}
-      <div className="flex md:hidden items-center justify-center mt-6">
-        <p className="font-mono text-[10px] text-white/30">← Scroll for more →</p>
+        {/* Scroll Progress */}
+        <div className="px-6 md:px-12 lg:px-20 mt-8">
+          <div className="h-[1px] bg-white/[0.06] w-full">
+            <motion.div className="h-full bg-white/20 origin-left" style={{ scaleX: scrollYProgress }} />
+          </div>
+        </div>
       </div>
     </section>
   );
