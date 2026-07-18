@@ -114,13 +114,13 @@ Every component was designed with security as a foundational principle, implemen
       title: 'Screenshots',
       subtitle: 'A visual walkthrough of the platform',
       images: [
-        { src: '/Projects/FeatureClientProject/td/Home.png', alt: 'TD Logistics Homepage' },
-        { src: '/Projects/FeatureClientProject/td/2.png', alt: 'Shipment Tracking Page' },
-        { src: '/Projects/FeatureClientProject/td/3.png', alt: 'Services Overview' },
-        { src: '/Projects/FeatureClientProject/td/4.png', alt: 'Quote Request Form' },
-        { src: '/Projects/FeatureClientProject/td/5.png', alt: 'Admin Dashboard' },
-        { src: '/Projects/FeatureClientProject/td/6.png', alt: 'Blog & News Section' },
-        { src: '/Projects/FeatureClientProject/td/7.png', alt: 'Contact & Support Page' },
+        { src: '/Projects/screenshot/FeatureClientProject/td/Home.png', alt: 'TD Logistics Homepage' },
+        { src: '/Projects/screenshot/FeatureClientProject/td/2.png', alt: 'Shipment Tracking Page' },
+        { src: '/Projects/screenshot/FeatureClientProject/td/3.png', alt: 'Services Overview' },
+        { src: '/Projects/screenshot/FeatureClientProject/td/4.png', alt: 'Quote Request Form' },
+        { src: '/Projects/screenshot/FeatureClientProject/td/5.png', alt: 'Admin Dashboard' },
+        { src: '/Projects/screenshot/FeatureClientProject/td/6.png', alt: 'Blog & News Section' },
+        { src: '/Projects/screenshot/FeatureClientProject/td/7.png', alt: 'Contact & Support Page' },
       ],
     },
     results: [
@@ -214,6 +214,120 @@ Every component was designed with security as a foundational principle, implemen
         title: 'AI-Powered Support',
         content: 'Chatbots and AI-driven customer support for 24/7 assistance.',
       },
+    ],
+  },
+};
+
+export interface ScreenshotImage {
+  src: string;
+  alt: string;
+}
+
+export interface ScreenshotData {
+  title: string;
+  subtitle: string;
+  images: ScreenshotImage[];
+}
+
+export const projectScreenshots: Record<string, ScreenshotData> = {
+  'TD Logistics': tdLogisticsCaseStudy.sections.screenshots,
+  "Writer's Journey": {
+    title: 'Screenshots',
+    subtitle: 'A visual walkthrough of the platform',
+    images: [
+      { src: '/Projects/screenshot/FeatureClientProject/writerjouney/1.png', alt: 'Homepage' },
+    ],
+  },
+  'TRQ Studio': {
+    title: 'Screenshots',
+    subtitle: 'A visual walkthrough of the platform',
+    images: [
+      { src: '/Projects/screenshot/FeatureClientProject/trqstudio/1.png', alt: 'Homepage' },
+      { src: '/Projects/screenshot/FeatureClientProject/trqstudio/2.png', alt: 'Portfolio Section' },
+      { src: '/Projects/screenshot/FeatureClientProject/trqstudio/3.png', alt: 'Project Gallery' },
+      { src: '/Projects/screenshot/FeatureClientProject/trqstudio/4.png', alt: 'CMS Dashboard' },
+      { src: '/Projects/screenshot/FeatureClientProject/trqstudio/5.png', alt: 'Blog Management' },
+      { src: '/Projects/screenshot/FeatureClientProject/trqstudio/6.png', alt: 'Content Editor' },
+      { src: '/Projects/screenshot/FeatureClientProject/trqstudio/7.png', alt: 'Settings Panel' },
+    ],
+  },
+  'Mesaha Lakum': {
+    title: 'Screenshots',
+    subtitle: 'A visual walkthrough of the platform',
+    images: [
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/1.png', alt: 'Homepage' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/2.png', alt: 'Events Page' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/3.png', alt: 'Event Details' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/4.png', alt: 'Gallery' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/5.png', alt: 'Booking Form' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/6.png', alt: 'Admin Dashboard' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/7.png', alt: 'Content Management' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/8.png', alt: 'Contact Page' },
+      { src: '/Projects/screenshot/FeatureClientProject/lakumartspace/9.png', alt: 'Footer & Navigation' },
+    ],
+  },
+  'MUCOMMERANCE': {
+    title: 'Screenshots',
+    subtitle: 'A visual walkthrough of the platform',
+    images: [
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/1.png', alt: 'Homepage' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/2.png', alt: 'Product Catalog' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/3.png', alt: 'Product Details' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/4.png', alt: 'Shopping Cart' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/5.png', alt: 'Checkout Flow' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/6.png', alt: 'User Account' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/7.png', alt: 'Order History' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/8.png', alt: 'Wishlist' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/9.png', alt: 'Admin Dashboard' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/10.png', alt: 'Product Management' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/11.png', alt: 'Order Management' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/12.png', alt: 'Customer Management' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/13.png', alt: 'Analytics' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/14.png', alt: 'Shipping Integration' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/15.png', alt: 'Payment Processing' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/16.png', alt: 'Content Management' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/17.png', alt: 'Audit Logs' },
+      { src: '/Projects/screenshot/ProductionProjects/MUcommarance/18.png', alt: 'Settings' },
+    ],
+  },
+  'Nova-Ecommerance-Platform': {
+    title: 'Screenshots',
+    subtitle: 'A visual walkthrough of the platform',
+    images: [
+      { src: '/Projects/screenshot/ProductionProjects/Nova/1.png', alt: 'Homepage' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/2.png', alt: 'Product Catalog' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/3.png', alt: 'Product Details' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/4.png', alt: 'Shopping Cart' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/5.png', alt: 'Checkout' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/6.png', alt: 'User Account' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/7.png', alt: 'Order Tracking' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/8.png', alt: 'Admin Dashboard' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/9.png', alt: 'Product Management' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/10.png', alt: 'Inventory Management' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/11.png', alt: 'Fulfillment Pipeline' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/12.png', alt: 'Supplier Management' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/13.png', alt: 'Shipping Labels' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/14.png', alt: 'Returns & RMA' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/15.png', alt: 'Analytics' },
+      { src: '/Projects/screenshot/ProductionProjects/Nova/16.png', alt: 'Coupon System' },
+    ],
+  },
+  'Nexus Network Platform': {
+    title: 'Screenshots',
+    subtitle: 'A visual walkthrough of the platform',
+    images: [
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/1.png', alt: 'Login Page' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/2.png', alt: 'News Feed' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/3.png', alt: 'Post Creation' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/4.png', alt: 'Profile Page' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/5.png', alt: 'Messaging' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/6.png', alt: 'Network & Connections' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/7.png', alt: 'Job Board' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/8.png', alt: 'Events' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/9.png', alt: 'Courses' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/10.png', alt: 'Analytics' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/11.png', alt: 'Notifications' },
+      { src: '/Projects/screenshot/ProductionProjects/Networkplatform/12.png', alt: 'Admin Panel' },
     ],
   },
 };

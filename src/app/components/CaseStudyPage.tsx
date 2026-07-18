@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView, useMotionValue, useSpring as useSpringMotion, AnimatePresence } from "motion/react";
 import { ChevronLeft, ExternalLink, Github, Linkedin, ArrowUpRight, AlertTriangle, Lightbulb, Code2, TrendingUp, CheckCircle2, Rocket, ArrowDown, ChevronRight, Eye } from "lucide-react";
-import { tdLogisticsCaseStudy } from "../data/caseStudies";
+import { tdLogisticsCaseStudy, projectScreenshots } from "../data/caseStudies";
 
 /* ══════════════════════════════════════════════════════════════════════════════
    Types
@@ -1140,7 +1140,9 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
 }
 
 function ScreenshotsSection({ project }: { project: CaseStudyProject }) {
-  const screenshots = tdLogisticsCaseStudy.sections.screenshots;
+  const projectName = project.title || project.name || '';
+  const screenshots = projectScreenshots[projectName];
+  if (!screenshots) return null;
 
   return (
     <section className="py-12 md:py-20 border-t border-white/[0.04] overflow-hidden" style={{ background: "#050505" }}>
