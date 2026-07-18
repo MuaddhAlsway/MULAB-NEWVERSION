@@ -1182,9 +1182,6 @@ function ScreenshotsSection({ project }: { project: CaseStudyProject }) {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   </div>
-                  <div className="px-4 py-3 border-t border-white/[0.04] bg-white/[0.01]">
-                    <p className="font-mono text-[10px] text-white/25 uppercase tracking-widest">{img.alt}</p>
-                  </div>
                 </div>
               </div>
             ))
