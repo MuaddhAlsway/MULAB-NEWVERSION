@@ -4,6 +4,7 @@ import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, Chevr
 import { projects as importedProjects } from "./data/projects";
 import { FeaturedClients } from "./components/FeaturedClients";
 import { CaseStudyPage } from "./components/CaseStudyPage";
+import AboutPage from "./components/AboutPage";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -678,12 +679,16 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
     <motion.nav initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
       className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-500", scrolled ? "py-4" : "py-6")}>
       <div className={cn("mx-4 md:mx-8 px-6 py-3 rounded-2xl flex items-center justify-between transition-all duration-500", scrolled ? "backdrop-blur-xl bg-black/60 border border-white/[0.06]" : "bg-transparent border border-transparent")}>
-        <button onClick={() => onNavigate("home")} className="font-display font-bold text-white tracking-tight text-sm md:text-base" style={{ letterSpacing: "-0.02em" }}>MA</button>
+        <button onClick={() => onNavigate("home")} className="font-display font-bold text-white tracking-tight text-sm md:text-base" style={{ letterSpacing: "-0.02em" }}>MULAB</button>
 
         <div className="hidden md:flex items-center gap-8 font-mono text-[11px] uppercase tracking-[0.15em] text-white/50">
-          {!isProjects && ["Skills", "Experience", "Contact"].map((item) => (
+          {currentPage === "home" && ["Skills", "Experience", "Contact"].map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-white transition-colors duration-200">{item}</a>
           ))}
+          <button onClick={() => onNavigate("about")}
+            className={cn("hover:text-white transition-colors duration-200", currentPage === "about" ? "text-white" : "")}>
+            About
+          </button>
           <button onClick={() => onNavigate(isProjects ? "home" : "projects")}
             className={cn("hover:text-white transition-colors duration-200", isProjects ? "text-white" : "")}>
             {isProjects ? "← Home" : "Projects"}
@@ -707,8 +712,9 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
         {menuOpen && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
             className="md:hidden mx-4 mt-2 p-6 rounded-2xl bg-black/90 backdrop-blur-xl border border-white/[0.06] flex flex-col gap-5">
+            <button onClick={() => { onNavigate("about"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/70 hover:text-white transition-colors text-left">About</button>
             <button onClick={() => { onNavigate("projects"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/70 hover:text-white transition-colors text-left">Projects</button>
-            {["Skills", "Experience", "Contact"].map((item) => (
+            {currentPage === "home" && ["Skills", "Experience", "Contact"].map((item) => (
               <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="font-display text-xl font-semibold text-white/70 hover:text-white transition-colors">{item}</a>
             ))}
           </motion.div>
@@ -2172,6 +2178,12 @@ export default function App() {
       return;
     }
 
+    // Handle /about route
+    if (path === '/about' || path === '/about/') {
+      setCurrentPage("about");
+      return;
+    }
+
     // Handle case study routes like /trq-studio
     if (path === '/trq-studio' || path === '/trq-studio/') {
       setCurrentPage("case-study");
@@ -2229,6 +2241,9 @@ export default function App() {
     } else if (page === "projects") {
       // Navigate to /portfolio
       window.history.pushState(null, "", "/portfolio");
+    } else if (page === "about") {
+      // Navigate to /about
+      window.history.pushState(null, "", "/about");
     } else if (page === "case-study") {
       // Navigate to /case-study/slug
       if (project) {
@@ -2265,6 +2280,10 @@ export default function App() {
                   setCurrentPage("projects");
                   setSelectedProject(project);
                 }} />
+              </motion.div>
+            ) : currentPage === "about" ? (
+              <motion.div key="about" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+                <AboutPage />
               </motion.div>
             ) : currentPage === "projects" ? (
               <motion.div key="projects" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
