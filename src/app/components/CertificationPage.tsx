@@ -62,10 +62,10 @@ export default function CertificationPage({
               className="group flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors duration-200"
             >
               <ChevronLeft size={14} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
-              Back to About
+              Back to Home
             </button>
             <span className="hidden sm:block font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">
-              About — Certifications
+              Home — Certifications
             </span>
           </motion.div>
 
@@ -241,7 +241,7 @@ export default function CertificationPage({
             className="group flex items-center gap-3 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/30 px-7 py-4 transition-all duration-300 font-mono text-[11px] uppercase tracking-[0.2em]"
           >
             <ChevronLeft size={14} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
-            Back to About
+            Back to Home
           </button>
 
           <a

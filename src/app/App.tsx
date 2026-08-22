@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
-import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch, Award, ShieldCheck } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
-import { certifications, findCertificationBySlug } from "./data/certifications";
+import { certifications, findCertificationBySlug, type Certification } from "./data/certifications";
 import { FeaturedClients } from "./components/FeaturedClients";
 import { CaseStudyPage } from "./components/CaseStudyPage";
 import AboutPage from "./components/AboutPage";
@@ -474,6 +474,10 @@ const GLOBAL_STYLES = `
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-100%); }
+}
+@keyframes marquee-right {
+  from { transform: translateX(-33.3333%); }
+  to { transform: translateX(0); }
 }
 @keyframes float-orbit {
   from { transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg); }
@@ -1267,6 +1271,121 @@ function StorySection() {
             </FadeIn>
           ))}
         </div>
+      </div>
+    </section>
+  );
+}
+
+function CertificationCoverThumb({ cert }: { cert: Certification }) {
+  if (cert.coverType === "pdf") {
+    return (
+      <div className="absolute inset-0 pointer-events-none">
+        <object
+          data={`${cert.cover}#page=1&view=FitH&toolbar=0&navpanes=0&scrollbar=0&statusbar=0`}
+          type="application/pdf"
+          aria-label={`${cert.shortTitle} certificate cover`}
+          className="w-full h-full"
+        >
+          <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900">
+            <ShieldCheck size={28} className="text-white/20" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">CS50x Certificate</span>
+          </div>
+        </object>
+      </div>
+    );
+  }
+  return (
+    <img
+      src={cert.cover}
+      alt={`${cert.shortTitle} certificate`}
+      loading="lazy"
+      className="w-full h-full object-cover grayscale contrast-105 brightness-90 transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-[1.04]"
+    />
+  );
+}
+
+function CertificationsSection({ onOpenCertification }: { onOpenCertification?: (slug: string) => void }) {
+  const openCertification = (cert: Certification) => {
+    onOpenCertification?.(cert.slug);
+  };
+
+  const handleCertKeyDown = (e: React.KeyboardEvent, cert: Certification) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openCertification(cert);
+    }
+  };
+
+  const marqueeItems = [...certifications, ...certifications, ...certifications];
+
+  return (
+    <section className="py-24 md:py-36 bg-black border-t border-white/[0.04] overflow-hidden">
+      <div className="px-6 md:px-12 lg:px-20 mb-14 md:mb-16">
+        <FadeIn>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Credentials</p>
+          <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
+            Certifications
+          </h2>
+          <p className="text-white/40 text-sm leading-relaxed max-w-xl">
+            Verified programs across computer science, frontend engineering, and backend development.
+            Click any certification to view its details.
+          </p>
+        </FadeIn>
+      </div>
+
+      {/* Infinite left-to-right marquee */}
+      <div className="relative w-full">
+        <div
+          className="flex w-max hover:[animation-play-state:paused]"
+          style={{ animation: "marquee-right 50s linear infinite", willChange: "transform" }}
+        >
+          {marqueeItems.map((cert, i) => (
+            <div key={`${cert.slug}-${i}`} className="w-[300px] md:w-[360px] shrink-0 pr-6">
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label={`View ${cert.shortTitle} details`}
+                onClick={() => openCertification(cert)}
+                onKeyDown={(e) => handleCertKeyDown(e, cert)}
+                className="group relative h-full rounded-2xl overflow-hidden border border-white/[0.06] bg-card cursor-pointer transition-all duration-300 hover:border-white/15 focus:outline-none focus-visible:border-white/30"
+              >
+                {/* Cover */}
+                <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">
+                  <CertificationCoverThumb cert={cert} />
+                  <div className="absolute top-4 left-4 flex items-center gap-2">
+                    <span className="font-mono text-[10px] text-white/40">{cert.num}</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10 flex items-center gap-1.5">
+                      <Award size={10} />
+                      Certified
+                    </span>
+                  </div>
+                  <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 backdrop-blur border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:border-white">
+                    <ArrowUpRight size={14} className="text-white/70 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                  </div>
+                </div>
+
+                {/* Body */}
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">{cert.issuer}</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">{cert.platform}</span>
+                  </div>
+                  <h3
+                    className="font-display text-white font-bold leading-tight mb-3"
+                    style={{ fontSize: "clamp(17px, 1.7vw, 21px)", letterSpacing: "-0.02em" }}
+                  >
+                    {cert.shortTitle}
+                  </h3>
+                  <p className="text-white/45 text-sm leading-relaxed">{cert.summary}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Edge fades */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-20 md:w-32 bg-gradient-to-r from-black to-transparent z-10" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-20 md:w-32 bg-gradient-to-l from-black to-transparent z-10" />
       </div>
     </section>
   );
@@ -2144,7 +2263,7 @@ function ProjectsPage({ onBack, onViewProject, initialSelectedProject, onViewCas
 
 // ─── Main Portfolio Page ──────────────────────────────────────────────────────
 
-function PortfolioPage({ onViewProjects, onProjectClick }: { onViewProjects: () => void; onProjectClick?: (project: FullProject) => void }) {
+function PortfolioPage({ onViewProjects, onProjectClick, onOpenCertification }: { onViewProjects: () => void; onProjectClick?: (project: FullProject) => void; onOpenCertification?: (slug: string) => void }) {
   return (
     <div className="bg-black">
       <HeroSection onViewProjects={onViewProjects} />
@@ -2156,6 +2275,7 @@ function PortfolioPage({ onViewProjects, onProjectClick }: { onViewProjects: () 
       <SkillsSection />
       <ExperienceSection />
       <StorySection />
+      <CertificationsSection onOpenCertification={onOpenCertification} />
       {/* <TestimonialsSection /> */}
       <ContactSection />
     </div>
@@ -2298,7 +2418,7 @@ export default function App() {
           <AnimatePresence mode="wait">
             {currentPage === "home" ? (
               <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <PortfolioPage onViewProjects={() => handleNavigate("projects")} onProjectClick={(project) => {
+                <PortfolioPage onViewProjects={() => handleNavigate("projects")} onOpenCertification={handleOpenCertification} onProjectClick={(project) => {
                   const slug = createSlug(project.title);
                   window.history.pushState(null, "", `/portfolio/${slug}`);
                   setCurrentPage("projects");
@@ -2313,7 +2433,7 @@ export default function App() {
               <motion.div key="certification" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
                 <CertificationPage
                   certification={findCertificationBySlug(selectedCertification)!}
-                  onBack={() => handleNavigate("about")}
+                  onBack={() => handleNavigate("home")}
                 />
               </motion.div>
             ) : currentPage === "projects" ? (
