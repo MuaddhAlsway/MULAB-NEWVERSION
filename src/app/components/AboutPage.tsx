@@ -1,6 +1,7 @@
-import { useRef, type ReactNode } from "react";
+import { useRef, type KeyboardEvent, type ReactNode } from "react";
 import { motion, useInView } from "motion/react";
-import { ArrowUpRight, Github, Linkedin, Mail, ArrowDown } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, ArrowDown, Award, ShieldCheck } from "lucide-react";
+import { certifications, type Certification } from "../data/certifications";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -116,7 +117,46 @@ function SectionHeading({
   );
 }
 
-export default function AboutPage() {
+function CertificationCoverThumb({ cert }: { cert: Certification }) {
+  if (cert.coverType === "pdf") {
+    return (
+      <div className="absolute inset-0 pointer-events-none">
+        <object
+          data={`${cert.cover}#page=1&view=FitH&toolbar=0&navpanes=0&scrollbar=0&statusbar=0`}
+          type="application/pdf"
+          aria-label={`${cert.shortTitle} certificate cover`}
+          className="w-full h-full"
+        >
+          <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900">
+            <ShieldCheck size={28} className="text-white/20" />
+            <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">CS50x Certificate</span>
+          </div>
+        </object>
+      </div>
+    );
+  }
+  return (
+    <img
+      src={cert.cover}
+      alt={`${cert.shortTitle} certificate`}
+      loading="lazy"
+      className="w-full h-full object-cover grayscale contrast-105 brightness-90 transition-all duration-700 ease-out group-hover:grayscale-0 group-hover:brightness-100 group-hover:scale-[1.04]"
+    />
+  );
+}
+
+export default function AboutPage({ onOpenCertification }: { onOpenCertification?: (slug: string) => void }) {
+  const openCertification = (cert: Certification) => {
+    if (onOpenCertification) onOpenCertification(cert.slug);
+  };
+
+  const handleCertKeyDown = (e: KeyboardEvent, cert: Certification) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      openCertification(cert);
+    }
+  };
+
   return (
     <div className="bg-black text-white">
       {/* ─── HERO ─────────────────────────────────────────────────────────── */}
@@ -295,11 +335,89 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* ─── CERTIFICATIONS ─────────────────────────────────────────────── */}
+      <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
+        <div className="px-6 md:px-12 lg:px-20">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
+            <SectionHeading index="(02)" label="Credentials" title="Certifications" />
+            <Reveal delay={0.15} className="md:pb-2 max-w-xs">
+              <p className="text-white/40 text-sm leading-relaxed">
+                Verified programs across computer science, frontend engineering, and backend development.
+                Click any certification to view its details.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {certifications.map((cert, i) => (
+              <Reveal key={cert.slug} delay={i * 0.06}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  aria-label={`View ${cert.shortTitle} details`}
+                  onClick={() => openCertification(cert)}
+                  onKeyDown={(e) => handleCertKeyDown(e, cert)}
+                  className="group relative h-full rounded-2xl overflow-hidden border border-white/[0.08] bg-neutral-900 cursor-pointer transition-colors duration-500 hover:border-white/25 focus:outline-none focus-visible:border-white/40"
+                >
+                  {/* Cover */}
+                  <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">
+                    <CertificationCoverThumb cert={cert} />
+                    {cert.coverType === "image" && (
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/10" />
+                    )}
+                    <div className="absolute top-4 left-5 flex items-center gap-3">
+                      <span className="font-mono text-[10px] text-white/50">{cert.num}</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10 flex items-center gap-1.5">
+                        <Award size={10} />
+                        Certified
+                      </span>
+                    </div>
+                    <div className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 backdrop-blur border border-white/10 flex items-center justify-center transition-all duration-300 group-hover:bg-white group-hover:border-white">
+                      <ArrowUpRight size={14} className="text-white/70 group-hover:text-black group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                    </div>
+                  </div>
+
+                  {/* Body */}
+                  <div className="p-7 md:p-8 border-t border-white/[0.08]">
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">{cert.issuer}</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">{cert.platform}</span>
+                    </div>
+                    <h3
+                      className="font-display text-white font-bold leading-tight mb-3 transition-colors duration-300"
+                      style={{ fontSize: "clamp(18px, 1.9vw, 23px)", letterSpacing: "-0.02em" }}
+                    >
+                      {cert.title}
+                    </h3>
+                    <p className="text-white/45 text-sm leading-relaxed mb-6">{cert.summary}</p>
+                    <div className="flex flex-wrap gap-2">
+                      {cert.skills.slice(0, 4).map((skill) => (
+                        <span
+                          key={skill}
+                          className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] uppercase tracking-wider text-white/45 group-hover:border-white/20 group-hover:text-white/70 transition-colors duration-300"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                      {cert.skills.length > 4 && (
+                        <span className="px-3 py-1.5 rounded-full font-mono text-[10px] uppercase tracking-wider text-white/30">
+                          +{cert.skills.length - 4}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── PHILOSOPHY ──────────────────────────────────────────────────── */}
       <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
         <div className="px-6 md:px-12 lg:px-20">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
-            <SectionHeading index="(02)" label="Method" title="How I Build Products" />
+            <SectionHeading index="(03)" label="Method" title="How I Build Products" />
             <Reveal delay={0.15} className="md:pb-2 max-w-xs">
               <p className="text-white/40 text-sm leading-relaxed">
                 A disciplined process that moves from problem to production — without skipping the fundamentals.
@@ -335,7 +453,7 @@ export default function AboutPage() {
       {/* ─── EXPERTISE ───────────────────────────────────────────────────── */}
       <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
         <div className="px-6 md:px-12 lg:px-20">
-          <SectionHeading index="(03)" label="Stack" title="Technical Expertise" className="mb-16 md:mb-24" />
+          <SectionHeading index="(04)" label="Stack" title="Technical Expertise" className="mb-16 md:mb-24" />
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6">
             {EXPERTISE.map((group, i) => (

@@ -2,9 +2,11 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
 import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
+import { certifications, findCertificationBySlug } from "./data/certifications";
 import { FeaturedClients } from "./components/FeaturedClients";
 import { CaseStudyPage } from "./components/CaseStudyPage";
 import AboutPage from "./components/AboutPage";
+import CertificationPage from "./components/CertificationPage";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -2168,6 +2170,7 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState("home");
   const [selectedProject, setSelectedProject] = useState<FullProject | null>(null);
   const [caseStudyProject, setCaseStudyProject] = useState<FullProject | null>(null);
+  const [selectedCertification, setSelectedCertification] = useState<string | null>(null);
 
   // Initialize from URL on mount
   useEffect(() => {
@@ -2181,6 +2184,19 @@ export default function App() {
 
     // Handle /about route
     if (path === '/about' || path === '/about/') {
+      setCurrentPage("about");
+      return;
+    }
+
+    // Handle certification detail routes like /certifications/harvard-cs50x
+    const certMatch = path.match(/^\/certifications\/([^/]+)\/?$/);
+    if (certMatch) {
+      const cert = findCertificationBySlug(certMatch[1]);
+      if (cert) {
+        setCurrentPage("certification");
+        setSelectedCertification(cert.slug);
+        return;
+      }
       setCurrentPage("about");
       return;
     }
@@ -2225,6 +2241,13 @@ export default function App() {
     
     // Default to home
     setCurrentPage("home");
+  }, []);
+
+  const handleOpenCertification = useCallback((slug: string) => {
+    setSelectedCertification(slug);
+    setCurrentPage("certification");
+    window.history.pushState(null, "", `/certifications/${slug}`);
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, []);
 
   const handlePreloaderDone = useCallback(() => {
@@ -2284,7 +2307,14 @@ export default function App() {
               </motion.div>
             ) : currentPage === "about" ? (
               <motion.div key="about" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <AboutPage />
+                <AboutPage onOpenCertification={handleOpenCertification} />
+              </motion.div>
+            ) : currentPage === "certification" && selectedCertification ? (
+              <motion.div key="certification" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+                <CertificationPage
+                  certification={findCertificationBySlug(selectedCertification)!}
+                  onBack={() => handleNavigate("about")}
+                />
               </motion.div>
             ) : currentPage === "projects" ? (
               <motion.div key="projects" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
