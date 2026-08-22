@@ -475,9 +475,9 @@ const GLOBAL_STYLES = `
   from { transform: translateX(0); }
   to { transform: translateX(-100%); }
 }
-@keyframes marquee-right {
-  from { transform: translateX(-33.3333%); }
-  to { transform: translateX(0); }
+@keyframes marquee-rtl {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.3333%); }
 }
 @keyframes float-orbit {
   from { transform: rotate(0deg) translateX(var(--orbit-r)) rotate(0deg); }
@@ -1337,7 +1337,7 @@ function CertificationsSection({ onOpenCertification }: { onOpenCertification?: 
       <div className="relative w-full">
         <div
           className="flex w-max hover:[animation-play-state:paused]"
-          style={{ animation: "marquee-right 50s linear infinite", willChange: "transform" }}
+          style={{ animation: "marquee-rtl 50s linear infinite", willChange: "transform" }}
         >
           {marqueeItems.map((cert, i) => (
             <div key={`${cert.slug}-${i}`} className="w-[300px] md:w-[360px] shrink-0 pr-6">

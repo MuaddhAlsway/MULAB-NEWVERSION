@@ -335,11 +335,78 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
         </div>
       </section>
 
+      {/* ─── PHILOSOPHY ──────────────────────────────────────────────────── */}
+      <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
+        <div className="px-6 md:px-12 lg:px-20">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
+            <SectionHeading index="(02)" label="Method" title="How I Build Products" />
+            <Reveal delay={0.15} className="md:pb-2 max-w-xs">
+              <p className="text-white/40 text-sm leading-relaxed">
+                A disciplined process that moves from problem to production — without skipping the fundamentals.
+              </p>
+            </Reveal>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/[0.08] border border-white/[0.08]">
+            {PHILOSOPHY.map((card, i) => (
+              <Reveal key={card.num} delay={i * 0.08}>
+                <div className="group relative h-full bg-black p-8 md:p-12 transition-colors duration-500 hover:bg-white/[0.03] overflow-hidden">
+                  <div className="absolute -top-6 -right-2 font-display font-black leading-none pointer-events-none select-none"
+                    style={{ fontSize: "clamp(96px, 10vw, 150px)", letterSpacing: "-0.04em", color: "rgba(255,255,255,0.03)", transition: "color 0.5s ease" }}>
+                    {card.num}
+                  </div>
+                  <div className="relative">
+                    <div className="flex items-center justify-between mb-16 md:mb-24">
+                      <span className="font-mono text-[11px] text-white/25">{card.num}</span>
+                      <ArrowUpRight size={16} className="text-white/20 group-hover:text-white/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                    </div>
+                    <h3 className="font-display text-white font-bold leading-tight mb-4" style={{ fontSize: "clamp(22px, 2.6vw, 32px)", letterSpacing: "-0.02em" }}>
+                      {card.title}
+                    </h3>
+                    <p className="text-white/45 text-sm leading-relaxed max-w-md">{card.desc}</p>
+                  </div>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── EXPERTISE ───────────────────────────────────────────────────── */}
+      <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
+        <div className="px-6 md:px-12 lg:px-20">
+          <SectionHeading index="(03)" label="Stack" title="Technical Expertise" className="mb-16 md:mb-24" />
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6">
+            {EXPERTISE.map((group, i) => (
+              <Reveal key={group.category} delay={i * 0.08}>
+                <div className="border-t border-white/20 pt-6">
+                  <div className="flex items-center justify-between mb-8">
+                    <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/80">{group.category}</span>
+                    <span className="font-mono text-[10px] text-white/20">{String(i + 1).padStart(2, "0")}</span>
+                  </div>
+                  <ul className="space-y-1">
+                    {group.items.map((tech) => (
+                      <li key={tech}>
+                        <span className="group/tech flex items-center justify-between py-2.5 cursor-default">
+                          <span className="text-white/50 group-hover/tech:text-white transition-colors duration-200 text-sm">{tech}</span>
+                          <span className="opacity-0 group-hover/tech:opacity-100 transition-opacity duration-200 font-mono text-[10px] text-white/40">→</span>
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ─── CERTIFICATIONS ─────────────────────────────────────────────── */}
       <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
         <div className="px-6 md:px-12 lg:px-20">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
-            <SectionHeading index="(02)" label="Credentials" title="Certifications" />
+            <SectionHeading index="(04)" label="Credentials" title="Certifications" />
             <Reveal delay={0.15} className="md:pb-2 max-w-xs">
               <p className="text-white/40 text-sm leading-relaxed">
                 Verified programs across computer science, frontend engineering, and backend development.
@@ -406,73 +473,6 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                       )}
                     </div>
                   </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── PHILOSOPHY ──────────────────────────────────────────────────── */}
-      <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
-        <div className="px-6 md:px-12 lg:px-20">
-          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
-            <SectionHeading index="(03)" label="Method" title="How I Build Products" />
-            <Reveal delay={0.15} className="md:pb-2 max-w-xs">
-              <p className="text-white/40 text-sm leading-relaxed">
-                A disciplined process that moves from problem to production — without skipping the fundamentals.
-              </p>
-            </Reveal>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-white/[0.08] border border-white/[0.08]">
-            {PHILOSOPHY.map((card, i) => (
-              <Reveal key={card.num} delay={i * 0.08}>
-                <div className="group relative h-full bg-black p-8 md:p-12 transition-colors duration-500 hover:bg-white/[0.03] overflow-hidden">
-                  <div className="absolute -top-6 -right-2 font-display font-black leading-none pointer-events-none select-none"
-                    style={{ fontSize: "clamp(96px, 10vw, 150px)", letterSpacing: "-0.04em", color: "rgba(255,255,255,0.03)", transition: "color 0.5s ease" }}>
-                    {card.num}
-                  </div>
-                  <div className="relative">
-                    <div className="flex items-center justify-between mb-16 md:mb-24">
-                      <span className="font-mono text-[11px] text-white/25">{card.num}</span>
-                      <ArrowUpRight size={16} className="text-white/20 group-hover:text-white/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
-                    </div>
-                    <h3 className="font-display text-white font-bold leading-tight mb-4" style={{ fontSize: "clamp(22px, 2.6vw, 32px)", letterSpacing: "-0.02em" }}>
-                      {card.title}
-                    </h3>
-                    <p className="text-white/45 text-sm leading-relaxed max-w-md">{card.desc}</p>
-                  </div>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── EXPERTISE ───────────────────────────────────────────────────── */}
-      <section className="py-24 md:py-36 bg-black border-t border-white/[0.04]">
-        <div className="px-6 md:px-12 lg:px-20">
-          <SectionHeading index="(04)" label="Stack" title="Technical Expertise" className="mb-16 md:mb-24" />
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-6">
-            {EXPERTISE.map((group, i) => (
-              <Reveal key={group.category} delay={i * 0.08}>
-                <div className="border-t border-white/20 pt-6">
-                  <div className="flex items-center justify-between mb-8">
-                    <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/80">{group.category}</span>
-                    <span className="font-mono text-[10px] text-white/20">{String(i + 1).padStart(2, "0")}</span>
-                  </div>
-                  <ul className="space-y-1">
-                    {group.items.map((tech) => (
-                      <li key={tech}>
-                        <span className="group/tech flex items-center justify-between py-2.5 cursor-default">
-                          <span className="text-white/50 group-hover/tech:text-white transition-colors duration-200 text-sm">{tech}</span>
-                          <span className="opacity-0 group-hover/tech:opacity-100 transition-opacity duration-200 font-mono text-[10px] text-white/40">→</span>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
                 </div>
               </Reveal>
             ))}
