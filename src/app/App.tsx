@@ -841,20 +841,20 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       stats: { endpoints: '20+', tables: '20', carriers: '40+' }
     },
     {
-      id: 6,
-      name: 'Nexus Network Platform',
-      description: 'Full-stack enterprise-grade LinkedIn clone with real-time messaging, analytics, courses, jobs, and admin panel',
-      tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
-      image: '/Projects/mockup/Nexus.png',
-      stats: { endpoints: '80+', tables: '30+', realtime: 'WS' }
-    },
-    {
       id: 53,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
       image: '/Projects/quickshow.png',
       stats: { endpoints: 'Live API', tables: 'MongoDB', pages: 'Admin Panel' }
+    },
+    {
+      id: 6,
+      name: 'Nexus Network Platform',
+      description: 'Full-stack enterprise-grade LinkedIn clone with real-time messaging, analytics, courses, jobs, and admin panel',
+      tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
+      image: '/Projects/mockup/Nexus.png',
+      stats: { endpoints: '80+', tables: '30+', realtime: 'WS' }
     }
   ];
 
