@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
-import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch, Award, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch, Award, ShieldCheck, Server } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
 import { certifications, findCertificationBySlug, type Certification } from "./data/certifications";
 import { FeaturedClients } from "./components/FeaturedClients";
@@ -23,10 +23,12 @@ interface Project {
   image: string;
   github?: string;
   live?: string;
+  api?: string;
   linkedin?: string;
   notion?: string;
   wiki?: string;
   diagram?: string;
+  screenshots?: string[];
   client?: string;
   duration?: string;
 }
@@ -49,6 +51,7 @@ interface FullProject {
   results: string[];
   liveUrl: string;
   githubUrl: string;
+  apiUrl?: string;
   featured: boolean;
   linkedinUrl?: string;
   notionUrl?: string;
@@ -70,11 +73,12 @@ const transformProject = (p: Project, idx: number) => ({
   year: new Date().getFullYear().toString(),
   tech: p.tech,
   image: p.image, // Keep original path from projects.ts
-  screenshots: [p.image], // Use cover image as screenshot
+  screenshots: p.screenshots && p.screenshots.length > 0 ? p.screenshots : [p.image], // Use cover image as screenshot
   alt: p.name,
   results: p.features || [],
   liveUrl: p.live || "#",
   githubUrl: p.github || "#",
+  apiUrl: p.api || undefined,
   linkedinUrl: p.linkedin || undefined,
   notionUrl: p.notion || undefined,
   wikiUrl: p.wiki || undefined,
@@ -843,6 +847,14 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
       image: '/Projects/mockup/Nexus.png',
       stats: { endpoints: '80+', tables: '30+', realtime: 'WS' }
+    },
+    {
+      id: 53,
+      name: 'QuickShow Pro',
+      description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
+      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
+      image: '/Projects/quickshow.png',
+      stats: { endpoints: 'Live API', tables: 'MongoDB', pages: 'Admin Panel' }
     }
   ];
 
@@ -1608,12 +1620,23 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
                     <ExternalLink size={16} className="text-white/40 group-hover:text-white transition-colors" />
-                    <span className="font-display text-white font-semibold text-sm">Live Demo</span>
+<span className="font-display text-white font-semibold text-sm">Live Demo</span>
                   </div>
                   <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
                 </a>
               )}
-              
+
+              {/* Live API */}
+              {project.apiUrl && project.apiUrl !== "#" && (
+                <a href={project.apiUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
+                  <div className="flex items-center gap-3">
+                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <span className="font-display text-white font-semibold text-sm">Live API</span>
+                  </div>
+                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                </a>
+              )}
+
               {/* GitHub */}
               {project.githubUrl && project.githubUrl !== "#" && (
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
@@ -2099,8 +2122,12 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
           {project.screenshots.length > 0 && (
             <div className="mb-16">
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Screenshots</p>
-              <div className="rounded-2xl overflow-hidden h-64 md:h-80 bg-neutral-900">
-                <img src={project.screenshots[0]} alt="Project screenshot" className="w-full h-full object-cover" />
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {project.screenshots.map((src, i) => (
+                  <div key={i} className={`rounded-2xl overflow-hidden bg-neutral-900 ${i === 0 ? "sm:col-span-2" : ""}`}>
+                    <img src={src} alt={`${project.title} screenshot ${i + 1}`} loading="lazy" className="w-full h-full object-cover" />
+                  </div>
+                ))}
               </div>
             </div>
           )}
@@ -2114,12 +2141,23 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
                     <ExternalLink size={16} className="text-white/40 group-hover:text-white transition-colors" />
-                    <span className="font-display text-white font-semibold text-sm">Live Demo</span>
+<span className="font-display text-white font-semibold text-sm">Live Demo</span>
                   </div>
                   <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
                 </a>
               )}
-              
+
+              {/* Live API */}
+              {project.apiUrl && project.apiUrl !== "#" && (
+                <a href={project.apiUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
+                  <div className="flex items-center gap-3">
+                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <span className="font-display text-white font-semibold text-sm">Live API</span>
+                  </div>
+                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                </a>
+              )}
+
               {/* GitHub */}
               {project.githubUrl && project.githubUrl !== "#" && (
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
