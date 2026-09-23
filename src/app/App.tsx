@@ -903,7 +903,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
                 >
                   {/* Image */}
                   <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
-                    <img src={project.image} alt={project.name} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                    <img src={project.image} alt={project.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
                       <span className="font-mono text-[10px] text-white/70 uppercase tracking-widest">Production Ready</span>
@@ -991,7 +991,7 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
                   onClick={() => onProjectClick?.(project)}
                 >
                   <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
-                    <img src={project.image} alt={project.alt} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                    <img src={project.image} alt={project.alt} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
                   </div>
@@ -1509,7 +1509,7 @@ function MouseFollowPreview({ src, visible }: { src: string; visible: boolean })
 
   return (
     <div ref={ref} className={cn("fixed top-0 left-0 w-72 h-44 rounded-2xl overflow-hidden pointer-events-none z-[500] transition-all duration-300 shadow-2xl", visible ? "opacity-100 scale-100" : "opacity-0 scale-95")} style={{ willChange: "transform" }}>
-      <img src={src} className="w-full h-full object-cover" alt="" />
+      <img src={src} className="w-full h-full object-cover grayscale" alt="" />
       <div className="absolute inset-0 bg-black/20" />
     </div>
   );
@@ -1543,7 +1543,7 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
       <div className="flex-1 overflow-y-auto">
         {/* Hero image */}
         <div className="relative h-[45vh] md:h-[55vh] overflow-hidden bg-neutral-900">
-          <img src={project.image} alt={project.alt} className="w-full h-full object-cover" />
+          <img src={project.image} alt={project.alt} className="w-full h-full object-cover grayscale" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
           <div className="absolute bottom-8 left-6 md:left-12">
             <span className="inline-block px-3 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/15 font-mono text-[10px] text-white/70 uppercase tracking-widest mb-3">{project.category}</span>
@@ -1797,7 +1797,7 @@ function FeaturedProjectSection({ project, onOpen }: { project: FullProject; onO
         {/* Tilt image */}
         <FadeIn delay={0.1}>
           <div ref={tiltRef} onMouseMove={onMove} onMouseLeave={onLeave} className="relative rounded-2xl overflow-hidden bg-neutral-900 cursor-none" style={{ transition: "transform 0.2s ease-out", aspectRatio: "4/3" }}>
-            <img src={project.image} alt={project.alt} className="w-full h-full object-cover" />
+            <img src={project.image} alt={project.alt} className="w-full h-full object-cover grayscale" />
             <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end">
               <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.category} — {project.year}</span>
@@ -1838,7 +1838,7 @@ function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (
               whileHover={{ y: -6 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}>
               {/* Image */}
               <div className="relative overflow-hidden bg-neutral-900" style={{ aspectRatio: i % 5 === 0 ? "16/10" : "4/3" }}>
-                <img src={project.image} alt={project.alt} className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                <img src={project.image} alt={project.alt} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                 {/* Hover overlay */}
                 <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
@@ -2067,7 +2067,7 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
       <div className="flex-1 overflow-y-auto">
         {/* Hero image */}
         <div className="relative h-[45vh] md:h-[55vh] overflow-hidden bg-neutral-900">
-          <img src={project.image} alt={project.alt} className="w-full h-full object-cover" />
+          <img src={project.image} alt={project.alt} className="w-full h-full object-cover grayscale" />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
           <div className="absolute bottom-8 left-6 md:left-12">
             <span className="inline-block px-3 py-1.5 rounded-full bg-white/10 backdrop-blur border border-white/15 font-mono text-[10px] text-white/70 uppercase tracking-widest mb-3">{project.category}</span>

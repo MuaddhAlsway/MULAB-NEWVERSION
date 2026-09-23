@@ -451,7 +451,7 @@ function CinematicHero({ project, onBack }: { project: CaseStudyProject; onBack:
     <section ref={ref} className="relative min-h-screen flex items-end pb-24 pt-32 px-6 md:px-12 lg:px-20 overflow-hidden">
       {/* Layer 1: Background image (slowest) */}
       <motion.div className="absolute inset-0 z-0" style={{ y: bgY }}>
-        <img src={project.image} alt={projectName} className="w-full h-[120%] object-cover opacity-20 scale-125" />
+        <img src={project.image} alt={projectName} className="w-full h-[120%] object-cover opacity-20 scale-125 grayscale" />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/80 to-black/30" />
         <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/40" />
       </motion.div>
@@ -1096,7 +1096,7 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
             <motion.img
               src={project.image}
               alt={project.title || project.name}
-              className="w-full h-auto object-cover"
+              className="w-full h-auto object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
               style={{ maxHeight: "70vh" }}
               whileHover={{ scale: 1.03 }}
               transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -1358,7 +1358,7 @@ function LinksAndCTA({ project, onBack, nextProject }: { project: CaseStudyProje
                   <motion.img
                     src={nextProject.image}
                     alt={nextProject.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
                     whileHover={{ scale: 1.05 }}
                     transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
                   />
