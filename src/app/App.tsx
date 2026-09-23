@@ -845,7 +845,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
-      image: '/Projects/quickshow.png',
+      image: '/Projects/quickshow01.png',
       stats: { endpoints: 'Live API', tables: 'MongoDB', pages: 'Admin Panel' }
     },
     {
