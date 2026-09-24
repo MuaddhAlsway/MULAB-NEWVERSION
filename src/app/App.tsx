@@ -407,48 +407,74 @@ const MARQUEE_WORDS = ["React", "Next.js", "Vite", "TypeScript", "Tailwind CSS",
 
 
 const TECH_STACK = [
-  // Frontend Skills
-  { name: "React 18/19", category: "Frontend" },
-  { name: "Next.js", category: "Frontend" },
-  { name: "Vite", category: "Frontend" },
+  // Frontend
   { name: "HTML5", category: "Frontend" },
   { name: "CSS3", category: "Frontend" },
-  { name: "JavaScript (ES6+)", category: "Frontend" },
+  { name: "JavaScript", category: "Frontend" },
+  { name: "TypeScript", category: "Frontend" },
+  { name: "React", category: "Frontend" },
+  { name: "Vite", category: "Frontend" },
   { name: "Tailwind CSS", category: "Frontend" },
-  { name: "Vanilla CSS", category: "Frontend" },
   { name: "React Router", category: "Frontend" },
-  { name: "React Hooks", category: "Frontend" },
-  
-  // Backend Skills
+  { name: "Axios", category: "Frontend" },
+  { name: "Fetch API", category: "Frontend" },
+
+  // Backend
   { name: "Node.js", category: "Backend" },
   { name: "Express.js", category: "Backend" },
   { name: "PHP", category: "Backend" },
-  { name: "C Programming", category: "Backend" },
-  { name: "SQLite", category: "Backend" },
-  { name: "Turso Database", category: "Backend" },
-  { name: "REST APIs", category: "Backend" },
-  { name: "JWT Authentication", category: "Backend" },
-  
-  // Tools & Deployment
-  { name: "Git/GitHub", category: "Tools" },
-  { name: "Vercel", category: "Tools" },
-  { name: "Netlify", category: "Tools" },
-  { name: "VS Code", category: "Tools" },
-  { name: "Figma", category: "Tools" },
-  { name: "Font Awesome", category: "Tools" },
-  { name: "Devicons", category: "Tools" },
-  { name: "Boxicons", category: "Tools" },
-  
-  // Non-Technical Skills
-  { name: "UI/UX Design & Prototyping", category: "Design" },
-  { name: "Responsive Web Design", category: "Design" },
-  { name: "Problem Solving", category: "Skills" },
-  { name: "Debugging", category: "Skills" },
-  { name: "Project Management", category: "Skills" },
-  { name: "Communication", category: "Skills" },
-  { name: "Collaboration", category: "Skills" },
-  { name: "Creative Thinking", category: "Skills" },
-  { name: "Attention to Detail", category: "Skills" },
+
+  // Databases & Data
+  { name: "MySQL", category: "Databases & Data" },
+  { name: "MariaDB", category: "Databases & Data" },
+  { name: "MongoDB", category: "Databases & Data" },
+  { name: "Mongoose", category: "Databases & Data" },
+  { name: "PDO", category: "Databases & Data" },
+  { name: "Turso / libSQL", category: "Databases & Data" },
+  { name: "Drizzle ORM", category: "Databases & Data" },
+
+  // Authentication & Security
+  { name: "Clerk", category: "Authentication & Security" },
+  { name: "JWT", category: "Authentication & Security" },
+  { name: "HTTP-only Cookies", category: "Authentication & Security" },
+  { name: "RBAC", category: "Authentication & Security" },
+  { name: "TLS / SSL", category: "Authentication & Security" },
+
+  // APIs & Integrations
+  { name: "REST APIs", category: "APIs & Integrations" },
+  { name: "Webhooks", category: "APIs & Integrations" },
+  { name: "Stripe", category: "APIs & Integrations" },
+  { name: "TMDB API", category: "APIs & Integrations" },
+  { name: "Shippo", category: "APIs & Integrations" },
+  { name: "Gmail API", category: "APIs & Integrations" },
+
+  // Background Processing & Events
+  { name: "Inngest", category: "Background Processing & Events" },
+  { name: "Background Jobs", category: "Background Processing & Events" },
+  { name: "Delayed Jobs", category: "Background Processing & Events" },
+  { name: "Retry Workflows", category: "Background Processing & Events" },
+  { name: "Event-Driven Processing", category: "Background Processing & Events" },
+
+  // Email & Media
+  { name: "Nodemailer", category: "Email & Media" },
+  { name: "Brevo SMTP", category: "Email & Media" },
+  { name: "Cloudinary", category: "Email & Media" },
+
+  // DevOps & Infrastructure
+  { name: "Docker", category: "DevOps & Infrastructure" },
+  { name: "Git", category: "DevOps & Infrastructure" },
+  { name: "GitHub", category: "DevOps & Infrastructure" },
+  { name: "GitHub Actions", category: "DevOps & Infrastructure" },
+  { name: "CI/CD", category: "DevOps & Infrastructure" },
+  { name: "XAMPP", category: "DevOps & Infrastructure" },
+
+  // Cloud & Deployment
+  { name: "Cloudflare Workers", category: "Cloud & Deployment" },
+  { name: "Cloudflare Pages", category: "Cloud & Deployment" },
+  { name: "Cloudflare KV", category: "Cloud & Deployment" },
+  { name: "Vercel", category: "Cloud & Deployment" },
+  { name: "Render", category: "Cloud & Deployment" },
+  { name: "Aiven", category: "Cloud & Deployment" },
 ];
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -1022,18 +1048,18 @@ function SkillsSection() {
   const techNames = [
     // Frontend (inner orbits)
     { name: "React", letter: "⚛", r: 140, dur: 14 },
-    { name: "Next.js", letter: "▲", r: 140, dur: 14 },
+    { name: "TypeScript", letter: "TS", r: 140, dur: 14 },
     { name: "Vite", letter: "⚡", r: 200, dur: 20 },
     { name: "Tailwind CSS", letter: "T", r: 200, dur: 20 },
     { name: "JavaScript", letter: "JS", r: 200, dur: 20 },
     // Backend
     { name: "Node.js", letter: "⬡", r: 270, dur: 28 },
     { name: "Express.js", letter: "E", r: 270, dur: 28 },
-    { name: "SQLite", letter: "DB", r: 270, dur: 28 },
-    // Tools & Design (outer orbit)
-    { name: "Figma", letter: "◈", r: 340, dur: 36 },
-    { name: "Git/GitHub", letter: "GH", r: 340, dur: 36 },
-    { name: "TypeScript", letter: "TS", r: 340, dur: 36 },
+    { name: "MongoDB", letter: "DB", r: 270, dur: 28 },
+    // Data, Cloud & DevOps (outer orbit)
+    { name: "Turso / libSQL", letter: "DB", r: 340, dur: 36 },
+    { name: "Cloudflare", letter: "CF", r: 340, dur: 36 },
+    { name: "MySQL", letter: "MY", r: 340, dur: 36 },
   ];
 
   return (
@@ -1062,14 +1088,14 @@ function SkillsSection() {
         </FadeIn>
         <div className="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-3 w-full">
           {[
-            { name: "React / Next.js / Vite", pct: 98 },
-            { name: "JavaScript / TypeScript", pct: 95 },
-            { name: "HTML5 / CSS3 / Tailwind", pct: 96 },
-            { name: "Node.js / Express.js", pct: 90 },
-            { name: "SQLite / Turso Database", pct: 88 },
-            { name: "REST APIs / JWT Auth", pct: 92 },
-            { name: "PHP / C Programming", pct: 80 },
-            { name: "UI/UX & Responsive Design", pct: 93 },
+            { name: "React / TypeScript / Vite", pct: 98 },
+            { name: "JavaScript / HTML5 / CSS3 / Tailwind", pct: 96 },
+            { name: "Node.js / Express.js / PHP", pct: 90 },
+            { name: "MongoDB / MySQL / Turso / libSQL", pct: 88 },
+            { name: "REST APIs / Webhooks / Stripe", pct: 92 },
+            { name: "JWT / RBAC / HTTP-only Cookies", pct: 88 },
+            { name: "Docker / CI/CD / GitHub Actions", pct: 85 },
+            { name: "Cloudflare / Vercel / Render", pct: 86 },
           ].map((skill, i) => (
             <FadeIn key={skill.name} delay={i * 0.06}>
               <div className="group p-4 rounded-xl border border-white/[0.06] bg-card hover:border-white/15 transition-colors duration-300">
@@ -1939,7 +1965,7 @@ function MetricsSection() {
 // Tech visualization
 function TechVisualization() {
   const [activeFilter, setActiveFilter] = useState("All");
-  const techFilters = ["All", "Frontend", "Backend", "Tools", "Design", "Skills"];
+  const techFilters = ["All", "Frontend", "Backend", "Databases & Data", "Authentication & Security", "APIs & Integrations", "Background Processing & Events", "Email & Media", "DevOps & Infrastructure", "Cloud & Deployment"];
 
   const filtered = activeFilter === "All" ? TECH_STACK : TECH_STACK.filter((t) => t.category === activeFilter);
 
