@@ -855,40 +855,35 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       name: 'MUCOMMERANCE',
       description: 'Full-stack luxury fashion e-commerce platform',
       tech: ['Cloudflare Workers', 'D1', 'React 18', 'Stripe', 'Shippo'],
-      image: '/Projects/mockup/MUCOMMERANCE (2).png',
-      stats: { endpoints: '95+', tables: '16', pages: '14' }
+      image: '/Projects/mockup/MUCOMMERANCE (2).png'
     },
     {
       id: 5,
       name: 'Nova-Ecommerance-Platform',
       description: 'Production e-commerce platform with logistics system',
       tech: ['Hono', 'Turso', 'React', 'Stripe', 'Shippo'],
-      image: '/Projects/mockup/nova.png',
-      stats: { endpoints: '20+', tables: '20', carriers: '40+' }
+      image: '/Projects/mockup/nova.png'
     },
     {
       id: 54,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
-      image: '/Projects/quickshow01.png',
-      stats: { endpoints: 'Live API', tables: 'MongoDB', pages: 'Admin Panel' }
+      image: '/Projects/quickshow01.png'
     },
     {
       id: 6,
       name: 'Nexus Network Platform',
       description: 'Full-stack enterprise-grade LinkedIn clone with real-time messaging, analytics, courses, jobs, and admin panel',
       tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
-      image: '/Projects/mockup/Nexus.png',
-      stats: { endpoints: '80+', tables: '30+', realtime: 'WS' }
+      image: '/Projects/mockup/Nexus.png'
     },
     {
       id: 7,
       name: 'Forever E-Commerce',
       description: 'Production-grade MERN e-commerce platform with Stripe payments, Cloudinary media, and email marketing',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Cloudinary'],
-      image: '/Projects/mockup/Forever.png',
-      stats: { apps: '3', deploys: 'Vercel', payments: 'Stripe' }
+      image: '/Projects/mockup/Forever.png'
     }
   ];
 
@@ -925,7 +920,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
             productionProjects.map((project) => (
               <div
                 key={`${project.id}-${setIndex}`}
-                className="flex-shrink-0 w-[82vw] md:w-[52vw] lg:w-[48vw] h-[640px] md:h-[700px]"
+                className="flex-shrink-0 w-[82vw] md:w-[52vw] lg:w-[48vw] h-[460px] md:h-[500px]"
               >
                 <motion.div
                   whileHover={{ scale: 1.02 }}
@@ -936,7 +931,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
                   }}
                 >
                   {/* Image */}
-                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900 shrink-0">
+                  <div className="relative overflow-hidden h-52 md:h-56 lg:h-64 bg-neutral-900 shrink-0">
                     <img src={project.image} alt={project.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
@@ -947,24 +942,14 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
                   {/* Content */}
                   <div className="p-6 md:p-8 flex flex-col flex-1 min-h-0">
                     <div className="flex items-start justify-between mb-4">
-                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors line-clamp-2" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
+                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
                         {project.name}
                       </h3>
                     </div>
 
-                    <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6 line-clamp-3 min-h-[3.1rem]">
+                    <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-4 line-clamp-3 min-h-[3.1rem]">
                       {project.description}
                     </p>
-
-                    {/* Stats Row */}
-                    <div className="flex gap-6 mb-6 pb-6 border-b border-white/[0.06]">
-                      {Object.entries(project.stats).map(([key, value]) => (
-                        <div key={key}>
-                          <div className="font-display text-white text-xl font-bold">{value}</div>
-                          <div className="font-mono text-[9px] text-white/30 uppercase tracking-widest">{key}</div>
-                        </div>
-                      ))}
-                    </div>
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2 mt-auto">
