@@ -925,18 +925,18 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
             productionProjects.map((project) => (
               <div
                 key={`${project.id}-${setIndex}`}
-                className="flex-shrink-0 w-[82vw] md:w-[52vw] lg:w-[48vw]"
+                className="flex-shrink-0 w-[82vw] md:w-[52vw] lg:w-[48vw] h-[640px] md:h-[700px]"
               >
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 h-full cursor-pointer"
+                  className="group relative flex flex-col rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 h-full cursor-pointer"
                   onClick={() => {
                     const fullProject = ALL_PROJECTS.find(p => p.id === project.id);
                     if (fullProject) onProjectClick?.(fullProject);
                   }}
                 >
                   {/* Image */}
-                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
+                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900 shrink-0">
                     <img src={project.image} alt={project.name} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
@@ -945,14 +945,14 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
                   </div>
 
                   {/* Content */}
-                  <div className="p-6 md:p-8">
+                  <div className="p-6 md:p-8 flex flex-col flex-1 min-h-0">
                     <div className="flex items-start justify-between mb-4">
-                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
+                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors line-clamp-2" style={{ fontSize: "clamp(20px, 3vw, 28px)", letterSpacing: "-0.02em" }}>
                         {project.name}
                       </h3>
                     </div>
 
-                    <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6">
+                    <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-6 line-clamp-3 min-h-[3.1rem]">
                       {project.description}
                     </p>
 
@@ -967,7 +967,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
                     </div>
 
                     {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mt-auto">
                       {project.tech.map((t) => (
                         <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
                           {t}
@@ -1017,25 +1017,25 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
             ALL_PROJECTS.slice(0, 5).map((project) => (
               <div
                 key={`${project.id}-${setIndex}`}
-                className="flex-shrink-0 w-[82vw] md:w-[44vw] lg:w-[36vw]"
+                className="flex-shrink-0 w-[82vw] md:w-[44vw] lg:w-[36vw] h-[460px] md:h-[500px]"
               >
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] h-full transition-all duration-300 cursor-pointer"
+                  className="group relative flex flex-col rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] h-full transition-all duration-300 cursor-pointer"
                   onClick={() => onProjectClick?.(project)}
                 >
-                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
+                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900 shrink-0">
                     <img src={project.image} alt={project.alt} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                     <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
                   </div>
-                  <div className="p-5 md:p-6">
+                  <div className="p-5 md:p-6 flex flex-col flex-1 min-h-0">
                     <div className="flex items-start justify-between mb-3">
-                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
-                      <span className="font-mono text-[10px] text-white/25">{project.year}</span>
+                      <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors line-clamp-2" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
+                      <span className="font-mono text-[10px] text-white/25 shrink-0 pl-3">{project.year}</span>
                     </div>
                     <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4">{project.category}</p>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-2 mt-auto">
                       {project.tech.slice(0, 3).map((t) => (
                         <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">{t}</span>
                       ))}
