@@ -867,7 +867,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       stats: { endpoints: '20+', tables: '20', carriers: '40+' }
     },
     {
-      id: 53,
+      id: 54,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
@@ -881,6 +881,14 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
       image: '/Projects/mockup/Nexus.png',
       stats: { endpoints: '80+', tables: '30+', realtime: 'WS' }
+    },
+    {
+      id: 7,
+      name: 'Forever E-Commerce',
+      description: 'Production-grade MERN e-commerce platform with Stripe payments, Cloudinary media, and email marketing',
+      tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Cloudinary'],
+      image: '/Projects/mockup/Forever.png',
+      stats: { apps: '3', deploys: 'Vercel', payments: 'Stripe' }
     }
   ];
 
