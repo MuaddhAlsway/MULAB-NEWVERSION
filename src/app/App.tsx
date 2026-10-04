@@ -1867,11 +1867,11 @@ function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (
     <section className="py-0 px-6 md:px-12 lg:px-20" style={{ background: "#050505" }}>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {filtered.map((project, i) => (
-          <FadeIn key={project.id} delay={i * 0.04}>
-            <motion.button onClick={() => onOpen(project)} className="group text-left relative rounded-2xl overflow-hidden border border-white/[0.06] bg-card hover:border-white/15 transition-all duration-400 w-full"
+          <FadeIn key={project.id} delay={i * 0.04} className="h-full">
+            <motion.button onClick={() => onOpen(project)} className="group text-left relative flex flex-col rounded-2xl overflow-hidden border border-white/[0.06] bg-card hover:border-white/15 transition-all duration-400 w-full h-[440px] md:h-[465px] lg:h-[485px]"
               whileHover={{ y: -6 }} transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}>
               {/* Image */}
-              <div className="relative overflow-hidden bg-neutral-900" style={{ aspectRatio: i % 5 === 0 ? "16/10" : "4/3" }}>
+              <div className="relative overflow-hidden bg-neutral-900 shrink-0 h-[220px] md:h-[240px] lg:h-[260px]">
                 <img src={project.image} alt={project.alt} className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
                 {/* Hover overlay */}
@@ -1884,13 +1884,13 @@ function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (
                 <div className="absolute top-4 right-4"><span className="px-2.5 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10 font-mono text-[9px] text-white/50 uppercase tracking-widest">{project.year}</span></div>
               </div>
               {/* Info */}
-              <div className="p-5">
+              <div className="p-5 flex flex-col flex-1 min-h-0">
                 <div className="flex items-start justify-between gap-3 mb-2">
-                  <h3 className="font-display text-white font-bold group-hover:text-white transition-colors" style={{ fontSize: "clamp(16px, 1.8vw, 20px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
+                  <h3 className="font-display text-white font-bold group-hover:text-white transition-colors line-clamp-2 min-h-[3rem]" style={{ fontSize: "clamp(16px, 1.8vw, 20px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
                 </div>
                 <p className="font-mono text-[10px] text-white/30 uppercase tracking-widest mb-3">{project.category}</p>
-                <p className="text-white/40 text-[13px] leading-relaxed line-clamp-2 mb-4">{project.shortDesc}</p>
-                <div className="flex flex-wrap gap-1.5">
+                <p className="text-white/40 text-[13px] leading-relaxed line-clamp-2 min-h-[2.7rem] mb-4">{project.shortDesc}</p>
+                <div className="flex flex-wrap gap-1.5 mt-auto">
                   {project.tech.slice(0, 3).map((t) => (<span key={t} className="px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] font-mono text-[9px] text-white/30">{t}</span>))}
                 </div>
               </div>
