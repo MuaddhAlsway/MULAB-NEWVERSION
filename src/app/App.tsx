@@ -24,6 +24,7 @@ interface Project {
   github?: string;
   live?: string;
   api?: string;
+  backend?: string;
   linkedin?: string;
   notion?: string;
   wiki?: string;
@@ -52,6 +53,7 @@ interface FullProject {
   liveUrl: string;
   githubUrl: string;
   apiUrl?: string;
+  backendUrl?: string;
   featured: boolean;
   linkedinUrl?: string;
   notionUrl?: string;
@@ -79,6 +81,7 @@ const transformProject = (p: Project, idx: number) => ({
   liveUrl: p.live || "#",
   githubUrl: p.github || "#",
   apiUrl: p.api || undefined,
+  backendUrl: p.backend || undefined,
   linkedinUrl: p.linkedin || undefined,
   notionUrl: p.notion || undefined,
   wikiUrl: p.wiki || undefined,
@@ -864,8 +867,8 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       tech: ['Hono', 'Turso', 'React', 'Stripe', 'Shippo'],
       image: '/Projects/mockup/nova.png'
     },
-    {
-      id: 54,
+{
+      id: 55,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
@@ -883,7 +886,14 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       name: 'Forever E-Commerce',
       description: 'Production-grade MERN e-commerce platform with Stripe payments, Cloudinary media, and email marketing',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Cloudinary'],
-      image: '/Projects/mockup/Forever.png'
+      image: '/Projects/Forever.png'
+    },
+    {
+      id: 8,
+      name: 'Estate — Luxury Real Estate Platform',
+      description: 'Production-oriented full-stack real-estate marketplace for Jeddah with secure user, agent, and admin workflows',
+      tech: ['React 19', 'Express 5', 'Neon PostgreSQL', 'Drizzle ORM', 'Cloudinary', 'Render'],
+      image: '/Projects/RealState.png'
     }
   ];
 
@@ -1656,6 +1666,17 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
                 </a>
               )}
 
+              {/* Backend API */}
+              {project.backendUrl && project.backendUrl !== "#" && (
+                <a href={project.backendUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
+                  <div className="flex items-center gap-3">
+                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <span className="font-display text-white font-semibold text-sm">Backend API</span>
+                  </div>
+                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                </a>
+              )}
+
               {/* GitHub */}
               {project.githubUrl && project.githubUrl !== "#" && (
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
@@ -2172,6 +2193,17 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
                   <div className="flex items-center gap-3">
                     <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Live API</span>
+                  </div>
+                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                </a>
+              )}
+
+              {/* Backend API */}
+              {project.backendUrl && project.backendUrl !== "#" && (
+                <a href={project.backendUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
+                  <div className="flex items-center gap-3">
+                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <span className="font-display text-white font-semibold text-sm">Backend API</span>
                   </div>
                   <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
                 </a>
