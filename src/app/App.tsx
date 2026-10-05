@@ -2427,6 +2427,12 @@ export default function App() {
   useEffect(() => {
     const path = window.location.pathname;
     
+    // Handle / route
+    if (path === '/' || path === '') {
+      setCurrentPage("home");
+      return;
+    }
+
     // Handle /portfolio route
     if (path === '/portfolio' || path === '/portfolio/') {
       setCurrentPage("projects");
