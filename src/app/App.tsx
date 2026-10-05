@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
-import { ArrowUpRight, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch, Award, ShieldCheck, Server } from "lucide-react";
+import { ArrowUpRight, ArrowLeft, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch, Award, ShieldCheck, Server, FolderOpen, User } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
 import { certifications, findCertificationBySlug, type Certification } from "./data/certifications";
 import { FeaturedClients } from "./components/FeaturedClients";
@@ -2339,6 +2339,80 @@ function PortfolioPage({ onViewProjects, onProjectClick, onOpenCertification }: 
   );
 }
 
+// ─── 404 Page ────────────────────────────────────────────────────────────────
+
+function NotFoundPage({ onNavigate }: { onNavigate: (page: string) => void }) {
+  const attemptedPath = window.location.pathname;
+
+  const routes = [
+    { label: "Back to Home", icon: ArrowLeft, target: "home", primary: true },
+    { label: "View Projects", icon: FolderOpen, target: "projects", primary: false },
+    { label: "About Me", icon: User, target: "about", primary: false },
+  ];
+
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden" style={{ background: "#050505" }}>
+      <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 45%, rgba(0,216,255,0.04) 0%, transparent 65%)" }} />
+
+      {/* Oversized ghost 404 */}
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1.2, delay: 0.15 }}
+        className="absolute inset-0 flex items-center justify-center font-display font-black select-none pointer-events-none"
+        style={{ fontSize: "clamp(180px, 42vw, 620px)", letterSpacing: "-0.06em", color: "rgba(255,255,255,0.025)" }}>
+        404
+      </motion.div>
+
+      <div className="relative z-10 w-full px-6 md:px-12 lg:px-20 py-32 md:py-40">
+        <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }}
+          className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-8">
+          Error 404 — Page Not Found
+        </motion.p>
+
+        <div className="overflow-hidden mb-2">
+          <motion.h1 initial={{ y: "100%" }} animate={{ y: "0%" }} transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display text-white leading-[0.88]" style={{ fontSize: "clamp(48px, 10vw, 140px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
+            Page Not
+          </motion.h1>
+        </div>
+        <div className="overflow-hidden mb-10">
+          <motion.h1 initial={{ y: "100%" }} animate={{ y: "0%" }} transition={{ duration: 1, delay: 0.42, ease: [0.16, 1, 0.3, 1] }}
+            className="font-display leading-[0.88]" style={{ fontSize: "clamp(48px, 10vw, 140px)", fontWeight: 800, letterSpacing: "-0.04em", color: "rgba(255,255,255,0.12)" }}>
+            Found.
+          </motion.h1>
+        </div>
+
+        <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }}
+          className="text-white/35 max-w-md leading-relaxed" style={{ fontSize: "clamp(14px, 1.2vw, 16px)" }}>
+          The page you were looking for has been moved, renamed, or never existed in the first place. Pick a route below to get back on track.
+        </motion.p>
+
+        {/* Attempted path */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.8 }}
+          className="mt-8 inline-flex items-center gap-3 px-4 py-2.5 rounded-full bg-white/[0.04] border border-white/[0.08]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/25">Requested</span>
+          <span className="font-mono text-[11px] text-white/55 break-all">{attemptedPath}</span>
+        </motion.div>
+
+        {/* Recovery routes */}
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.9 }}
+          className="mt-12 flex flex-col sm:flex-row flex-wrap items-stretch sm:items-center gap-4">
+          {routes.map(({ label, icon: Icon, target, primary }) => (
+            <button key={target} onClick={() => onNavigate(target)}
+              className={cn(
+                "group flex items-center justify-center gap-3 px-7 py-3.5 rounded-full font-display font-semibold text-sm transition-all duration-200",
+                primary
+                  ? "bg-white text-black hover:bg-white/90"
+                  : "border border-white/15 text-white/70 hover:text-white hover:border-white/35"
+              )}>
+              <Icon size={16} className={cn("transition-all duration-200", primary ? "" : "text-white/40 group-hover:text-white/70", target === "home" ? "group-hover:-translate-x-1" : "")} />
+              {label}
+            </button>
+          ))}
+        </motion.div>
+      </div>
+    </section>
+  );
+}
+
 // ─── App Root ─────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -2374,7 +2448,7 @@ export default function App() {
         setSelectedCertification(cert.slug);
         return;
       }
-      setCurrentPage("about");
+      setCurrentPage("notfound");
       return;
     }
 
@@ -2410,14 +2484,14 @@ export default function App() {
         setSelectedProject(project);
         return;
       } else {
-        // If project not found, go to projects page
-        setCurrentPage("projects");
+        // Unknown project slug
+        setCurrentPage("notfound");
         return;
       }
     }
     
-    // Default to home
-    setCurrentPage("home");
+    // Unknown route — render the 404 page instead of silently landing on home
+    setCurrentPage("notfound");
   }, []);
 
   const handleOpenCertification = useCallback((slug: string) => {
@@ -2504,6 +2578,10 @@ export default function App() {
             ) : currentPage === "case-study" && caseStudyProject ? (
               <motion.div key="case-study" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
                 <CaseStudyPage project={caseStudyProject} onBack={() => handleNavigate("home")} />
+              </motion.div>
+            ) : currentPage === "notfound" ? (
+              <motion.div key="notfound" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+                <NotFoundPage onNavigate={handleNavigate} />
               </motion.div>
             ) : null}
           </AnimatePresence>
