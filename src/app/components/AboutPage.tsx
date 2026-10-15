@@ -2,6 +2,7 @@ import { useRef, type KeyboardEvent, type ReactNode } from "react";
 import { motion, useInView } from "motion/react";
 import { ArrowUpRight, Github, Linkedin, Mail, ArrowDown, Award, ShieldCheck } from "lucide-react";
 import { certifications, type Certification } from "../data/certifications";
+import { CompanyLogo } from "./ExperienceLogos";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -314,7 +315,10 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                         <div className="font-display text-white font-bold leading-tight" style={{ fontSize: "clamp(20px, 2.2vw, 26px)", letterSpacing: "-0.02em" }}>
                           {item.role}
                         </div>
-                        <div className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/45 mt-2">{item.company}</div>
+                        <div className="flex items-center gap-2 mt-2">
+                          <div className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/45">{exp.company}</div>
+                          <CompanyLogo company={exp.company} />
+                        </div>
                       </div>
                       <div className="md:col-span-6">
                         <p className="text-white/45 text-sm leading-relaxed mb-5">{item.description}</p>

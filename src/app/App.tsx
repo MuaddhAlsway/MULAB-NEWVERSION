@@ -741,7 +741,7 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
           Available for work <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         </a>
 
-        <button className="md:hidden text-white p-1" onClick={() => setMenuOpen(!menuOpen)}>
+        <div className="md:hidden text-white p-1" onClick={() => setMenuOpen(!menuOpen)}>
           <div className="w-5 flex flex-col gap-1">
             <motion.span animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 8 : 0 }} className="block h-px bg-white" />
             <motion.span animate={{ opacity: menuOpen ? 0 : 1 }} className="block h-px bg-white" />
@@ -753,12 +753,15 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
       <AnimatePresence>
         {menuOpen && (
           <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-            className="md:hidden mx-4 mt-2 p-6 rounded-2xl bg-black/90 backdrop-blur-xl border border-white/[0.06] flex flex-col gap-5">
-            <button onClick={() => { onNavigate("about"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/70 hover:text-white transition-colors text-left">About</button>
-            <button onClick={() => { onNavigate("projects"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/70 hover:text-white transition-colors text-left">Projects</button>
+            className="md:hidden mx-4 mt-2 p-6 rounded-2xl bg-black/95 backdrop-blur-xl border border-white/[0.08] flex flex-col gap-5">
+            <button onClick={() => { onNavigate("about"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/80 hover:text-white transition-colors text-left">About</button>
+            <button onClick={() => { onNavigate("projects"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/80 hover:text-white transition-colors text-left">{isProjects ? "← Home" : "Projects"}</button>
             {currentPage === "home" && ["Skills", "Experience", "Contact"].map((item) => (
-              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="font-display text-xl font-semibold text-white/70 hover:text-white transition-colors">{item}</a>
+              <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="font-display text-xl font-semibold text-white/80 hover:text-white transition-colors">{item}</a>
             ))}
+            <a href="mailto:muaddhalsway@gmail.com" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.12em] text-white/60 hover:text-white transition-colors mt-2">
+              Available for work <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
