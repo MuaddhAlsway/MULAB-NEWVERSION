@@ -1138,9 +1138,12 @@ function ExperienceSection() {
                   <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/25 mb-3">{item.year}</div>
                   <div className="p-5 md:p-7 rounded-2xl border border-white/[0.05] bg-card hover:border-white/10 transition-all duration-300 hover:bg-white/[0.02]">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                       <div className="flex flex-col gap-2">
+                       <div>
                          <h3 className="font-display text-white font-bold mb-1" style={{ fontSize: "clamp(18px, 2.2vw, 22px)", letterSpacing: "-0.02em" }}>{item.role}</h3>
-                         <CompanyLogo company={item.company} />
+                         <div className="flex items-center gap-2">
+                           <p className="font-mono text-[11px] text-white/35 uppercase tracking-wider">{item.company}</p>
+                           <CompanyLogo company={item.company} />
+                         </div>
                        </div>
                     </div>
                     <p className="text-white/50 text-sm leading-relaxed mb-4">{item.desc}</p>
