@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { motion, AnimatePresence, useInView } from "motion/react";
-import { ArrowUpRight, ArrowLeft, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, BookOpen, FileText, GitBranch, Award, ShieldCheck, Server, FolderOpen, User } from "lucide-react";
+import { ArrowUpRight, ArrowLeft, Github, Linkedin, Mail, Instagram, ExternalLink, X, ChevronLeft, ChevronRight, BookOpen, FileText, GitBranch, Award, ShieldCheck, Server, FolderOpen, User, Rocket, Lock, Brain, Zap, Circle, Repeat, Globe, Lightbulb, Flame, CheckCircle2, type LucideIcon } from "lucide-react";
 import { projects as importedProjects } from "./data/projects";
 import { certifications, findCertificationBySlug, type Certification } from "./data/certifications";
 import { FeaturedClients } from "./components/FeaturedClients";
@@ -1186,30 +1186,62 @@ function ExperienceSection() {
 const STORY_TIMELINE = [
   {
     day: "Day 1",
-    title: "🚀 My Backend Learning Journey",
+    title: "My Backend Learning Journey",
     subtitle: "Pure Backend Focus",
     content: "I recently started a new path in my learning journey: Pure Backend Development using Node.js and Express 🟢⚡ After researching how to improve my skills, I realized I needed one thing most: Focus without distractions. So I decided to build backend projects without frontend — just pure APIs, logic, and server-side development.\n\nMy goal is simple: Master backend fundamentals first, understand how APIs really work, and build strong foundations before moving to full-stack.\n\nI believe real growth comes step by step: Small projects → Consistency → Practice → Mastery. At the beginning, it was confusing. I didn't know the exact path. But I learned something important: Every developer starts from zero — clarity comes through building, not waiting.\n\nNow my learning approach is: Pure backend projects (Node.js + Express) 🟢, Learning from structured courses (like Udemy) 📚, Constant practice and improvement 🔁, Later → full-stack integration with frontend 🌐.\n\nBecause backend mastery is not about speed — it's about depth. It's a journey, not a shortcut. And I'm committed to it. 🚀",
-    icon: "🚀"
+    icon: Rocket
   },
   {
     day: "Day 2",
-    title: "🚀 Building an Advanced Authentication System",
+    title: "Building an Advanced Authentication System",
     subtitle: "Depth Over Speed",
     content: "Today, I built an authentication system at an advanced level. The first version was simple, but the second version pushed me much deeper into backend complexity and real-world thinking.\n\nRight now, my focus is not on blindly following tutorials. I'm intentionally choosing a different path: Pure Backend Development. My goal is to master the fundamentals behind how systems really work — not just the surface-level implementation, but the logic, structure, and decisions happening behind the scenes.\n\nThis journey will take time, but that's exactly the point. I'm choosing depth over speed — understanding why things work, not just how to build them.\n\n💡 My learning approach now looks like this:\n\n1. Brainstorm the idea before writing any code\n2. Understand why the system matters in real backend engineering\n3. Identify what I can learn beyond courses (Udemy / tutorials)\n4. Design architecture first (diagrams, logic flow, system structure)\n5. Build step by step\n6. Face real bugs and unexpected issues during development\n7. Document everything I learn from those problems\n8. Reuse that knowledge in future projects to avoid repeating mistakes\n\nEvery project I build is upgrading my level as a backend developer. Real growth happens when you step out of comfort and build things without knowing every answer in advance. That's where real understanding starts — when you're forced to figure it out.\n\nInstead of chasing the \"final result\" from tutorials, I'm learning how every step connects to the system as a whole. Because backend mastery doesn't come from copying execution — it comes from understanding the system deeply enough to build it yourself.\n\n🔥 This is just the beginning of my backend journey. I'm committed to improving, breaking things, fixing them, and becoming stronger with every project.",
-    icon: "🔐"
+    icon: Lock
   },
   {
     day: "Day 3",
-    title: "🚀 My Journey Today — A Shift in How I Think",
+    title: "My Journey Today — A Shift in How I Think",
     subtitle: "From Passive Learning to Active Building",
     content: "When I look back, I realize I'm not the same developer I was before. My thinking has changed. It's no longer just about learning concepts or finishing courses — it's about how I approach problems.\n\nThe real change is this: I stopped waiting to \"finish the material\" before building. Instead, I started building first. Because becoming a backend engineer through passive learning is not enough. You have to figure it out while building.\n\nThis approach changed everything for me:\n\nNow I learn in an active way. I build piece by piece until the bigger picture slowly starts to form. And along the way, I don't just consume knowledge — I generate questions. And those questions matter. Because the right questions push you into a level you can't reach through tutorials alone.\n\nI realized something important: You don't become a backend engineer by waiting for clarity. You become one by going through confusion, mistakes, and repeated attempts until you discover your own way of building.\n\nThis is what I call pure backend thinking:\n\n✅ Build before you fully understand\n✅ Learn through breakdowns and real bugs\n✅ Let problems guide the next step\n✅ Improve through repetition and iteration\n✅ Slowly connect the system until the full picture appears\n\nI'm still in the process. Still learning. Still pushing. But now I understand the direction. And that alone changes everything.\n\n🔥 This is not just learning anymore — this is building myself as a backend engineer. The transformation is real, and it starts with action, not perfection.",
-    icon: "🧠"
+    icon: Brain
   }
 ];
+
+const STORY_EMOJI_ICONS: Record<string, LucideIcon> = {
+  "🚀": Rocket,
+  "⚡": Zap,
+  "🟢": Circle,
+  "📚": BookOpen,
+  "🔁": Repeat,
+  "🌐": Globe,
+  "💡": Lightbulb,
+  "🔥": Flame,
+  "✅": CheckCircle2,
+  "🔐": Lock,
+  "🧠": Brain
+};
+
+const STORY_EMOJI_REGEX = new RegExp(`(${Object.keys(STORY_EMOJI_ICONS).join("|")})`, "g");
+
+function StoryText({ text }: { text: string }) {
+  const parts = text.split(STORY_EMOJI_REGEX);
+  return (
+    <>
+      {parts.map((part, i) => {
+        const Icon = STORY_EMOJI_ICONS[part];
+        if (Icon) {
+          return <Icon key={i} className="inline-block w-[0.95em] h-[0.95em] align-[-0.13em] text-white/55" strokeWidth={1.75} />;
+        }
+        return <span key={i}>{part}</span>;
+      })}
+    </>
+  );
+}
 
 function StorySection() {
   const [activeDay, setActiveDay] = useState(0);
   const story = STORY_TIMELINE[activeDay];
+  const StoryIcon = story.icon;
 
   return (
     <section id="story" className="py-24 md:py-36 bg-black">
@@ -1256,7 +1288,7 @@ function StorySection() {
               <div>
                 <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/25 mb-2">{story.day}</p>
                 <div className="flex items-center gap-4">
-                  <span className="text-5xl">{story.icon}</span>
+                  <StoryIcon className="w-11 h-11 text-white/80 flex-shrink-0" strokeWidth={1.5} />
                   <div>
                     <h3 className="font-display text-white font-bold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em" }}>
                       {story.title}
@@ -1288,7 +1320,7 @@ function StorySection() {
                   className="text-white/70 leading-relaxed whitespace-pre-wrap"
                   style={{ fontSize: "clamp(16px, 1.1vw, 18px)" }}
                 >
-                  {paragraph}
+                  <StoryText text={paragraph} />
                 </p>
               ))}
             </div>
@@ -1302,7 +1334,8 @@ function StorySection() {
                 whileHover={{ x: -4 }}
                 whileTap={{ scale: 0.95 }}
               >
-                ← Previous
+                <ChevronLeft className="w-4 h-4" />
+                Previous
               </motion.button>
 
               <div className="font-mono text-[11px] text-white/40 uppercase tracking-wider">
@@ -1316,7 +1349,8 @@ function StorySection() {
                 whileHover={{ x: 4 }}
                 whileTap={{ scale: 0.95 }}
               >
-                Next →
+                Next
+                <ChevronRight className="w-4 h-4" />
               </motion.button>
             </div>
           </motion.div>
