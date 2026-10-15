@@ -4,6 +4,7 @@ import { ArrowUpRight, ArrowLeft, Github, Linkedin, Mail, Instagram, ExternalLin
 import { projects as importedProjects } from "./data/projects";
 import { certifications, findCertificationBySlug, type Certification } from "./data/certifications";
 import { FeaturedClients } from "./components/FeaturedClients";
+import { TrustedBy } from "./components/TrustedBy";
 import { CaseStudyPage } from "./components/CaseStudyPage";
 import AboutPage from "./components/AboutPage";
 import CertificationPage from "./components/CertificationPage";
@@ -2358,6 +2359,7 @@ function PortfolioPage({ onViewProjects, onProjectClick, onOpenCertification }: 
       <HeroSection onViewProjects={onViewProjects} />
       <MarqueeSection />
       
+      <TrustedBy />
       <FeaturedClients />
       <PortfolioProjectsSection onViewAll={onViewProjects} onProjectClick={onProjectClick} />
       <ProductionProjectsSection onProjectClick={onProjectClick} />
