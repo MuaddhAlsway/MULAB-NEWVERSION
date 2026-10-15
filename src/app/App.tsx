@@ -715,15 +715,28 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const onResize = () => { if (window.innerWidth >= 768) setMenuOpen(false); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setMenuOpen(false); };
+    window.addEventListener("resize", onResize);
+    window.addEventListener("keydown", onKey);
+    return () => { window.removeEventListener("resize", onResize); window.removeEventListener("keydown", onKey); };
+  }, []);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [menuOpen]);
+
   const isProjects = currentPage === "projects";
 
   return (
     <motion.nav initial={{ y: -20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-      className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-500", scrolled ? "py-4" : "py-6")}>
-      <div className={cn("mx-4 md:mx-8 px-6 py-3 rounded-2xl flex items-center justify-between transition-all duration-500", scrolled ? "backdrop-blur-xl bg-black/60 border border-white/[0.06]" : "bg-transparent border border-transparent")}>
-        <button onClick={() => onNavigate("home")} className="font-display font-bold text-white tracking-tight text-sm md:text-base" style={{ letterSpacing: "-0.02em" }}>MULAB</button>
+      className={cn("fixed top-0 left-0 right-0 z-50 transition-all duration-500", scrolled ? "py-3 md:py-4" : "py-4 md:py-6")}>
+      <div className={cn("mx-3 sm:mx-4 md:mx-8 px-4 sm:px-6 py-3 rounded-2xl flex items-center justify-between gap-4 transition-all duration-500", scrolled || menuOpen ? "backdrop-blur-xl bg-black/70 border border-white/[0.06]" : "bg-transparent border border-transparent")}>
+        <button onClick={() => { onNavigate("home"); setMenuOpen(false); }} className="font-display font-bold text-white tracking-tight text-sm md:text-base shrink-0" style={{ letterSpacing: "-0.02em" }}>MULAB</button>
 
-        <div className="hidden md:flex items-center gap-8 font-mono text-[11px] uppercase tracking-[0.15em] text-white/50">
+        <div className="hidden md:flex items-center gap-6 lg:gap-8 font-mono text-[11px] uppercase tracking-[0.15em] text-white/50">
           {currentPage === "home" && ["Skills", "Experience", "Contact"].map((item) => (
             <a key={item} href={`#${item.toLowerCase()}`} className="hover:text-white transition-colors duration-200">{item}</a>
           ))}
@@ -737,11 +750,17 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
           </button>
         </div>
 
-        <a href="mailto:muaddhalsway@gmail.com" className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-all duration-200 font-mono text-[10px] uppercase tracking-[0.1em]">
+        <a href="mailto:muaddhalsway@gmail.com" className="hidden md:flex items-center gap-2 px-4 py-2 rounded-full border border-white/15 text-white/60 hover:text-white hover:border-white/30 transition-all duration-200 font-mono text-[10px] uppercase tracking-[0.1em] whitespace-nowrap shrink-0">
           Available for work <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         </a>
 
-        <button className="md:hidden text-white p-1" onClick={() => setMenuOpen(!menuOpen)}>
+        <button
+          className="md:hidden text-white p-2 -mr-1 shrink-0"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+        >
           <div className="w-5 flex flex-col gap-1">
             <motion.span animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 8 : 0 }} className="block h-px bg-white" />
             <motion.span animate={{ opacity: menuOpen ? 0 : 1 }} className="block h-px bg-white" />
@@ -752,10 +771,13 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
 
       <AnimatePresence>
         {menuOpen && (
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
-            className="md:hidden mx-4 mt-2 p-6 rounded-2xl bg-black/95 backdrop-blur-xl border border-white/[0.08] flex flex-col gap-5">
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
+            className="md:hidden mx-3 sm:mx-4 mt-2 p-6 rounded-2xl bg-black/95 backdrop-blur-xl border border-white/[0.08] flex flex-col gap-5 max-h-[calc(100vh-6rem)] overflow-y-auto"
+          >
             <button onClick={() => { onNavigate("about"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/80 hover:text-white transition-colors text-left">About</button>
-            <button onClick={() => { onNavigate("projects"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/80 hover:text-white transition-colors text-left">{isProjects ? "← Home" : "Projects"}</button>
+            <button onClick={() => { onNavigate(isProjects ? "home" : "projects"); setMenuOpen(false); }} className="font-display text-xl font-semibold text-white/80 hover:text-white transition-colors text-left">{isProjects ? "← Home" : "Projects"}</button>
             {currentPage === "home" && ["Skills", "Experience", "Contact"].map((item) => (
               <a key={item} href={`#${item.toLowerCase()}`} onClick={() => setMenuOpen(false)} className="font-display text-xl font-semibold text-white/80 hover:text-white transition-colors">{item}</a>
             ))}
@@ -1071,7 +1093,7 @@ function SkillsSection() {
   ];
 
   return (
-    <section id="skills" className="py-24 md:py-36 bg-black overflow-hidden">
+    <section id="skills" className="scroll-mt-20 py-24 md:py-36 bg-black overflow-hidden">
       <div className="px-6 md:px-12 lg:px-20 mb-16">
         <FadeIn>
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Technologies & Skills</p>
@@ -1125,7 +1147,7 @@ function SkillsSection() {
 
 function ExperienceSection() {
   return (
-    <section id="experience" className="py-24 md:py-36 bg-black">
+    <section id="experience" className="scroll-mt-20 py-24 md:py-36 bg-black">
       <div className="px-6 md:px-12 lg:px-20">
         <FadeIn className="mb-20">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-4">Career Path</p>
@@ -1480,7 +1502,7 @@ function ContactSection() {
   }, []);
 
   return (
-    <section id="contact" className="relative py-24 md:py-40 bg-black overflow-hidden border-t border-white/[0.04]">
+    <section id="contact" className="scroll-mt-20 relative py-24 md:py-40 bg-black overflow-hidden border-t border-white/[0.04]">
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 70% 50% at 50% 70%, rgba(0,216,255,0.035) 0%, transparent 65%)" }} />
       <div className="relative px-6 md:px-12 lg:px-20">
         <FadeIn className="mb-6"><p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">Get In Touch</p></FadeIn>
