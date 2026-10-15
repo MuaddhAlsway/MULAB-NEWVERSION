@@ -12,6 +12,7 @@ const clientLogos: ClientLogo[] = [
   { name: 'TD Logistics', src: '/logoclient/tdlogistic.jpg', href: 'https://tdlogistics.co/' },
   { name: 'Mesaha Lakum', src: '/logoclient/lakumartspace.png', href: 'https://lakumartspace.com/' },
   { name: 'Three Sister', src: '/logoclient/threesister.jpg' },
+  { name: 'MADD', src: '/logoclient/madd.png' },
 ];
 
 export function TrustedBy() {

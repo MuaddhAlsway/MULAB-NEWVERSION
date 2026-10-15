@@ -5,6 +5,7 @@ import { projects as importedProjects } from "./data/projects";
 import { certifications, findCertificationBySlug, type Certification } from "./data/certifications";
 import { FeaturedClients } from "./components/FeaturedClients";
 import { TrustedBy } from "./components/TrustedBy";
+import { CompanyLogo } from "./components/ExperienceLogos";
 import { CaseStudyPage } from "./components/CaseStudyPage";
 import AboutPage from "./components/AboutPage";
 import CertificationPage from "./components/CertificationPage";
@@ -1137,10 +1138,10 @@ function ExperienceSection() {
                   <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/25 mb-3">{item.year}</div>
                   <div className="p-5 md:p-7 rounded-2xl border border-white/[0.05] bg-card hover:border-white/10 transition-all duration-300 hover:bg-white/[0.02]">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
-                      <div>
-                        <h3 className="font-display text-white font-bold mb-1" style={{ fontSize: "clamp(18px, 2.2vw, 22px)", letterSpacing: "-0.02em" }}>{item.role}</h3>
-                        <p className="font-mono text-[11px] text-white/35 uppercase tracking-wider">{item.company}</p>
-                      </div>
+                       <div className="flex flex-col gap-2">
+                         <h3 className="font-display text-white font-bold mb-1" style={{ fontSize: "clamp(18px, 2.2vw, 22px)", letterSpacing: "-0.02em" }}>{item.role}</h3>
+                         <CompanyLogo company={item.company} />
+                       </div>
                     </div>
                     <p className="text-white/50 text-sm leading-relaxed mb-4">{item.desc}</p>
                     <div className="flex flex-wrap gap-2">
