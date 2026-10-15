@@ -1165,10 +1165,7 @@ function ExperienceSection() {
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                        <div>
                          <h3 className="font-display text-white font-bold mb-1" style={{ fontSize: "clamp(18px, 2.2vw, 22px)", letterSpacing: "-0.02em" }}>{item.role}</h3>
-                         <div className="flex items-center gap-2">
-                           <p className="font-mono text-[11px] text-white/35 uppercase tracking-wider">{item.company}</p>
-                           <CompanyLogo company={item.company} />
-                         </div>
+                         <CompanyLogo company={item.company} className="mt-2" />
                        </div>
                     </div>
                     <p className="text-white/50 text-sm leading-relaxed mb-4">{item.desc}</p>

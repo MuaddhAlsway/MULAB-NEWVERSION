@@ -15,25 +15,30 @@ const logoMap: Record<string, CompanyLogo> = {
 export function CompanyLogo({ company, className }: { company: string; className?: string }) {
   const logo = logoMap[company];
   if (!logo) return null;
+
   const img = (
     <ImageWithFallback
       src={logo.src}
       alt={company}
-      className={`max-h-6 sm:max-h-7 max-w-[90px] object-contain grayscale group-hover:grayscale-0 transition-all duration-500 opacity-80 group-hover:opacity-100 ${className || ''}`}
+      className="max-h-7 md:max-h-8 max-w-[150px] object-contain grayscale group-hover:grayscale-0 transition-all duration-500 opacity-80 group-hover:opacity-100"
     />
   );
-  if (logo.href) {
-    return (
-      <a
-        href={logo.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center"
-        aria-label={company}
-      >
-        {img}
-      </a>
-    );
-  }
-  return <div className="flex items-center">{img}</div>;
+
+  return (
+    <div className={`flex items-center ${className || ''}`}>
+      {logo.href ? (
+        <a
+          href={logo.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center"
+          aria-label={company}
+        >
+          {img}
+        </a>
+      ) : (
+        img
+      )}
+    </div>
+  );
 }

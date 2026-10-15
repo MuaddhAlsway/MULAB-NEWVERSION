@@ -315,10 +315,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                         <div className="font-display text-white font-bold leading-tight" style={{ fontSize: "clamp(20px, 2.2vw, 26px)", letterSpacing: "-0.02em" }}>
                           {item.role}
                         </div>
-                        <div className="flex items-center gap-2 mt-2">
-                          <div className="font-mono text-[11px] uppercase tracking-[0.15em] text-white/45">{exp.company}</div>
-                          <CompanyLogo company={exp.company} />
-                        </div>
+                        <CompanyLogo company={item.company} className="mt-3" />
                       </div>
                       <div className="md:col-span-6">
                         <p className="text-white/45 text-sm leading-relaxed mb-5">{item.description}</p>
