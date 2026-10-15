@@ -27,7 +27,7 @@ const clientProjects: ClientProject[] = [
   {
     id: 2,
     name: 'TD Logistics',
-    description: 'Logistics services platform',
+    description: 'Logistics & Tracking Platform',
     tech: ['Next.js', 'TypeScript', 'SQLite', 'Tailwind'],
     image: '/Projects/mockup/TD.png',
     github: 'https://github.com/MuaddhAlsway/TD-cloudflare-deploy.git',
@@ -37,7 +37,7 @@ const clientProjects: ClientProject[] = [
   {
     id: 3,
     name: "Writer's Journey",
-    description: 'Book Launch Platform',
+    description: 'Book Launch & Email Platform',
     tech: ['React', 'Express.js', 'Turso', 'Resend'],
     image: '/Projects/mockup/WRITING.png',
     github: 'https://github.com/MuaddhAlsway/Writer-Website-Landing-Page.git',
@@ -47,7 +47,7 @@ const clientProjects: ClientProject[] = [
   {
     id: 4,
     name: 'Riyadah',
-    description: 'Accounting firm website',
+    description: 'Accounting Firm Platform',
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
     image: '/Projects/mockup/ALRYADH.png',
     github: 'https://github.com/MuaddhAlsway/Alryadah.git',
@@ -57,7 +57,7 @@ const clientProjects: ClientProject[] = [
   {
     id: 5,
     name: 'Mesaha Lakum',
-    description: 'Event Management & Cultural Platform',
+    description: 'Event Management Platform',
     tech: ['PHP', 'MySQL', 'JavaScript', 'HTML5', 'CSS3'],
     image: '/Projects/mockup/LAKUM.png',
     github: 'https://github.com/MuaddhAlsway/LAKUMPremiumVersion.git',
@@ -95,7 +95,7 @@ export function FeaturedClients() {
       {/* Client Projects Carousel */}
       <div className="relative w-full overflow-hidden">
         <motion.div
-          className="flex gap-6 px-6 md:px-12 lg:px-20"
+          className="flex items-stretch gap-6 px-6 md:px-12 lg:px-20"
           animate={{ x: [0, -(clientProjects.length * 400 + 24 * clientProjects.length)] }}
           transition={{
             duration: 60,
@@ -113,10 +113,10 @@ export function FeaturedClients() {
               >
                 <motion.div
                   whileHover={{ scale: 1.02 }}
-                  className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 h-full"
+                  className="group relative rounded-2xl overflow-hidden bg-card border border-white/[0.06] hover:border-white/[0.12] transition-all duration-300 h-full flex flex-col"
                 >
                   {/* Image Container */}
-                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900">
+                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900 flex-shrink-0">
                     <ImageWithFallback
                       src={project.image}
                       alt={project.name}
@@ -126,20 +126,20 @@ export function FeaturedClients() {
                   </div>
 
                   {/* Content Container */}
-                  <div className="p-5 md:p-6">
-                    <div className="flex items-start justify-between mb-3">
-                      <h3 className="font-display text-white font-bold group-hover:text-white/[0.9] transition-colors" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>
+                  <div className="p-5 md:p-6 flex flex-col flex-1">
+                    <div className="flex items-start justify-between gap-2 mb-3">
+                      <h3 className="font-display text-white font-bold group-hover:text-white/[0.9] transition-colors line-clamp-1" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>
                         {project.name}
                       </h3>
-                      <span className="font-mono text-[10px] text-white/25 flex-shrink-0">Client</span>
+                      <span className="font-mono text-[10px] text-white/25 flex-shrink-0 mt-1">Client</span>
                     </div>
                     
-                    <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4">
+                    <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4 line-clamp-2 min-h-[2.6em]">
                       {project.description}
                     </p>
 
                     {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-2 mb-4 min-h-[3.25rem] content-start">
                       {project.tech.slice(0, 4).map((t) => (
                         <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
                           {t}
@@ -148,7 +148,7 @@ export function FeaturedClients() {
                     </div>
 
                     {/* Brand Section */}
-                    <div className="flex items-center flex-wrap gap-x-2.5 gap-y-2 mb-4 pt-3 border-t border-white/[0.06] min-h-[24px]">
+                    <div className="flex items-center flex-wrap gap-x-2.5 gap-y-2 mb-4 pt-3 border-t border-white/[0.06] min-h-[40px]">
                       {project.brand && brandLogos[project.brand] && (
                         <img
                           src={brandLogos[project.brand]}
@@ -162,7 +162,7 @@ export function FeaturedClients() {
                     </div>
 
                     {/* Links */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 mt-auto">
                       {project.live && (
                         <a
                           href={project.live.trim()}
