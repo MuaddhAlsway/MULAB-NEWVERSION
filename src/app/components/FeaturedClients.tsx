@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import { Building2 } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface ClientProject {
@@ -66,6 +65,11 @@ const clientProjects: ClientProject[] = [
     brand: 'MIBDAAT AL-THELATH for advertising'
   }
 ];
+
+const brandLogos: Record<string, string> = {
+  'MULAB': '/logoclient/mulab.png',
+  'MIBDAAT AL-THELATH for advertising': '/logoclient/threesister.jpg',
+};
 
 export function FeaturedClients() {
   return (
@@ -144,10 +148,14 @@ export function FeaturedClients() {
                     </div>
 
                     {/* Brand Section */}
-                    <div className="flex items-center gap-2 mb-4 pt-3 border-t border-white/[0.06]">
-                      <div className="w-5 h-5 rounded-full bg-white/[0.1] flex items-center justify-center flex-shrink-0">
-                        <Building2 className="w-3 h-3 text-white/[0.6]" />
-                      </div>
+                    <div className="flex items-center flex-wrap gap-x-2.5 gap-y-2 mb-4 pt-3 border-t border-white/[0.06] min-h-[24px]">
+                      {project.brand && brandLogos[project.brand] && (
+                        <img
+                          src={brandLogos[project.brand]}
+                          alt={project.brand}
+                          className="h-5 max-w-[130px] object-contain grayscale group-hover:grayscale-0 transition-all duration-500 opacity-80 group-hover:opacity-100"
+                        />
+                      )}
                       <span className="font-mono text-[10px] text-white/40 tracking-[0.1em] uppercase">
                         {project.brand || 'MIBDAAT AL-THELATH'}
                       </span>
