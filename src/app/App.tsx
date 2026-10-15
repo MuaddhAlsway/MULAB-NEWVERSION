@@ -2005,10 +2005,11 @@ function ProjectsListView({ projects, onOpen, showFeatured }: { projects: FullPr
 // Metrics section
 function MetricsSection() {
   const metrics = [
-    { value: "51+", label: "Projects", sub: "Completed" },
-    { value: "2+", label: "Years", sub: "Frontend Development Journey" },
-    { value: "10+", label: "Technologies", sub: "HTML, CSS, JavaScript, C, Python & SQL" },
-    { value: "5+", label: "Major Platforms", sub: "LinkedIn, Airbnb, Spotify, Apple & Udemy" },
+    { value: "53+", label: "Projects", sub: "Full-Stack, Frontend, Backend & C" },
+    { value: "3+", label: "Years", sub: "Full-Stack Development Journey" },
+    { value: "51+", label: "Technologies", sub: "Frontend, Backend, Databases, Cloud & DevOps" },
+    { value: "15+", label: "Major Platforms", sub: "Netflix, LinkedIn, Amazon, Spotify & Airbnb" },
+    { value: "30+", label: "Live Deployments", sub: "Production-ready projects shipped" },
     { value: "100+", label: "Hours", sub: "CS50 & Self-Learning Experience" },
   ];
 
@@ -2019,7 +2020,7 @@ function MetricsSection() {
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-4">By the Numbers</p>
           <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Project Metrics</h2>
         </FadeIn>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {metrics.map((m, i) => (
             <FadeIn key={m.label} delay={i * 0.08}>
               <div className="p-6 rounded-2xl border border-white/[0.06] bg-card hover:border-white/15 transition-all duration-300 group h-full">
