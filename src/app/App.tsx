@@ -741,7 +741,7 @@ function Nav({ currentPage, onNavigate }: { currentPage: string; onNavigate: (pa
           Available for work <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
         </a>
 
-        <div className="md:hidden text-white p-1" onClick={() => setMenuOpen(!menuOpen)}>
+        <button className="md:hidden text-white p-1" onClick={() => setMenuOpen(!menuOpen)}>
           <div className="w-5 flex flex-col gap-1">
             <motion.span animate={{ rotate: menuOpen ? 45 : 0, y: menuOpen ? 8 : 0 }} className="block h-px bg-white" />
             <motion.span animate={{ opacity: menuOpen ? 0 : 1 }} className="block h-px bg-white" />
