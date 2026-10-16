@@ -1862,7 +1862,7 @@ function ProjectsHero() {
       <div className="relative z-10 px-6 md:px-12 lg:px-20 pb-20 md:pb-28">
         <motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.2 }}
           className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30 mb-8">
-          Portfolio — {ALL_PROJECTS.length} Projects — 2021–2024
+          Portfolio — {ALL_PROJECTS.length} Projects — 2023–Present
         </motion.p>
         <div className="overflow-hidden">
           <motion.h1 initial={{ y: "100%" }} animate={{ y: "0%" }} transition={{ duration: 1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
