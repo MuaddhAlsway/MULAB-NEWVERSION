@@ -25,8 +25,8 @@ export const certifications: Certification[] = [
     overview:
       "A comprehensive introduction to computer science covering computational thinking, algorithms, data structures, memory, computer architecture, databases, and web development. Built practical projects using C, Python, SQL, HTML, CSS, and JavaScript.",
     skills: ["Algorithms", "Data Structures", "C", "Python", "SQL", "HTML/CSS", "JavaScript"],
-    cover: "/Certification/CS50x.pdf",
-    coverType: "pdf",
+    cover: "/Certification/CS50.png",
+    coverType: "image",
     verifyUrl: "https://certificates.cs50.io/b113f8e7-3911-45fe-aa7c-ed7574cc86fd.pdf?size=letter",
   },
   {
