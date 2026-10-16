@@ -823,7 +823,7 @@ function HeroSection({ onViewProjects }: { onViewProjects: () => void }) {
         </div>
         <div className="absolute top-[38%] left-[5%] md:left-[8%] w-28 md:w-36 p-3 rounded-2xl border border-white/[0.07] backdrop-blur-md hidden sm:block" style={{ background: "rgba(255,255,255,0.025)" }}>
           <div className="font-mono text-[9px] text-white/30 mb-1">Projects</div>
-          <div className="font-display text-2xl font-bold text-white">12+</div>
+          <div className="font-display text-2xl font-bold text-white">53+</div>
           <div className="font-mono text-[10px] text-white/40">Delivered</div>
         </div>
       </div>
