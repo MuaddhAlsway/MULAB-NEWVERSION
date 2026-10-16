@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
+import { LazyImage } from './LazyImage';
 
 interface ClientProject {
   id: number;
@@ -117,10 +117,10 @@ export function FeaturedClients() {
                 >
                   {/* Image Container */}
                   <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900 flex-shrink-0">
-                    <ImageWithFallback
+                    <LazyImage
                       src={project.image}
                       alt={project.name}
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
+                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                   </div>
