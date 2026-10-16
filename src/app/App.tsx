@@ -412,35 +412,60 @@ const MARQUEE_WORDS = ["React", "Next.js", "Vite", "TypeScript", "Tailwind CSS",
 
 
 const TECH_STACK = [
+  // Languages
+  { name: "HTML", category: "Languages" },
+  { name: "CSS", category: "Languages" },
+  { name: "JavaScript", category: "Languages" },
+  { name: "TypeScript", category: "Languages" },
+  { name: "C", category: "Languages" },
+  { name: "PHP", category: "Languages" },
+  { name: "Markdown", category: "Languages" },
+
   // Frontend
-  { name: "HTML5", category: "Frontend" },
-  { name: "CSS3", category: "Frontend" },
-  { name: "JavaScript", category: "Frontend" },
-  { name: "TypeScript", category: "Frontend" },
   { name: "React", category: "Frontend" },
+  { name: "React Native", category: "Frontend" },
+  { name: "Next.js", category: "Frontend" },
+  { name: "Remix", category: "Frontend" },
   { name: "Vite", category: "Frontend" },
-  { name: "Tailwind CSS", category: "Frontend" },
   { name: "React Router", category: "Frontend" },
+  { name: "TanStack", category: "Frontend" },
+  { name: "React Query", category: "Frontend" },
+  { name: "React Hook Form", category: "Frontend" },
+  { name: "Context API", category: "Frontend" },
   { name: "Axios", category: "Frontend" },
   { name: "Fetch API", category: "Frontend" },
+  { name: "Lucide React", category: "Frontend" },
+
+  // UI & Styling
+  { name: "Tailwind CSS", category: "UI & Styling" },
+  { name: "DaisyUI", category: "UI & Styling" },
+  { name: "shadcn/ui", category: "UI & Styling" },
+  { name: "Bootstrap", category: "UI & Styling" },
+  { name: "Font Awesome", category: "UI & Styling" },
+  { name: "Google Fonts", category: "UI & Styling" },
 
   // Backend
   { name: "Node.js", category: "Backend" },
   { name: "Express.js", category: "Backend" },
-  { name: "PHP", category: "Backend" },
+  { name: "Hono", category: "Backend" },
+  { name: "FastAPI", category: "Backend" },
+  { name: "JWT", category: "Backend" },
+  { name: "CORS", category: "Backend" },
 
   // Databases & Data
-  { name: "MySQL", category: "Databases & Data" },
-  { name: "MariaDB", category: "Databases & Data" },
   { name: "MongoDB", category: "Databases & Data" },
   { name: "Mongoose", category: "Databases & Data" },
-  { name: "PDO", category: "Databases & Data" },
-  { name: "Turso / libSQL", category: "Databases & Data" },
+  { name: "MySQL", category: "Databases & Data" },
+  { name: "MariaDB", category: "Databases & Data" },
+  { name: "PostgreSQL", category: "Databases & Data" },
+  { name: "SQLite", category: "Databases & Data" },
+  { name: "Prisma", category: "Databases & Data" },
   { name: "Drizzle ORM", category: "Databases & Data" },
+  { name: "Turso / libSQL", category: "Databases & Data" },
+  { name: "PDO", category: "Databases & Data" },
 
   // Authentication & Security
   { name: "Clerk", category: "Authentication & Security" },
-  { name: "JWT", category: "Authentication & Security" },
   { name: "HTTP-only Cookies", category: "Authentication & Security" },
   { name: "RBAC", category: "Authentication & Security" },
   { name: "TLS / SSL", category: "Authentication & Security" },
@@ -465,21 +490,43 @@ const TECH_STACK = [
   { name: "Brevo SMTP", category: "Email & Media" },
   { name: "Cloudinary", category: "Email & Media" },
 
+  // Cloud & Deployment
+  { name: "Neon", category: "Cloud & Deployment" },
+  { name: "Aiven", category: "Cloud & Deployment" },
+  { name: "Firebase", category: "Cloud & Deployment" },
+  { name: "Vercel", category: "Cloud & Deployment" },
+  { name: "Render", category: "Cloud & Deployment" },
+  { name: "Netlify", category: "Cloud & Deployment" },
+  { name: "Cloudflare", category: "Cloud & Deployment" },
+  { name: "Cloudflare Pages", category: "Cloud & Deployment" },
+  { name: "Cloudflare Workers", category: "Cloud & Deployment" },
+  { name: "Cloudflare KV", category: "Cloud & Deployment" },
+  { name: "Cloudflare R2", category: "Cloud & Deployment" },
+  { name: "Hostinger", category: "Cloud & Deployment" },
+
   // DevOps & Infrastructure
   { name: "Docker", category: "DevOps & Infrastructure" },
   { name: "Git", category: "DevOps & Infrastructure" },
   { name: "GitHub", category: "DevOps & Infrastructure" },
   { name: "GitHub Actions", category: "DevOps & Infrastructure" },
+  { name: "GitLab CI", category: "DevOps & Infrastructure" },
   { name: "CI/CD", category: "DevOps & Infrastructure" },
+  { name: "npm", category: "DevOps & Infrastructure" },
+  { name: "Nodemon", category: "DevOps & Infrastructure" },
+  { name: "Dotenv", category: "DevOps & Infrastructure" },
+  { name: "Environment Variables", category: "DevOps & Infrastructure" },
   { name: "XAMPP", category: "DevOps & Infrastructure" },
 
-  // Cloud & Deployment
-  { name: "Cloudflare Workers", category: "Cloud & Deployment" },
-  { name: "Cloudflare Pages", category: "Cloud & Deployment" },
-  { name: "Cloudflare KV", category: "Cloud & Deployment" },
-  { name: "Vercel", category: "Cloud & Deployment" },
-  { name: "Render", category: "Cloud & Deployment" },
-  { name: "Aiven", category: "Cloud & Deployment" },
+  // Testing & Code Quality
+  { name: "Postman", category: "Testing & Code Quality" },
+  { name: "Jasmine", category: "Testing & Code Quality" },
+  { name: "Thunder Client", category: "Testing & Code Quality" },
+  { name: "ESLint", category: "Testing & Code Quality" },
+  { name: "Prettier", category: "Testing & Code Quality" },
+
+  // Design & Tools
+  { name: "VS Code", category: "Design & Tools" },
+  { name: "Figma", category: "Design & Tools" },
 ];
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
@@ -2007,7 +2054,7 @@ function MetricsSection() {
   const metrics = [
     { value: "53+", label: "Projects", sub: "Full-Stack, Frontend, Backend & C" },
     { value: "3+", label: "Years", sub: "Full-Stack Development Journey" },
-    { value: "51+", label: "Technologies", sub: "Frontend, Backend, Databases, Cloud & DevOps" },
+    { value: "80+", label: "Technologies", sub: "Languages, Frontend, Backend, Databases, Cloud & More" },
     { value: "15+", label: "Major Platforms", sub: "Netflix, LinkedIn, Amazon, Spotify & Airbnb" },
     { value: "30+", label: "Live Deployments", sub: "Production-ready projects shipped" },
     { value: "100+", label: "Hours", sub: "CS50 & Self-Learning Experience" },
@@ -2041,7 +2088,7 @@ function MetricsSection() {
 // Tech visualization
 function TechVisualization() {
   const [activeFilter, setActiveFilter] = useState("All");
-  const techFilters = ["All", "Frontend", "Backend", "Databases & Data", "Authentication & Security", "APIs & Integrations", "Background Processing & Events", "Email & Media", "DevOps & Infrastructure", "Cloud & Deployment"];
+  const techFilters = ["All", "Languages", "Frontend", "UI & Styling", "Backend", "Databases & Data", "Authentication & Security", "APIs & Integrations", "Background Processing & Events", "Email & Media", "Cloud & Deployment", "DevOps & Infrastructure", "Testing & Code Quality", "Design & Tools"];
 
   const filtered = activeFilter === "All" ? TECH_STACK : TECH_STACK.filter((t) => t.category === activeFilter);
 
