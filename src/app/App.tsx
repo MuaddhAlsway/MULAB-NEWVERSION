@@ -1016,7 +1016,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
                   }}
                 >
                   {/* Image */}
-                  <div className="relative overflow-hidden h-52 md:h-56 lg:h-64 bg-neutral-900 shrink-0">
+                  <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900 shrink-0">
                     <LazyImage src={project.image} alt={project.name} className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                     <div className="absolute top-4 right-4 px-3 py-1.5 rounded-full bg-white/[0.08] backdrop-blur-sm border border-white/[0.1]">
