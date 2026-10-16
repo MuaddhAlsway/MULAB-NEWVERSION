@@ -418,7 +418,6 @@ const TECH_STACK = [
   { name: "JavaScript", category: "Languages" },
   { name: "TypeScript", category: "Languages" },
   { name: "C", category: "Languages" },
-  { name: "PHP", category: "Languages" },
   { name: "Markdown", category: "Languages" },
 
   // Frontend
@@ -449,6 +448,7 @@ const TECH_STACK = [
   { name: "Express.js", category: "Backend" },
   { name: "Hono", category: "Backend" },
   { name: "FastAPI", category: "Backend" },
+  { name: "PHP", category: "Backend" },
   { name: "JWT", category: "Backend" },
   { name: "CORS", category: "Backend" },
 
