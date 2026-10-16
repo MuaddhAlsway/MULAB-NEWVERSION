@@ -831,7 +831,7 @@ function HeroSection({ onViewProjects }: { onViewProjects: () => void }) {
       <div className="relative z-10 px-6 md:px-12 lg:px-20 pb-20 md:pb-28">
         <div className="overflow-hidden mb-3">
           <motion.p initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="font-mono text-[10px] md:text-xs text-white/30 uppercase tracking-[0.3em] mb-6">Muaddh Alsway — Est. 2020</motion.p>
+            className="font-mono text-[10px] md:text-xs text-white/30 uppercase tracking-[0.3em] mb-6">Muaddh Alsway — Est. 2023</motion.p>
         </div>
         {["Creative", "Front-End", "Developer."].map((word, i) => (
           <div key={word} className="overflow-hidden">
