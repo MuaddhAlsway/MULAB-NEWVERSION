@@ -19,7 +19,7 @@ const clientProjects: ClientProject[] = [
     name: 'TRQ Studio',
     description: 'Modern Portfolio & CMS Platform',
     tech: ['Next.js', 'React', 'Tailwind', 'CMS'],
-    image: '/Projects/mockup/TRQ.png',
+    image: '/Projects/mockup/TRQ.webp',
     github: 'https://github.com/MuaddhAlsway/TRQ-Archicator-Studio.git',
     live: 'https://trqstudio.com/',
     brand: 'MULAB'
@@ -29,7 +29,7 @@ const clientProjects: ClientProject[] = [
     name: 'TD Logistics',
     description: 'Logistics & Tracking Platform',
     tech: ['Next.js', 'TypeScript', 'SQLite', 'Tailwind'],
-    image: '/Projects/mockup/TD.png',
+    image: '/Projects/mockup/TD.webp',
     github: 'https://github.com/MuaddhAlsway/TD-cloudflare-deploy.git',
     live: 'https://tdlogistics.co/',
     brand: 'MIBDAAT AL-THELATH for advertising'
@@ -39,7 +39,7 @@ const clientProjects: ClientProject[] = [
     name: "Writer's Journey",
     description: 'Book Launch & Email Platform',
     tech: ['React', 'Express.js', 'Turso', 'Resend'],
-    image: '/Projects/mockup/WRITING.png',
+    image: '/Projects/mockup/WRITING.webp',
     github: 'https://github.com/MuaddhAlsway/Writer-Website-Landing-Page.git',
     live: ' https://authorfsk.com/',
     brand: 'MIBDAAT AL-THELATH for advertising'
@@ -49,7 +49,7 @@ const clientProjects: ClientProject[] = [
     name: 'Riyadah',
     description: 'Accounting Firm Platform',
     tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-    image: '/Projects/mockup/ALRYADH.png',
+    image: '/Projects/mockup/ALRYADH.webp',
     github: 'https://github.com/MuaddhAlsway/Alryadah.git',
     live: 'https://bc0161e1.riyadah-certified-accountants-saudi-arabia.pages.dev/',
     brand: 'MULAB'
@@ -59,7 +59,7 @@ const clientProjects: ClientProject[] = [
     name: 'Mesaha Lakum',
     description: 'Event Management Platform',
     tech: ['PHP', 'MySQL', 'JavaScript', 'HTML5', 'CSS3'],
-    image: '/Projects/mockup/LAKUM.png',
+    image: '/Projects/mockup/LAKUM.webp',
     github: 'https://github.com/MuaddhAlsway/LAKUMPremiumVersion.git',
     live: ' https://lakumartspace.com/',
     brand: 'MIBDAAT AL-THELATH for advertising'
@@ -67,8 +67,8 @@ const clientProjects: ClientProject[] = [
 ];
 
 const brandLogos: Record<string, string> = {
-  'MULAB': '/logoclient/mulab.png',
-  'MIBDAAT AL-THELATH for advertising': '/logoclient/threesister.jpg',
+  'MULAB': '/logoclient/mulab.webp',
+  'MIBDAAT AL-THELATH for advertising': '/logoclient/threesister.webp',
 };
 
 export function FeaturedClients() {
@@ -86,7 +86,7 @@ export function FeaturedClients() {
           <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
             Featured <span className="text-white/[0.7]">Client</span> Work
           </h2>
-          <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest max-w-2xl">
+          <p className="font-mono text-[11px] text-white/55 uppercase tracking-widest max-w-2xl">
             A curated selection of client projects demonstrating professional web development expertise
           </p>
         </motion.div>
@@ -131,17 +131,17 @@ export function FeaturedClients() {
                       <h3 className="font-display text-white font-bold group-hover:text-white/[0.9] transition-colors line-clamp-1" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>
                         {project.name}
                       </h3>
-                      <span className="font-mono text-[10px] text-white/25 flex-shrink-0 mt-1">Client</span>
+                      <span className="font-mono text-[10px] text-white/50 flex-shrink-0 mt-1">Client</span>
                     </div>
                     
-                    <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4 line-clamp-2 min-h-[2.6em]">
+                    <p className="font-mono text-[11px] text-white/55 uppercase tracking-widest mb-4 line-clamp-2 min-h-[2.6em]">
                       {project.description}
                     </p>
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2 mb-4 min-h-[3.25rem] content-start">
                       {project.tech.slice(0, 4).map((t) => (
-                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
+                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/60">
                           {t}
                         </span>
                       ))}
@@ -156,7 +156,7 @@ export function FeaturedClients() {
                           className="h-5 max-w-[130px] object-contain grayscale group-hover:grayscale-0 transition-all duration-500 opacity-80 group-hover:opacity-100"
                         />
                       )}
-                      <span className="font-mono text-[10px] text-white/40 tracking-[0.1em] uppercase">
+                      <span className="font-mono text-[10px] text-white/60 tracking-[0.1em] uppercase">
                         {project.brand || 'MIBDAAT AL-THELATH'}
                       </span>
                     </div>

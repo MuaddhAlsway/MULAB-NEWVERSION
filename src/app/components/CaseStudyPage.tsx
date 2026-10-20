@@ -409,7 +409,7 @@ function StaggerItem({ children, className = "" }: { children: React.ReactNode; 
 }
 
 function SectionLabel({ text }: { text: string }) {
-  return <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/20 mb-5">{text}</p>;
+  return <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/55 mb-5">{text}</p>;
 }
 
 function SectionTitle({ children, className = "" }: { children: React.ReactNode; className?: string }) {
@@ -510,7 +510,7 @@ function CinematicHero({ project, onBack }: { project: CaseStudyProject; onBack:
 
         {/* Tagline */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.6 }} className="mb-8">
-          <p className="text-white/45 max-w-2xl" style={{ fontSize: "clamp(16px, 2vw, 22px)", lineHeight: 1.5 }}>
+          <p className="text-white/55 max-w-2xl" style={{ fontSize: "clamp(16px, 2vw, 22px)", lineHeight: 1.5 }}>
             {tagline}
           </p>
         </motion.div>
@@ -523,7 +523,7 @@ function CinematicHero({ project, onBack }: { project: CaseStudyProject; onBack:
             { label: "Year", value: project.year || "2025" },
           ].filter(Boolean).map((item) => item && (
             <div key={item.label}>
-              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20 mb-1">{item.label}</p>
+              <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/55 mb-1">{item.label}</p>
               <p className="text-white/65 text-sm font-medium">{item.value}</p>
             </div>
           ))}
@@ -532,12 +532,12 @@ function CinematicHero({ project, onBack }: { project: CaseStudyProject; onBack:
         {/* Tech */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5, delay: 0.9 }} className="flex flex-wrap gap-2 mb-10">
           {project.tech.slice(0, 8).map((t) => (
-            <span key={t} className="px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] font-mono text-[10px] text-white/35 hover:border-[#00D8FF]/30 hover:text-[#00D8FF]/70 hover:bg-[#00D8FF]/[0.03] transition-all duration-300">
+            <span key={t} className="px-3 py-1.5 rounded-full border border-white/[0.08] bg-white/[0.03] font-mono text-[10px] text-white/55 hover:border-[#00D8FF]/30 hover:text-[#00D8FF]/70 hover:bg-[#00D8FF]/[0.03] transition-all duration-300">
               {t}
             </span>
           ))}
           {project.tech.length > 8 && (
-            <span className="px-3 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] font-mono text-[10px] text-white/20">
+            <span className="px-3 py-1.5 rounded-full border border-white/[0.06] bg-white/[0.02] font-mono text-[10px] text-white/55">
               +{project.tech.length - 8} more
             </span>
           )}
@@ -565,9 +565,9 @@ function CinematicHero({ project, onBack }: { project: CaseStudyProject; onBack:
 
       {/* Scroll Indicator */}
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }} className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2">
-        <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/15">Scroll</span>
+        <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-white/55">Scroll</span>
         <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}>
-          <ArrowDown size={14} className="text-white/15" />
+          <ArrowDown size={14} className="text-white/55" />
         </motion.div>
       </motion.div>
     </section>
@@ -641,7 +641,7 @@ function StickyBigNumbers({ project }: { project: CaseStudyProject }) {
                   className="p-8 rounded-2xl border border-white/[0.06]"
                   style={{ background: "rgba(255,255,255,0.02)" }}
                 >
-                  <p className="text-white/40 text-lg leading-relaxed" style={{ fontSize: "clamp(16px, 1.8vw, 22px)" }}>
+                  <p className="text-white/60 text-lg leading-relaxed" style={{ fontSize: "clamp(16px, 1.8vw, 22px)" }}>
                     {metrics[active].description}
                   </p>
                   <div className="mt-6 flex gap-2">
@@ -692,7 +692,7 @@ function AboutSection({ project }: { project: CaseStudyProject }) {
         <div className="max-w-4xl space-y-6">
           {paragraphs.slice(1).map((p, i) => (
             <FadeIn key={i} delay={0.15 + i * 0.05}>
-              <p className="text-white/45 leading-relaxed" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
+              <p className="text-white/55 leading-relaxed" style={{ fontSize: "clamp(15px, 1.4vw, 18px)" }}>
                 {p}
               </p>
             </FadeIn>
@@ -769,7 +769,7 @@ function ChallengeSolutionSection({ project }: { project: CaseStudyProject }) {
                 <div className="space-y-4">
                   {splitToList(challengeText).map((c, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <span className="text-white/10 font-mono text-xs mt-1 shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="text-white/50 font-mono text-xs mt-1 shrink-0">{String(i + 1).padStart(2, "0")}</span>
                       <p className="text-white/50 text-sm leading-relaxed">{c}.</p>
                     </div>
                   ))}
@@ -831,7 +831,7 @@ function EngineeringChallengesSection({ project }: { project: CaseStudyProject }
         <FadeIn><SectionLabel text="Deep Dive" /><SectionTitle>Engineering Deep Dive</SectionTitle></FadeIn>
 
         <FadeIn delay={0.1} className="mb-10">
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/20 mb-5 flex items-center gap-3">
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55 mb-5 flex items-center gap-3">
             <Code2 size={12} /> Challenges & Obstacles
           </p>
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -841,7 +841,7 @@ function EngineeringChallengesSection({ project }: { project: CaseStudyProject }
                   <GradientBorderCard>
                     <div className="p-5">
                       <div className="flex items-center gap-3 mb-3">
-                        <span className="font-mono text-[11px] text-white/10 font-bold">{String(i + 1).padStart(2, "0")}</span>
+                        <span className="font-mono text-[11px] text-white/50 font-bold">{String(i + 1).padStart(2, "0")}</span>
                         <div className="h-px flex-1 bg-white/[0.04]" />
                       </div>
                       <p className="text-white/50 text-sm leading-relaxed">{c}.</p>
@@ -854,7 +854,7 @@ function EngineeringChallengesSection({ project }: { project: CaseStudyProject }
         </FadeIn>
 
         <FadeIn delay={0.2}>
-          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/20 mb-5 flex items-center gap-3 mt-14">
+          <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55 mb-5 flex items-center gap-3 mt-14">
             <Rocket size={12} /> Key Learnings
           </p>
           <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1008,14 +1008,14 @@ function FileStructureSection({ project }: { project: CaseStudyProject }) {
               <div className="w-3 h-3 rounded-full bg-red-500/60" />
               <div className="w-3 h-3 rounded-full bg-yellow-500/60" />
               <div className="w-3 h-3 rounded-full bg-green-500/60" />
-              <span className="ml-3 font-mono text-[10px] text-white/20 uppercase tracking-wider">Terminal</span>
+              <span className="ml-3 font-mono text-[10px] text-white/55 uppercase tracking-wider">Terminal</span>
             </div>
             <div className="p-6 overflow-x-auto">
               <pre className="font-mono text-[13px] leading-[1.8] select-none">
                 {structure.map((line, i) => {
                   const isFolder = line.includes("/") && !line.includes("──");
                   const isFile = line.includes(".");
-                  let colorClass = "text-white/40";
+                  let colorClass = "text-white/60";
                   if (isFolder) colorClass = "text-[#00D8FF]/60";
                   else if (isFile) {
                     if (line.includes(".json") || line.includes(".config") || line.includes(".env")) colorClass = "text-yellow-400/50";
@@ -1058,10 +1058,10 @@ function FeaturesSection({ project }: { project: CaseStudyProject }) {
           {display.map((f, i) => (
             <FadeIn key={i} delay={i * 0.04}>
               <div className="group flex items-center gap-5 p-5 rounded-xl border border-white/[0.04] bg-white/[0.015] hover:border-white/[0.12] hover:bg-white/[0.035] transition-all duration-300">
-                <span className="font-mono text-[11px] text-white/10 font-bold shrink-0 w-8">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-mono text-[11px] text-white/50 font-bold shrink-0 w-8">{String(i + 1).padStart(2, "0")}</span>
                 <div className="h-6 w-px bg-white/[0.06] group-hover:bg-[#00D8FF]/20 shrink-0 transition-colors" />
                 <p className="text-white/55 text-sm leading-relaxed group-hover:text-white/70 transition-colors">{f}</p>
-                <ChevronRight size={14} className="text-white/10 group-hover:text-[#00D8FF]/40 ml-auto shrink-0 transition-all group-hover:translate-x-1" />
+                <ChevronRight size={14} className="text-white/50 group-hover:text-[#00D8FF]/40 ml-auto shrink-0 transition-all group-hover:translate-x-1" />
               </div>
             </FadeIn>
           ))}
@@ -1114,14 +1114,14 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
             <div className="flex items-center justify-between">
               <div>
                 <p className="font-display text-white font-semibold text-sm">{project.title || project.name}</p>
-                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20 mt-1">{project.category || "Case Study"} — {project.year || "2025"}</p>
+                <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/55 mt-1">{project.category || "Case Study"} — {project.year || "2025"}</p>
               </div>
               <div className="flex items-center gap-2">
                 {project.tech.slice(0, 3).map(t => (
                   <span key={t} className="px-2 py-1 rounded-md border border-white/[0.06] bg-white/[0.02] font-mono text-[8px] text-white/25">{t}</span>
                 ))}
                 {project.tech.length > 3 && (
-                  <span className="px-2 py-1 rounded-md border border-white/[0.04] bg-white/[0.01] font-mono text-[8px] text-white/15">+{project.tech.length - 3}</span>
+                  <span className="px-2 py-1 rounded-md border border-white/[0.04] bg-white/[0.01] font-mono text-[8px] text-white/55">+{project.tech.length - 3}</span>
                 )}
               </div>
             </div>
@@ -1130,7 +1130,7 @@ function ShowcaseSection({ project }: { project: CaseStudyProject }) {
       </div>
 
       <FadeIn delay={0.2} className="text-center mt-6 px-6">
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/15">
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">
           {project.title || project.name} — Production Interface
         </p>
       </FadeIn>
@@ -1189,7 +1189,7 @@ function ScreenshotsSection({ project }: { project: CaseStudyProject }) {
       </div>
 
       <FadeIn delay={0.2} className="text-center mt-6 px-6">
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/15">
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/55">
           {screenshots.images.length} screens — auto-scrolling
         </p>
       </FadeIn>
@@ -1228,7 +1228,7 @@ function ResultsSection({ project }: { project: CaseStudyProject }) {
                     <p className="font-display text-white leading-none mb-2" style={{ fontSize: "clamp(28px, 4vw, 44px)", fontWeight: 800, letterSpacing: "-0.03em" }}>
                       {r.metric}<span className="text-white/25 text-[0.6em]">{r.suffix}</span>
                     </p>
-                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">{r.label}</p>
+                    <p className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/55">{r.label}</p>
                   </div>
                 </GradientBorderCard>
               </TiltCard>
@@ -1277,7 +1277,7 @@ function LearningsTimeline({ project }: { project: CaseStudyProject }) {
                 <div className="flex items-start gap-5 group">
                   <div className="relative shrink-0">
                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center group-hover:border-[#00D8FF]/30 group-hover:bg-[#00D8FF]/[0.03] transition-all duration-300">
-                      <span className="font-mono text-[10px] text-white/20 group-hover:text-[#00D8FF]/50 transition-colors">{String(i + 1).padStart(2, "0")}</span>
+                      <span className="font-mono text-[10px] text-white/55 group-hover:text-[#00D8FF]/50 transition-colors">{String(i + 1).padStart(2, "0")}</span>
                     </div>
                   </div>
                   <div className="flex-1 pb-2">
@@ -1319,10 +1319,10 @@ function LinksAndCTA({ project, onBack, nextProject }: { project: CaseStudyProje
                         <span className="text-white/30 group-hover:text-white/70 transition-colors">{link.icon}</span>
                         <div>
                           <span className="font-display text-white font-semibold text-sm block">{link.label}</span>
-                          <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-white/20 mt-1 block">Open in new tab</span>
+                          <span className="font-mono text-[9px] uppercase tracking-[0.15em] text-white/55 mt-1 block">Open in new tab</span>
                         </div>
                       </div>
-                      <ArrowUpRight size={16} className="text-white/15 group-hover:text-white/50 transition-colors" />
+                      <ArrowUpRight size={16} className="text-white/55 group-hover:text-white/50 transition-colors" />
                     </div>
                   </MagneticButton>
                 </FadeIn>
@@ -1337,7 +1337,7 @@ function LinksAndCTA({ project, onBack, nextProject }: { project: CaseStudyProje
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 80%, rgba(0,216,255,0.05) 0%, transparent 60%)" }} />
         <div className="px-6 md:px-12 lg:px-20 text-center relative">
           <FadeIn>
-            <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/15 mb-6">End of Case Study</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-white/55 mb-6">End of Case Study</p>
             <div className="overflow-hidden mb-6">
               <motion.h2 initial={{ y: "110%" }} whileInView={{ y: "0%" }} viewport={{ once: true }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                 className="font-display text-white leading-[0.95]" style={{ fontSize: "clamp(36px, 7vw, 96px)", fontWeight: 800, letterSpacing: "-0.05em" }}>
@@ -1425,12 +1425,12 @@ export function CaseStudyPage({ project, onBack }: { project: CaseStudyProject; 
 
   useEffect(() => {
     const allProjects = [
-      { title: "TRQ Studio", slug: "trq-studio", image: "/Projects/mockup/TRQ.png", category: "Full Stack" },
-      { title: "Mesaha Lakum", slug: "mesaha-lakum", image: "/Projects/mockup/LAKUM.png", category: "Full Stack" },
-      { title: "TD Logistics", slug: "td-logistics", image: "/Projects/mockup/TD.png", category: "Full Stack" },
-      { title: "MUCOMMERANCE", slug: "mucommerance", image: "/Projects/mockup/MUCOMMERANCE (2).png", category: "Full Stack" },
-      { title: "Writer's Journey", slug: "writer-s-journey", image: "/Projects/mockup/WRITING.png", category: "Full Stack" },
-      { title: "Riyadah", slug: "riyadah", image: "/Projects/mockup/ALRYADH.png", category: "Full Stack" },
+      { title: "TRQ Studio", slug: "trq-studio", image: "/Projects/mockup/TRQ.webp", category: "Full Stack" },
+      { title: "Mesaha Lakum", slug: "mesaha-lakum", image: "/Projects/mockup/LAKUM.webp", category: "Full Stack" },
+      { title: "TD Logistics", slug: "td-logistics", image: "/Projects/mockup/TD.webp", category: "Full Stack" },
+      { title: "MUCOMMERANCE", slug: "mucommerance", image: "/Projects/mockup/MUCOMMERANCE (2).webp", category: "Full Stack" },
+      { title: "Writer's Journey", slug: "writer-s-journey", image: "/Projects/mockup/WRITING.webp", category: "Full Stack" },
+      { title: "Riyadah", slug: "riyadah", image: "/Projects/mockup/ALRYADH.webp", category: "Full Stack" },
     ];
     const currentSlug = createSlug(project.title || project.name || "");
     const idx = allProjects.findIndex(p => p.slug === currentSlug);
@@ -1445,13 +1445,13 @@ export function CaseStudyPage({ project, onBack }: { project: CaseStudyProject; 
       {/* Fixed Header */}
       <div className="fixed top-0 left-0 right-0 z-[950] flex items-center justify-between px-6 md:px-12 py-4 border-b border-white/[0.06] bg-black/70 backdrop-blur-xl">
         <div className="flex items-center gap-3">
-          <Eye size={12} className="text-white/15" />
-          <span className="font-mono text-[9px] text-white/20 uppercase tracking-widest">Case Study</span>
+          <Eye size={12} className="text-white/55" />
+          <span className="font-mono text-[9px] text-white/55 uppercase tracking-widest">Case Study</span>
           <span className="w-px h-3 bg-white/10" />
           <span className="text-white/50 text-sm font-medium">{project.title || project.name}</span>
         </div>
         <button onClick={onBack} className="w-9 h-9 rounded-full border border-white/10 hover:border-white/30 bg-white/[0.03] flex items-center justify-center transition-all duration-200 group" data-cursor-hover>
-          <ChevronLeft size={14} className="text-white/40 group-hover:text-white transition-colors" />
+          <ChevronLeft size={14} className="text-white/60 group-hover:text-white transition-colors" />
         </button>
       </div>
 

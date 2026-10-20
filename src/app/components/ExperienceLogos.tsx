@@ -7,9 +7,9 @@ interface CompanyLogo {
 }
 
 const logoMap: Record<string, CompanyLogo> = {
-  'MADD': { name: 'MADD', src: '/logoclient/madd.png', href: 'https://mad-d.net/' },
-  'Establishment MIBDAAT EL-THELATH': { name: 'Three Sister', src: '/logoclient/threesister.jpg' },
-  'TRQ Studio': { name: 'TRQ Studio', src: '/logoclient/trqstudio.png', href: 'https://trqstudio.com/' },
+  'MADD': { name: 'MADD', src: '/logoclient/madd.webp', href: 'https://mad-d.net/' },
+  'Establishment MIBDAAT EL-THELATH': { name: 'Three Sister', src: '/logoclient/threesister.webp' },
+  'TRQ Studio': { name: 'TRQ Studio', src: '/logoclient/trqstudio.webp', href: 'https://trqstudio.com/' },
 };
 
 export function CompanyLogo({ company, className }: { company: string; className?: string }) {

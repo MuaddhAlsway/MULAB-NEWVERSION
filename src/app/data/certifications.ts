@@ -25,7 +25,7 @@ export const certifications: Certification[] = [
     overview:
       "A comprehensive introduction to computer science covering computational thinking, algorithms, data structures, memory, computer architecture, databases, and web development. Built practical projects using C, Python, SQL, HTML, CSS, and JavaScript.",
     skills: ["Algorithms", "Data Structures", "C", "Python", "SQL", "HTML/CSS", "JavaScript"],
-    cover: "/Certification/CS50.png",
+    cover: "/Certification/CS50.webp",
     coverType: "image",
     verifyUrl: "https://certificates.cs50.io/b113f8e7-3911-45fe-aa7c-ed7574cc86fd.pdf?size=letter",
   },
@@ -40,7 +40,7 @@ export const certifications: Certification[] = [
     overview:
       "Demonstrated practical knowledge of modern responsive web development, including semantic HTML, CSS, Flexbox, CSS Grid, accessibility, responsive layouts, and building user-focused web interfaces.",
     skills: ["Semantic HTML", "CSS", "Flexbox", "CSS Grid", "Accessibility"],
-    cover: "/Certification/responsiveWebDesignV8_freecodecamp.png",
+    cover: "/Certification/responsiveWebDesignV8_freecodecamp.webp",
     coverType: "image",
     verifyUrl: "https://www.freecodecamp.org/certification/fcc-f4785d39-02d1-445e-8a81-3dbd12ca13ea/responsive-web-design",
   },
@@ -55,7 +55,7 @@ export const certifications: Certification[] = [
     overview:
       "Developed a strong foundation in JavaScript programming, including ES6, functions, arrays, objects, classes, recursion, algorithmic problem-solving, and data structures through hands-on coding challenges and projects.",
     skills: ["JavaScript", "ES6", "Algorithms", "Data Structures", "Problem Solving"],
-    cover: "/Certification/JavaScript_freecodecamp.png",
+    cover: "/Certification/JavaScript_freecodecamp.webp",
     coverType: "image",
     verifyUrl: "https://www.freecodecamp.org/certification/fcc-f4785d39-02d1-445e-8a81-3dbd12ca13ea/javascript-algorithms-and-data-structures-v8",
   },
@@ -70,7 +70,7 @@ export const certifications: Certification[] = [
     overview:
       "Built interactive front-end applications using modern JavaScript libraries and tools, with hands-on experience in React, Redux, React Router, Bootstrap, and responsive UI development.",
     skills: ["React", "Redux", "React Router", "Bootstrap"],
-    cover: "/Certification/frontend_freecodecamp.png",
+    cover: "/Certification/frontend_freecodecamp.webp",
     coverType: "image",
     verifyUrl: "https://www.freecodecamp.org/certification/fcc-f4785d39-02d1-445e-8a81-3dbd12ca13ea/front-end-development-libraries",
   },
@@ -85,7 +85,7 @@ export const certifications: Certification[] = [
     overview:
       "Built RESTful and GraphQL APIs with Node.js, implemented authentication and authorization, and worked with both SQL and MongoDB databases. Gained practical experience with backend architecture, API development, and server-side JavaScript.",
     skills: ["Node.js", "REST & GraphQL APIs", "Authentication", "MongoDB", "SQL", "Backend Architecture"],
-    cover: "/Certification/NODEJS_udemy.jpg",
+    cover: "/Certification/NODEJS_udemy.webp",
     coverType: "image",
     verifyUrl: "https://www.udemy.com/certificate/UC-18389629-3e90-40ee-b3e6-fdb83834ec01/",
   },

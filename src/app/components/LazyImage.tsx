@@ -16,8 +16,11 @@ export function LazyImage({
   wrapperClassName,
   showSkeleton = true,
   loading,
+  priority = false,
+  width = 1600,
+  height = 900,
   ...rest
-}: LazyImageProps) {
+}: LazyImageProps & { priority?: boolean }) {
   const imgRef = useRef<HTMLImageElement>(null);
   const [status, setStatus] = useState<"loading" | "loaded" | "error">("loading");
 
@@ -48,7 +51,10 @@ export function LazyImage({
         ref={imgRef}
         src={src}
         alt={alt}
-        loading={loading ?? "lazy"}
+        width={width}
+        height={height}
+        loading={priority ? "eager" : (loading ?? "lazy")}
+        fetchPriority={priority ? "high" : "auto"}
         decoding="async"
         draggable={false}
         onLoad={handleLoad}

@@ -7,9 +7,10 @@ import { FeaturedClients } from "./components/FeaturedClients";
 import { LazyImage } from "./components/LazyImage";
 import { TrustedBy } from "./components/TrustedBy";
 import { CompanyLogo } from "./components/ExperienceLogos";
-import { CaseStudyPage } from "./components/CaseStudyPage";
-import AboutPage from "./components/AboutPage";
-import CertificationPage from "./components/CertificationPage";
+import { lazy, Suspense } from "react";
+const CaseStudyPage = lazy(() => import("./components/CaseStudyPage").then((m) => ({ default: m.CaseStudyPage })));
+const AboutPage = lazy(() => import("./components/AboutPage"));
+const CertificationPage = lazy(() => import("./components/CertificationPage"));
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -628,6 +629,7 @@ function ParticleCanvas() {
   const mouseRef = useRef({ x: -9999, y: -9999 });
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
@@ -640,7 +642,7 @@ function ParticleCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       particles = [];
-      const count = Math.floor((canvas.width * canvas.height) / 14000);
+      const count = Math.floor((canvas.width * canvas.height) / 30000);
       for (let i = 0; i < count; i++) {
         particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.25, vy: (Math.random() - 0.5) * 0.25, size: Math.random() * 1.2 + 0.3 });
       }
@@ -662,13 +664,14 @@ function ParticleCanvas() {
         ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
         ctx.fillStyle = "rgba(255,255,255,0.55)"; ctx.fill();
       }
-      const maxDist = 110;
+      const maxDist = 90;
       for (let i = 0; i < particles.length; i++) {
         for (let j = i + 1; j < particles.length; j++) {
-          const dx = particles[i].x - particles[j].x;
-          const dy = particles[i].y - particles[j].y;
-          const d = Math.sqrt(dx * dx + dy * dy);
-          if (d < maxDist) {
+         const dx = particles[i].x - particles[j].x;
+         const dy = particles[i].y - particles[j].y;
+         const d2 = dx * dx + dy * dy;
+         if (d2 < maxDist * maxDist) {
+           const d = Math.sqrt(d2);
             ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y);
             ctx.strokeStyle = `rgba(255,255,255,${0.12 * (1 - d / maxDist)})`; ctx.lineWidth = 0.4; ctx.stroke();
           }
@@ -723,7 +726,7 @@ function Preloader({ onDone }: { onDone: () => void }) {
       if (n >= 100) {
         setCount(100);
         clearInterval(id);
-        setTimeout(() => { setExiting(true); setTimeout(onDone, 800); }, 300);
+        setTimeout(() => { setExiting(true); setTimeout(onDone, 400); }, 150);
       } else {
         setCount(Math.min(99, Math.floor(n)));
       }
@@ -736,7 +739,7 @@ function Preloader({ onDone }: { onDone: () => void }) {
       animate={{ opacity: exiting ? 0 : 1, scale: exiting ? 1.04 : 1 }} transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}>
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 40% at 50% 50%, rgba(0,216,255,0.04) 0%, transparent 70%)" }} />
       <div className="relative font-display leading-none text-white select-none" style={{ fontSize: "clamp(80px, 18vw, 240px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
-        {String(count).padStart(2, "0")}<span className="text-white/10">%</span>
+        {String(count).padStart(2, "0")}<span className="text-white/50">%</span>
       </div>
       <div className="absolute bottom-10 left-8 right-8 md:left-14 md:right-14">
         <div className="relative h-px bg-white/10 overflow-hidden rounded-full">
@@ -872,7 +875,7 @@ function HeroSection({ onViewProjects }: { onViewProjects: () => void }) {
         <div className="absolute top-[38%] left-[5%] md:left-[8%] w-28 md:w-36 p-3 rounded-2xl border border-white/[0.07] backdrop-blur-md hidden sm:block" style={{ background: "rgba(255,255,255,0.025)" }}>
           <div className="font-mono text-[9px] text-white/30 mb-1">Projects</div>
           <div className="font-display text-2xl font-bold text-white">53+</div>
-          <div className="font-mono text-[10px] text-white/40">Delivered</div>
+          <div className="font-mono text-[10px] text-white/60">Delivered</div>
         </div>
       </div>
 
@@ -894,14 +897,14 @@ function HeroSection({ onViewProjects }: { onViewProjects: () => void }) {
           <button onClick={onViewProjects} className="group flex items-center gap-3 px-7 py-3.5 rounded-full bg-white text-black font-display font-semibold text-sm hover:bg-white/90 transition-all duration-200">
             View Selected Work <ArrowUpRight size={16} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </button>
-          <a href="#contact" className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/40 hover:text-white transition-colors duration-200">Let's collaborate</a>
+          <a href="#contact" className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/60 hover:text-white transition-colors duration-200">Let's collaborate</a>
         </motion.div>
       </div>
 
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.4 }}
         className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <div className="h-10 w-px bg-gradient-to-b from-white/30 to-transparent" />
-        <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/20">Scroll</span>
+        <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/55">Scroll</span>
       </motion.div>
     </section>
   );
@@ -915,7 +918,7 @@ function MarqueeSection() {
         {[0, 1].map((i) => (
           <div key={i} className="flex gap-0 whitespace-nowrap" style={{ animation: "marquee 28s linear infinite", ...(i === 1 ? { position: "absolute", left: "100%" } as React.CSSProperties : {}) }}>
             {repeated.map((word, j) => (
-              <span key={j} className="font-display text-white/[0.12] hover:text-white/40 transition-colors duration-300 text-3xl md:text-4xl font-bold px-8" style={{ letterSpacing: "-0.02em" }}>
+              <span key={j} className="font-display text-white/[0.4] hover:text-white/70 transition-colors duration-300 text-3xl md:text-4xl font-bold px-8" style={{ letterSpacing: "-0.02em" }}>
                 {word}<span className="text-white/[0.06] mx-6">✦</span>
               </span>
             ))}
@@ -933,42 +936,42 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       name: 'MUCOMMERANCE',
       description: 'Full-stack luxury fashion e-commerce platform',
       tech: ['Cloudflare Workers', 'D1', 'React 18', 'Stripe', 'Shippo'],
-      image: '/Projects/mockup/MUCOMMERANCE (2).png'
+      image: '/Projects/mockup/MUCOMMERANCE (2).webp'
     },
     {
       id: 5,
       name: 'Nova-Ecommerance-Platform',
       description: 'Production e-commerce platform with logistics system',
       tech: ['Hono', 'Turso', 'React', 'Stripe', 'Shippo'],
-      image: '/Projects/mockup/nova.png'
+      image: '/Projects/mockup/nova.webp'
     },
 {
       id: 55,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
-      image: '/Projects/quickshow01.png'
+      image: '/Projects/quickshow01.webp'
     },
     {
       id: 6,
       name: 'Nexus Network Platform',
       description: 'Full-stack enterprise-grade LinkedIn clone with real-time messaging, analytics, courses, jobs, and admin panel',
       tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
-      image: '/Projects/mockup/Nexus.png'
+      image: '/Projects/mockup/Nexus.webp'
     },
     {
       id: 7,
       name: 'Forever E-Commerce',
       description: 'Production-grade MERN e-commerce platform with Stripe payments, Cloudinary media, and email marketing',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Cloudinary'],
-      image: '/Projects/Forever.png'
+      image: '/Projects/Forever.webp'
     },
     {
       id: 8,
       name: 'Estate — Luxury Real Estate Platform',
       description: 'Production-oriented full-stack real-estate marketplace for Jeddah with secure user, agent, and admin workflows',
       tech: ['React 19', 'Express 5', 'Neon PostgreSQL', 'Drizzle ORM', 'Cloudinary', 'Render'],
-      image: '/Projects/RealState.png'
+      image: '/Projects/RealState.webp'
     }
   ];
 
@@ -982,7 +985,7 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
               <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
                 Production <span className="text-white/[0.7]">Projects</span>
               </h2>
-              <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest max-w-2xl">
+              <p className="font-mono text-[11px] text-white/55 uppercase tracking-widest max-w-2xl">
                 Production-grade platforms built independently — fully functional, deployed, and ready for real-world users
               </p>
             </div>
@@ -1032,14 +1035,14 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
                       </h3>
                     </div>
 
-                    <p className="font-mono text-[11px] text-white/40 uppercase tracking-widest mb-4 line-clamp-3 min-h-[3.1rem]">
+                    <p className="font-mono text-[11px] text-white/60 uppercase tracking-widest mb-4 line-clamp-3 min-h-[3.1rem]">
                       {project.description}
                     </p>
 
                     {/* Tech Stack */}
                     <div className="flex flex-wrap gap-2 mt-auto">
                       {project.tech.map((t) => (
-                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">
+                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/60">
                           {t}
                         </span>
                       ))}
@@ -1097,17 +1100,17 @@ function PortfolioProjectsSection({ onViewAll, onProjectClick }: { onViewAll: ()
                   <div className="relative overflow-hidden h-56 md:h-72 bg-neutral-900 shrink-0">
                     <LazyImage src={project.image} alt={project.alt} className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 ease-out group-hover:scale-105" />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                    <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
+                    <div className="absolute top-4 left-4 font-mono text-[10px] text-white/60 uppercase tracking-widest">{project.num}</div>
                   </div>
                   <div className="p-5 md:p-6 flex flex-col flex-1 min-h-0">
                     <div className="flex items-start justify-between mb-3">
                       <h3 className="font-display text-white font-bold group-hover:text-white/90 transition-colors line-clamp-2" style={{ fontSize: "clamp(18px, 2.5vw, 24px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
-                      <span className="font-mono text-[10px] text-white/25 shrink-0 pl-3">{project.year}</span>
+                      <span className="font-mono text-[10px] text-white/50 shrink-0 pl-3">{project.year}</span>
                     </div>
-                    <p className="font-mono text-[11px] text-white/35 uppercase tracking-widest mb-4">{project.category}</p>
+                    <p className="font-mono text-[11px] text-white/55 uppercase tracking-widest mb-4">{project.category}</p>
                     <div className="flex flex-wrap gap-2 mt-auto">
                       {project.tech.slice(0, 3).map((t) => (
-                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/40">{t}</span>
+                        <span key={t} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] text-white/60">{t}</span>
                       ))}
                     </div>
                   </div>
@@ -1208,7 +1211,7 @@ function ExperienceSection() {
               <FadeIn key={item.year} delay={i * 0.1}>
                 <div className="relative pl-10 md:pl-16 pb-16 group">
                   <div className="absolute left-0 -translate-x-1/2 w-3 h-3 rounded-full border-2 border-white/20 bg-black group-hover:border-white/60 group-hover:bg-white transition-all duration-400" />
-                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/25 mb-3">{item.year}</div>
+                  <div className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mb-3">{item.year}</div>
                   <div className="p-5 md:p-7 rounded-2xl border border-white/[0.05] bg-card hover:border-white/10 transition-all duration-300 hover:bg-white/[0.02]">
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
                        <div>
@@ -1218,7 +1221,7 @@ function ExperienceSection() {
                     </div>
                     <p className="text-white/50 text-sm leading-relaxed mb-4">{item.desc}</p>
                     <div className="flex flex-wrap gap-2">
-                      {item.tags.map((tag) => (<span key={tag} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] font-mono text-[10px] text-white/35">{tag}</span>))}
+                      {item.tags.map((tag) => (<span key={tag} className="px-2.5 py-1 rounded-full bg-white/[0.04] border border-white/[0.06] font-mono text-[10px] text-white/55">{tag}</span>))}
                     </div>
                   </div>
                 </div>
@@ -1310,7 +1313,7 @@ function StorySection() {
                   "flex-shrink-0 px-6 py-3 rounded-full border font-mono text-[11px] uppercase tracking-[0.12em] transition-all duration-300 whitespace-nowrap",
                   activeDay === i
                     ? "bg-white text-black border-white"
-                    : "border-white/[0.08] text-white/40 hover:text-white hover:border-white/25 bg-transparent"
+                    : "border-white/[0.08] text-white/60 hover:text-white hover:border-white/25 bg-transparent"
                 )}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
@@ -1334,14 +1337,14 @@ function StorySection() {
             {/* Icon and Day */}
             <div className="flex items-start justify-between mb-8">
               <div>
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/25 mb-2">{story.day}</p>
+                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/50 mb-2">{story.day}</p>
                 <div className="flex items-center gap-4">
                   <StoryIcon className="w-11 h-11 text-white/80 flex-shrink-0" strokeWidth={1.5} />
                   <div>
                     <h3 className="font-display text-white font-bold" style={{ fontSize: "clamp(28px, 3vw, 42px)", letterSpacing: "-0.03em" }}>
                       {story.title}
                     </h3>
-                    <p className="font-mono text-[11px] text-white/35 uppercase tracking-wider mt-1">{story.subtitle}</p>
+                    <p className="font-mono text-[11px] text-white/55 uppercase tracking-wider mt-1">{story.subtitle}</p>
                   </div>
                 </div>
               </div>
@@ -1386,7 +1389,7 @@ function StorySection() {
                 Previous
               </motion.button>
 
-              <div className="font-mono text-[11px] text-white/40 uppercase tracking-wider">
+              <div className="font-mono text-[11px] text-white/60 uppercase tracking-wider">
                 {activeDay + 1} / {STORY_TIMELINE.length}
               </div>
 
@@ -1437,7 +1440,7 @@ function CertificationCoverThumb({ cert }: { cert: Certification }) {
           className="w-full h-full"
         >
           <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900">
-            <ShieldCheck size={28} className="text-white/20" />
+            <ShieldCheck size={28} className="text-white/55" />
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">CS50x Certificate</span>
           </div>
         </object>
@@ -1476,7 +1479,7 @@ function CertificationsSection({ onOpenCertification }: { onOpenCertification?: 
           <h2 className="font-display text-white leading-none mb-6" style={{ fontSize: "clamp(36px, 6vw, 80px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
             Certifications
           </h2>
-          <p className="text-white/40 text-sm leading-relaxed max-w-xl">
+          <p className="text-white/60 text-sm leading-relaxed max-w-xl">
             Verified programs across computer science, frontend engineering, and backend development.
             Click any certification to view its details.
           </p>
@@ -1494,7 +1497,7 @@ function CertificationsSection({ onOpenCertification }: { onOpenCertification?: 
               <div
                 role="button"
                 tabIndex={0}
-                aria-label={`View ${cert.shortTitle} details`}
+
                 onClick={() => openCertification(cert)}
                 onKeyDown={(e) => handleCertKeyDown(e, cert)}
                 className="group relative h-full rounded-2xl overflow-hidden border border-white/[0.06] bg-card cursor-pointer transition-all duration-300 hover:border-white/15 focus:outline-none focus-visible:border-white/30"
@@ -1503,7 +1506,7 @@ function CertificationsSection({ onOpenCertification }: { onOpenCertification?: 
                 <div className="relative aspect-[16/10] overflow-hidden bg-neutral-900">
                   <CertificationCoverThumb cert={cert} />
                   <div className="absolute top-4 left-4 flex items-center gap-2">
-                    <span className="font-mono text-[10px] text-white/40">{cert.num}</span>
+                    <span className="font-mono text-[10px] text-white/60">{cert.num}</span>
                     <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/50 px-2.5 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10 flex items-center gap-1.5">
                       <Award size={10} />
                       Certified
@@ -1517,8 +1520,8 @@ function CertificationsSection({ onOpenCertification }: { onOpenCertification?: 
                 {/* Body */}
                 <div className="p-6">
                   <div className="flex items-center justify-between mb-3">
-                    <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">{cert.issuer}</span>
-                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">{cert.platform}</span>
+                    <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55">{cert.issuer}</span>
+                    <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/55">{cert.platform}</span>
                   </div>
                   <h3
                     className="font-display text-white font-bold leading-tight mb-3"
@@ -1526,7 +1529,7 @@ function CertificationsSection({ onOpenCertification }: { onOpenCertification?: 
                   >
                     {cert.shortTitle}
                   </h3>
-                  <p className="text-white/45 text-sm leading-relaxed">{cert.summary}</p>
+                  <p className="text-white/55 text-sm leading-relaxed">{cert.summary}</p>
                 </div>
               </div>
             </div>
@@ -1588,12 +1591,12 @@ function ContactSection() {
         <div className="overflow-hidden mb-16">
           <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: false }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-white leading-none" style={{ fontSize: "clamp(48px, 10vw, 140px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
-            Let's Create<br /><span className="text-white/[0.12]">Together.</span>
+            Let's Create<br /><span className="text-white/[0.35]">Together.</span>
           </motion.h2>
         </div>
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-14">
           <div className="max-w-xs">
-            <p className="text-white/40 text-sm leading-relaxed mb-8">Open to select freelance projects, full-time roles, and creative collaborations. Let's build something extraordinary.</p>
+            <p className="text-white/60 text-sm leading-relaxed mb-8">Open to select freelance projects, full-time roles, and creative collaborations. Let's build something extraordinary.</p>
             <a href="mailto:muaddhalsway@gmail.com" className="group flex items-center gap-3 text-white hover:text-white/60 transition-colors duration-300">
               <Mail size={15} className="text-white/30" /><span className="font-mono text-sm">muaddhalsway@gmail.com</span>
             </a>
@@ -1603,7 +1606,7 @@ function ContactSection() {
               <div className="absolute inset-0 rounded-full bg-white scale-0 group-hover:scale-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
               <div className="relative text-center z-10">
                 <div className="font-display font-bold text-white group-hover:text-black transition-colors duration-300 leading-tight" style={{ fontSize: 18, letterSpacing: "-0.02em" }}>Start a<br />Project</div>
-                <ArrowUpRight size={16} className="mx-auto mt-2 text-white/40 group-hover:text-black/50 transition-colors duration-300" />
+                <ArrowUpRight size={16} className="mx-auto mt-2 text-white/60 group-hover:text-black/50 transition-colors duration-300" />
               </div>
             </a>
           </motion.div>
@@ -1611,12 +1614,12 @@ function ContactSection() {
         <div className="mt-20 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex items-center gap-5">
             {[{ icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" }, { icon: Linkedin, label: "LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Instagram, label: "Instagram", url: "#" }].map(({ icon: Icon, label, url }) => (
-              <a key={label} href={url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white/25 hover:text-white transition-colors duration-200 group">
+              <a key={label} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200 group">
                 <Icon size={15} /><span className="font-mono text-[10px] uppercase tracking-widest hidden sm:block opacity-0 group-hover:opacity-100 transition-opacity">{label}</span>
               </a>
             ))}
           </div>
-          <p className="font-mono text-[10px] text-white/15 uppercase tracking-[0.2em]">© 2024 Muaddh Alsway</p>
+          <p className="font-mono text-[10px] text-white/60 uppercase tracking-[0.2em]">© 2024 Muaddh Alsway</p>
         </div>
       </div>
     </section>
@@ -1669,11 +1672,11 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
       {/* Header */}
       <div className="flex-shrink-0 flex items-center justify-between px-6 md:px-12 py-5 border-b border-white/[0.06]">
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[10px] text-white/25 uppercase tracking-widest">{project.num}</span>
+          <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest">{project.num}</span>
           <h2 className="font-display text-white font-bold" style={{ fontSize: "clamp(18px, 2.5vw, 28px)", letterSpacing: "-0.02em" }}>{project.title}</h2>
         </div>
         <button onClick={onClose} className="w-10 h-10 rounded-full border border-white/10 hover:border-white/30 bg-white/[0.03] flex items-center justify-center transition-all duration-200 group">
-          <X size={16} className="text-white/40 group-hover:text-white transition-colors" />
+          <X size={16} className="text-white/60 group-hover:text-white transition-colors" />
         </button>
       </div>
 
@@ -1692,7 +1695,7 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
         <div className="px-6 md:px-12 lg:px-20 py-16 max-w-5xl">
           {/* Overview */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Overview</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Overview</p>
             <p className="text-white/65 leading-relaxed" style={{ fontSize: "clamp(15px, 1.5vw, 18px)" }}>{project.overview}</p>
           </div>
 
@@ -1711,7 +1714,7 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
 
           {/* Tech stack */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Technology Stack</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Technology Stack</p>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span key={t} className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] font-mono text-[11px] text-white/50 hover:text-white hover:border-white/25 transition-all duration-200">{t}</span>
@@ -1721,11 +1724,11 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
 
           {/* Results */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Results</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Results</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {project.results.map((r, i) => (
                 <div key={i} className="flex items-start gap-3 p-4 rounded-xl border border-white/[0.05] bg-card">
-                  <span className="text-white/20 font-mono text-xs mt-0.5">→</span>
+                  <span className="text-white/55 font-mono text-xs mt-0.5">→</span>
                   <span className="text-white/65 text-sm leading-relaxed">{r}</span>
                 </div>
               ))}
@@ -1734,7 +1737,7 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
 
           {/* Screenshots */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Screenshots</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Screenshots</p>
             <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
               {project.screenshots.map((src, i) => (
                 <button key={i} onClick={() => setImgIdx(i)} className={cn("flex-shrink-0 w-56 h-36 md:w-72 md:h-44 rounded-xl overflow-hidden border-2 transition-all duration-200", i === imgIdx ? "border-white/50" : "border-transparent opacity-60 hover:opacity-80")}>
@@ -1751,16 +1754,16 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
 
           {/* CTA links */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Project Links</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Project Links</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {/* Live Demo */}
               {project.liveUrl && project.liveUrl !== "#" && (
                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <ExternalLink size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <ExternalLink size={16} className="text-white/60 group-hover:text-white transition-colors" />
 <span className="font-display text-white font-semibold text-sm">Live Demo</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
 
@@ -1768,10 +1771,10 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
               {project.apiUrl && project.apiUrl !== "#" && (
                 <a href={project.apiUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Server size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Live API</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
 
@@ -1779,10 +1782,10 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
               {project.backendUrl && project.backendUrl !== "#" && (
                 <a href={project.backendUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Server size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Backend API</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
 
@@ -1790,10 +1793,10 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
               {project.githubUrl && project.githubUrl !== "#" && (
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Github size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Github size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Source Code</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -1801,10 +1804,10 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
               {project.linkedinUrl && project.linkedinUrl !== "#" && project.linkedinUrl !== undefined && (
                 <a href={project.linkedinUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Linkedin size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Linkedin size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">LinkedIn Post</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -1812,10 +1815,10 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
               {project.notionUrl && project.notionUrl !== "#" && project.notionUrl !== undefined && (
                 <a href={project.notionUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <BookOpen size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <BookOpen size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Notion Doc</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -1823,10 +1826,10 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
               {project.wikiUrl && project.wikiUrl !== "#" && project.wikiUrl !== undefined && (
                 <a href={project.wikiUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <FileText size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <FileText size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Wiki</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -1834,10 +1837,10 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
               {project.diagramUrl && project.diagramUrl !== "#" && project.diagramUrl !== undefined && (
                 <a href={project.diagramUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <GitBranch size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <GitBranch size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Diagram</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
             </div>
@@ -1878,7 +1881,7 @@ function ProjectsHero() {
           </motion.h1>
         </div>
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }}
-          className="mt-8 text-white/35 max-w-md leading-relaxed" style={{ fontSize: "clamp(14px, 1.2vw, 16px)" }}>
+          className="mt-8 text-white/55 max-w-md leading-relaxed" style={{ fontSize: "clamp(14px, 1.2vw, 16px)" }}>
           A curated exhibition of projects built at the intersection of engineering precision and creative vision. Each project is a case study in solving real problems beautifully.
         </motion.p>
       </div>
@@ -1886,7 +1889,7 @@ function ProjectsHero() {
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.2 }}
         className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
         <div className="h-10 w-px bg-gradient-to-b from-white/30 to-transparent" />
-        <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/20">Explore</span>
+        <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-white/55">Explore</span>
       </motion.div>
     </section>
   );
@@ -1913,7 +1916,7 @@ function FeaturedProjectSection({ project, onOpen }: { project: FullProject; onO
       <FadeIn className="mb-12">
         <div className="flex items-center gap-4">
           <span className="px-3 py-1 rounded-full bg-white/[0.06] border border-white/[0.08] font-mono text-[10px] text-white/50 uppercase tracking-widest">Featured Project</span>
-          <span className="font-mono text-[10px] text-white/25">{project.num}</span>
+          <span className="font-mono text-[10px] text-white/50">{project.num}</span>
         </div>
       </FadeIn>
 
@@ -1928,7 +1931,7 @@ function FeaturedProjectSection({ project, onOpen }: { project: FullProject; onO
           </FadeIn>
           <FadeIn delay={0.15}>
             <div className="flex flex-wrap gap-2 mb-10">
-              {project.tech.map((t) => (<span key={t} className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.07] font-mono text-[10px] text-white/40">{t}</span>))}
+              {project.tech.map((t) => (<span key={t} className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.07] font-mono text-[10px] text-white/60">{t}</span>))}
             </div>
           </FadeIn>
           <FadeIn delay={0.2}>
@@ -1949,7 +1952,7 @@ function FeaturedProjectSection({ project, onOpen }: { project: FullProject; onO
             <LazyImage src={project.image} alt={project.alt} className="object-cover grayscale" />
             <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end">
-              <span className="font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.category} — {project.year}</span>
+              <span className="font-mono text-[10px] text-white/60 uppercase tracking-widest">{project.category} — {project.year}</span>
             </div>
           </div>
         </FadeIn>
@@ -1966,7 +1969,7 @@ function CategoryFilter({ active, onChange }: { active: string; onChange: (c: st
         {CATEGORIES.map((cat) => (
           <button key={cat} onClick={() => onChange(cat)}
             className={cn("px-5 py-2.5 rounded-full border font-mono text-[11px] uppercase tracking-[0.12em] transition-all duration-300 whitespace-nowrap",
-              active === cat ? "bg-white text-black border-white" : "border-white/[0.08] text-white/40 hover:text-white hover:border-white/25 bg-transparent")}>
+              active === cat ? "bg-white text-black border-white" : "border-white/[0.08] text-white/60 hover:text-white hover:border-white/25 bg-transparent")}>
             {cat}
           </button>
         ))}
@@ -1995,7 +1998,7 @@ function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (
                     View Case Study <ArrowUpRight size={14} />
                   </div>
                 </div>
-                <div className="absolute top-4 left-4 font-mono text-[10px] text-white/40 uppercase tracking-widest">{project.num}</div>
+                <div className="absolute top-4 left-4 font-mono text-[10px] text-white/60 uppercase tracking-widest">{project.num}</div>
                 <div className="absolute top-4 right-4"><span className="px-2.5 py-1 rounded-full bg-black/50 backdrop-blur border border-white/10 font-mono text-[9px] text-white/50 uppercase tracking-widest">{project.year}</span></div>
               </div>
               {/* Info */}
@@ -2004,7 +2007,7 @@ function ProjectsGrid({ projects, onOpen }: { projects: FullProject[]; onOpen: (
                   <h3 className="font-display text-white font-bold group-hover:text-white transition-colors line-clamp-2 min-h-[3rem]" style={{ fontSize: "clamp(16px, 1.8vw, 20px)", letterSpacing: "-0.02em" }}>{project.title}</h3>
                 </div>
                 <p className="font-mono text-[10px] text-white/30 uppercase tracking-widest mb-3">{project.category}</p>
-                <p className="text-white/40 text-[13px] leading-relaxed line-clamp-2 min-h-[2.7rem] mb-4">{project.shortDesc}</p>
+                <p className="text-white/60 text-[13px] leading-relaxed line-clamp-2 min-h-[2.7rem] mb-4">{project.shortDesc}</p>
                 <div className="flex flex-wrap gap-1.5 mt-auto">
                   {project.tech.slice(0, 3).map((t) => (<span key={t} className="px-2 py-0.5 rounded-full bg-white/[0.04] border border-white/[0.06] font-mono text-[9px] text-white/30">{t}</span>))}
                 </div>
@@ -2025,7 +2028,7 @@ function ProjectsListView({ projects, onOpen, showFeatured }: { projects: FullPr
     <section className="px-6 md:px-12 lg:px-20 pb-20 border-t border-white/[0.04]" style={{ background: "#050505" }}>
       <MouseFollowPreview src={hoveredSrc || ""} visible={!!hoveredSrc} />
       <div className={`${showFeatured ? 'mb-10 pt-16' : 'mb-0 pt-0'}`}>
-        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25">{showFeatured ? 'All Projects' : ''}</p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">{showFeatured ? 'All Projects' : ''}</p>
       </div>
       <div>
         {projects.map((project, i) => (
@@ -2033,12 +2036,12 @@ function ProjectsListView({ projects, onOpen, showFeatured }: { projects: FullPr
             className="group w-full flex items-center justify-between py-5 border-b border-white/[0.06] hover:border-white/15 transition-all duration-300"
             initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: false }} transition={{ duration: 0.5, delay: i * 0.04 }}>
             <div className="flex items-center gap-6 md:gap-10">
-              <span className="font-mono text-[10px] text-white/20 hidden sm:block">{project.num}</span>
+              <span className="font-mono text-[10px] text-white/55 hidden sm:block">{project.num}</span>
               <h3 className="font-display text-white font-bold text-left group-hover:text-white transition-colors" style={{ fontSize: "clamp(18px, 2.5vw, 30px)", letterSpacing: "-0.03em" }}>{project.title}</h3>
-              <span className="hidden md:block font-mono text-[10px] text-white/25 uppercase tracking-widest">{project.category}</span>
+              <span className="hidden md:block font-mono text-[10px] text-white/50 uppercase tracking-widest">{project.category}</span>
             </div>
             <div className="flex items-center gap-4">
-              <span className="font-mono text-[11px] text-white/25 hidden sm:block">{project.year}</span>
+              <span className="font-mono text-[11px] text-white/50 hidden sm:block">{project.year}</span>
               <div className="w-8 h-8 rounded-full border border-white/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200 bg-white/[0.03]">
                 <ArrowUpRight size={13} className="text-white/50" />
               </div>
@@ -2065,7 +2068,7 @@ function MetricsSection() {
     <section className="py-20 md:py-28 border-t border-white/[0.04]" style={{ background: "#050505" }}>
       <div className="px-6 md:px-12 lg:px-20">
         <FadeIn className="mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-4">By the Numbers</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">By the Numbers</p>
           <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Project Metrics</h2>
         </FadeIn>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -2076,7 +2079,7 @@ function MetricsSection() {
                   <motion.span initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: false }} transition={{ duration: 0.6, delay: i * 0.08 }}>{m.value}</motion.span>
                 </div>
                 <div className="font-display text-white/60 font-semibold text-sm mb-1">{m.label}</div>
-                <div className="font-mono text-[10px] text-white/25 uppercase tracking-widest leading-relaxed">{m.sub}</div>
+                <div className="font-mono text-[10px] text-white/50 uppercase tracking-widest leading-relaxed">{m.sub}</div>
               </div>
             </FadeIn>
           ))}
@@ -2097,7 +2100,7 @@ function TechVisualization() {
     <section className="py-20 md:py-28 border-t border-white/[0.04]" style={{ background: "#050505" }}>
       <div className="px-6 md:px-12 lg:px-20">
         <FadeIn className="mb-10">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-4">Technologies</p>
+          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-4">Technologies</p>
           <h2 className="font-display text-white leading-none" style={{ fontSize: "clamp(32px, 5vw, 64px)", fontWeight: 800, letterSpacing: "-0.04em" }}>Tech Stack</h2>
         </FadeIn>
 
@@ -2106,7 +2109,7 @@ function TechVisualization() {
           {techFilters.map((f) => (
             <button key={f} onClick={() => setActiveFilter(f)}
               className={cn("px-4 py-1.5 rounded-full border font-mono text-[10px] uppercase tracking-[0.12em] transition-all duration-250",
-                activeFilter === f ? "bg-white text-black border-white" : "border-white/[0.08] text-white/35 hover:text-white hover:border-white/20")}>
+                activeFilter === f ? "bg-white text-black border-white" : "border-white/[0.08] text-white/55 hover:text-white hover:border-white/20")}>
               {f}
             </button>
           ))}
@@ -2121,7 +2124,7 @@ function TechVisualization() {
                 className="group flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/[0.08] bg-card hover:border-white/25 hover:bg-white/[0.06] transition-all duration-300 cursor-default"
                 style={{ animation: `drift ${6 + i * 0.4}s ease-in-out infinite`, animationDelay: `${i * 0.3}s` }}>
                 <span className="font-display text-white/70 group-hover:text-white transition-colors font-semibold text-sm">{tech.name}</span>
-                <span className="font-mono text-[9px] text-white/20 uppercase tracking-widest">{tech.category}</span>
+                <span className="font-mono text-[9px] text-white/55 uppercase tracking-widest">{tech.category}</span>
               </motion.div>
             ))}
           </AnimatePresence>
@@ -2145,7 +2148,7 @@ function ProjectsCTA() {
     <section className="relative py-24 md:py-40 overflow-hidden border-t border-white/[0.04]" style={{ background: "#050505" }}>
       <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 80% 60% at 50% 60%, rgba(0,216,255,0.04) 0%, transparent 65%)" }} />
       <div className="relative px-6 md:px-12 lg:px-20">
-        <FadeIn className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25">Next Chapter</p></FadeIn>
+        <FadeIn className="mb-4"><p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">Next Chapter</p></FadeIn>
         <div className="overflow-hidden mb-6">
           <motion.h2 initial={{ y: "100%" }} whileInView={{ y: "0%" }} viewport={{ once: false }} transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-white leading-none" style={{ fontSize: "clamp(32px, 7vw, 100px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
@@ -2161,14 +2164,14 @@ function ProjectsCTA() {
 
         <div className="flex flex-col md:flex-row items-start md:items-center gap-12">
           <div>
-            <p className="text-white/35 max-w-sm leading-relaxed text-sm mb-8">Every great product starts with a conversation. Tell me about yours.</p>
+            <p className="text-white/55 max-w-sm leading-relaxed text-sm mb-8">Every great product starts with a conversation. Tell me about yours.</p>
             <div className="flex flex-col gap-4">
               <a href="mailto:muaddhalsway@gmail.com" className="group flex items-center gap-3 text-white/50 hover:text-white transition-colors">
                 <Mail size={14} /><span className="font-mono text-sm">muaddhalsway@gmail.com</span><ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
               <div className="flex items-center gap-5">
                 {[{ icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" }, { icon: Linkedin, label: "LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Instagram, label: "Instagram", url: "#" }].map(({ icon: Icon, label, url }) => (
-                  <a key={label} href={url} target="_blank" rel="noopener noreferrer" className="text-white/25 hover:text-white transition-colors"><Icon size={16} /></a>
+                  <a key={label} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="text-white/50 hover:text-white transition-colors"><Icon size={16} /></a>
                 ))}
               </div>
             </div>
@@ -2179,15 +2182,15 @@ function ProjectsCTA() {
               <div className="absolute inset-0 rounded-full bg-white scale-0 group-hover:scale-100 transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]" />
               <div className="relative text-center z-10">
                 <div className="font-display font-bold text-white group-hover:text-black transition-colors duration-300 leading-tight" style={{ fontSize: 16, letterSpacing: "-0.02em" }}>Start a<br />Project</div>
-                <ArrowUpRight size={16} className="mx-auto mt-2 text-white/40 group-hover:text-black/50 transition-colors duration-300" />
+                <ArrowUpRight size={16} className="mx-auto mt-2 text-white/60 group-hover:text-black/50 transition-colors duration-300" />
               </div>
             </a>
           </motion.div>
         </div>
 
         <div className="mt-20 pt-8 border-t border-white/[0.06] flex justify-between items-center">
-          <p className="font-mono text-[10px] text-white/15 uppercase tracking-[0.2em]">© 2024 Muaddh Alsway</p>
-          <p className="font-mono text-[10px] text-white/15 uppercase tracking-[0.2em] hidden sm:block">Front-End Developer</p>
+          <p className="font-mono text-[10px] text-white/60 uppercase tracking-[0.2em]">© 2024 Muaddh Alsway</p>
+          <p className="font-mono text-[10px] text-white/60 uppercase tracking-[0.2em] hidden sm:block">Front-End Developer</p>
         </div>
       </div>
     </section>
@@ -2205,11 +2208,11 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
       {/* Header */}
       <div className="flex-shrink-0 flex items-center justify-between px-6 md:px-12 py-5 border-b border-white/[0.06]">
         <div className="flex items-center gap-4">
-          <span className="font-mono text-[10px] text-white/25 uppercase tracking-widest">{project.num}</span>
+          <span className="font-mono text-[10px] text-white/50 uppercase tracking-widest">{project.num}</span>
           <h2 className="font-display text-white font-bold" style={{ fontSize: "clamp(18px, 2.5vw, 28px)", letterSpacing: "-0.02em" }}>{project.title}</h2>
         </div>
         <button onClick={onBack} className="w-10 h-10 rounded-full border border-white/10 hover:border-white/30 bg-white/[0.03] flex items-center justify-center transition-all duration-200 group">
-          <ChevronLeft size={16} className="text-white/40 group-hover:text-white transition-colors" />
+          <ChevronLeft size={16} className="text-white/60 group-hover:text-white transition-colors" />
         </button>
       </div>
 
@@ -2228,7 +2231,7 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
         <div className="px-6 md:px-12 lg:px-20 py-16 max-w-5xl">
           {/* Overview */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Overview</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Overview</p>
             <p className="text-white/65 leading-relaxed" style={{ fontSize: "clamp(15px, 1.5vw, 18px)" }}>{project.overview}</p>
           </div>
 
@@ -2247,7 +2250,7 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
 
           {/* Tech stack */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Technology Stack</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Technology Stack</p>
             <div className="flex flex-wrap gap-2">
               {project.tech.map((t) => (
                 <span key={t} className="px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] font-mono text-[11px] text-white/50 hover:text-white hover:border-white/25 transition-all duration-200">{t}</span>
@@ -2257,11 +2260,11 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
 
           {/* Results */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Results</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Results</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {project.results.map((r, i) => (
                 <div key={i} className="flex items-start gap-3 p-4 rounded-xl border border-white/[0.05] bg-card">
-                  <span className="text-white/20 font-mono text-xs mt-0.5">→</span>
+                  <span className="text-white/55 font-mono text-xs mt-0.5">→</span>
                   <span className="text-white/65 text-sm leading-relaxed">{r}</span>
                 </div>
               ))}
@@ -2271,7 +2274,7 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
           {/* Screenshots */}
           {project.screenshots.length > 0 && (
             <div className="mb-16">
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Screenshots</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Screenshots</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {project.screenshots.map((src, i) => (
                   <div key={i} className={`rounded-2xl overflow-hidden bg-neutral-900 ${i === 0 ? "sm:col-span-2" : ""}`}>
@@ -2284,16 +2287,16 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
 
           {/* CTA links */}
           <div className="mb-16">
-            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/25 mb-5">Project Links</p>
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Project Links</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
               {/* Live Demo */}
               {project.liveUrl && project.liveUrl !== "#" && (
                 <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <ExternalLink size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <ExternalLink size={16} className="text-white/60 group-hover:text-white transition-colors" />
 <span className="font-display text-white font-semibold text-sm">Live Demo</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
 
@@ -2301,10 +2304,10 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
               {project.apiUrl && project.apiUrl !== "#" && (
                 <a href={project.apiUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Server size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Live API</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
 
@@ -2312,10 +2315,10 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
               {project.backendUrl && project.backendUrl !== "#" && (
                 <a href={project.backendUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Server size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Server size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Backend API</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
 
@@ -2323,10 +2326,10 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
               {project.githubUrl && project.githubUrl !== "#" && (
                 <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Github size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Github size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Source Code</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -2334,10 +2337,10 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
               {project.linkedinUrl && project.linkedinUrl !== "#" && project.linkedinUrl !== undefined && (
                 <a href={project.linkedinUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <Linkedin size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <Linkedin size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">LinkedIn Post</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -2345,10 +2348,10 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
               {project.notionUrl && project.notionUrl !== "#" && project.notionUrl !== undefined && (
                 <a href={project.notionUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <BookOpen size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <BookOpen size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Notion Doc</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -2356,10 +2359,10 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
               {project.wikiUrl && project.wikiUrl !== "#" && project.wikiUrl !== undefined && (
                 <a href={project.wikiUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <FileText size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <FileText size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Wiki</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
               
@@ -2367,10 +2370,10 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
               {project.diagramUrl && project.diagramUrl !== "#" && project.diagramUrl !== undefined && (
                 <a href={project.diagramUrl} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
                   <div className="flex items-center gap-3">
-                    <GitBranch size={16} className="text-white/40 group-hover:text-white transition-colors" />
+                    <GitBranch size={16} className="text-white/60 group-hover:text-white transition-colors" />
                     <span className="font-display text-white font-semibold text-sm">Diagram</span>
                   </div>
-                  <ArrowUpRight size={14} className="text-white/20 group-hover:text-white/40 transition-colors" />
+                  <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
             </div>
@@ -2389,7 +2392,7 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
                   <p className="font-mono text-[10px] text-white/30 uppercase tracking-widest mt-1">Premium Awwwards-style breakdown</p>
                 </div>
               </div>
-              <ArrowUpRight size={20} className="text-white/20 group-hover:text-white/60 transition-colors" />
+              <ArrowUpRight size={20} className="text-white/55 group-hover:text-white/60 transition-colors" />
             </button>
           </div>
         </div>
@@ -2431,7 +2434,7 @@ function ProjectsPage({ onBack, onViewProject, initialSelectedProject, onViewCas
                 setSelectedProject(null);
                 window.history.pushState(null, "", "/portfolio");
               }}
-              className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/40 hover:text-white transition-colors"
+              className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.15em] text-white/60 hover:text-white transition-colors"
             >
               ← Back to Projects
             </button>
@@ -2524,14 +2527,14 @@ function NotFoundPage({ onNavigate }: { onNavigate: (page: string) => void }) {
         </div>
 
         <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8, delay: 0.7 }}
-          className="text-white/35 max-w-md leading-relaxed" style={{ fontSize: "clamp(14px, 1.2vw, 16px)" }}>
+          className="text-white/55 max-w-md leading-relaxed" style={{ fontSize: "clamp(14px, 1.2vw, 16px)" }}>
           The page you were looking for has been moved, renamed, or never existed in the first place. Pick a route below to get back on track.
         </motion.p>
 
         {/* Attempted path */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-8 inline-flex items-center gap-3 px-4 py-2.5 rounded-full bg-white/[0.04] border border-white/[0.08]">
-          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/25">Requested</span>
+          <span className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/50">Requested</span>
           <span className="font-mono text-[11px] text-white/55 break-all">{attemptedPath}</span>
         </motion.div>
 
@@ -2546,7 +2549,7 @@ function NotFoundPage({ onNavigate }: { onNavigate: (page: string) => void }) {
                   ? "bg-white text-black hover:bg-white/90"
                   : "border border-white/15 text-white/70 hover:text-white hover:border-white/35"
               )}>
-              <Icon size={16} className={cn("transition-all duration-200", primary ? "" : "text-white/40 group-hover:text-white/70", target === "home" ? "group-hover:-translate-x-1" : "")} />
+              <Icon size={16} className={cn("transition-all duration-200", primary ? "" : "text-white/60 group-hover:text-white/70", target === "home" ? "group-hover:-translate-x-1" : "")} />
               {label}
             </button>
           ))}
@@ -2707,14 +2710,16 @@ export default function App() {
               </motion.div>
             ) : currentPage === "about" ? (
               <motion.div key="about" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <AboutPage onOpenCertification={handleOpenCertification} />
+                <Suspense fallback={null}><AboutPage onOpenCertification={handleOpenCertification} /></Suspense>
               </motion.div>
             ) : currentPage === "certification" && selectedCertification ? (
               <motion.div key="certification" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
+                <Suspense fallback={null}>
                 <CertificationPage
                   certification={findCertificationBySlug(selectedCertification)!}
                   onBack={() => handleNavigate("home")}
                 />
+                </Suspense>
               </motion.div>
             ) : currentPage === "projects" ? (
               <motion.div key="projects" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
@@ -2726,7 +2731,7 @@ export default function App() {
               </motion.div>
             ) : currentPage === "case-study" && caseStudyProject ? (
               <motion.div key="case-study" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
-                <CaseStudyPage project={caseStudyProject} onBack={() => handleNavigate("home")} />
+                <Suspense fallback={null}><CaseStudyPage project={caseStudyProject} onBack={() => handleNavigate("home")} /></Suspense>
               </motion.div>
             ) : currentPage === "notfound" ? (
               <motion.div key="notfound" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>

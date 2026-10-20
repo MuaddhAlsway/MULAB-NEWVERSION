@@ -2,7 +2,7 @@ export const mesahaLakumCaseStudy = {
   id: 'mesaha-lakum',
   title: 'Mesaha Lakum',
   subtitle: 'Cultural Artspace Platform with Admin Management',
-  image: '/Projects/LAKUM.png',
+  image: '/Projects/LAKUM.webp',
   sections: {
     overview: {
       title: 'Overview',

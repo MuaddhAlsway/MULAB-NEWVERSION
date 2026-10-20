@@ -16,7 +16,7 @@ function CertificationCover({ cert }: { cert: Certification }) {
       >
         <div className="w-full h-full min-h-[60vh] flex flex-col items-center justify-center gap-4 bg-neutral-900">
           <ShieldCheck size={40} className="text-white/25" />
-          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/40 text-center px-6">
+          <p className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/60 text-center px-6">
             PDF preview unavailable — open the certificate via the link below
           </p>
         </div>
@@ -59,7 +59,7 @@ export default function CertificationPage({
           >
             <button
               onClick={onBack}
-              className="group flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-white/40 hover:text-white transition-colors duration-200"
+              className="group flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors duration-200"
             >
               <ChevronLeft size={14} className="group-hover:-translate-x-0.5 transition-transform duration-200" />
               Back to Home
@@ -98,7 +98,7 @@ export default function CertificationPage({
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.9, delay: 0.55, ease: EASE }}
-            className="mt-8 text-white/45 leading-relaxed max-w-2xl"
+            className="mt-8 text-white/55 leading-relaxed max-w-2xl"
             style={{ fontSize: "clamp(15px, 1.35vw, 18px)" }}
           >
             {certification.summary}
@@ -167,7 +167,7 @@ export default function CertificationPage({
           >
             <div className="flex items-center justify-between mb-6">
               <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">Certificate — {certification.num}</span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/20">{certification.platform}</span>
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/55">{certification.platform}</span>
             </div>
             <a
               href={certification.verifyUrl}
@@ -222,7 +222,7 @@ export default function CertificationPage({
                 {certification.skills.map((skill) => (
                   <span
                     key={skill}
-                    className="px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] uppercase tracking-wider text-white/45 hover:border-white/20 hover:text-white/70 transition-colors duration-300 cursor-default"
+                    className="px-4 py-2 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] uppercase tracking-wider text-white/55 hover:border-white/20 hover:text-white/70 transition-colors duration-300 cursor-default"
                   >
                     {skill}
                   </span>

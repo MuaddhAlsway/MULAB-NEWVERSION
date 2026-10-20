@@ -129,7 +129,7 @@ function CertificationCoverThumb({ cert }: { cert: Certification }) {
           className="w-full h-full"
         >
           <div className="w-full h-full flex flex-col items-center justify-center gap-3 bg-neutral-900">
-            <ShieldCheck size={28} className="text-white/20" />
+            <ShieldCheck size={28} className="text-white/55" />
             <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">CS50x Certificate</span>
           </div>
         </object>
@@ -209,7 +209,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                 initial={{ opacity: 0, y: 24 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, delay: 1.05, ease: EASE }}
-                className="mt-10 text-white/45 leading-relaxed max-w-xl"
+                className="mt-10 text-white/55 leading-relaxed max-w-xl"
                 style={{ fontSize: "clamp(15px, 1.35vw, 18px)" }}
               >
                 Technical Product Engineer focused on transforming ideas into scalable digital products
@@ -223,7 +223,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                 className="mt-10 flex items-center gap-3"
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
-                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">Available for new opportunities</span>
+                <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55">Available for new opportunities</span>
               </motion.div>
             </div>
 
@@ -236,12 +236,12 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
             >
               <div className="flex items-center justify-between mb-4">
                 <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/30">Portrait — 2026</span>
-                <span className="font-mono text-[10px] text-white/20">01</span>
+                <span className="font-mono text-[10px] text-white/55">01</span>
               </div>
               <div className="relative rounded-2xl overflow-hidden border border-white/[0.08] bg-neutral-900">
                 <div className="relative aspect-[4/5]">
                   <img
-                    src="/mystory/1780947090830.jpg"
+                    src="/mystory/1780947090830.webp"
                     alt="Muaddh Alsway — Technical Product Engineer"
                     className="w-full h-full object-cover grayscale contrast-110 brightness-90"
                   />
@@ -255,7 +255,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                         Founder — MULAB
                       </div>
                     </div>
-                    <ArrowUpRight size={18} className="text-white/40" />
+                    <ArrowUpRight size={18} className="text-white/60" />
                   </div>
                 </div>
               </div>
@@ -294,7 +294,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
               <div className="lg:sticky lg:top-32">
                 <SectionHeading index="(01)" label="My Journey" title="Career Path" />
                 <Reveal delay={0.15} className="mt-8 max-w-sm">
-                  <p className="text-white/40 leading-relaxed text-sm">
+                  <p className="text-white/60 leading-relaxed text-sm">
                     From client-focused frontend delivery to full-stack platforms and product engineering —
                     a path built on depth, precision, and shipping production-quality software.
                   </p>
@@ -308,20 +308,20 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                   <Reveal key={item.index} delay={i * 0.08}>
                     <div className="group relative py-10 md:py-12 border-b border-white/[0.1] grid grid-cols-1 md:grid-cols-12 gap-4 transition-colors duration-300 hover:bg-white/[0.02] px-2 md:-mx-2 md:px-4">
                       <div className="md:col-span-2 flex items-start">
-                        <span className="font-mono text-[11px] text-white/20 group-hover:text-white/60 transition-colors">{item.index}</span>
+                        <span className="font-mono text-[11px] text-white/55 group-hover:text-white/60 transition-colors">{item.index}</span>
                       </div>
                       <div className="md:col-span-4">
-                        <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/35 mb-3">{item.period}</div>
+                        <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-white/55 mb-3">{item.period}</div>
                         <div className="font-display text-white font-bold leading-tight" style={{ fontSize: "clamp(20px, 2.2vw, 26px)", letterSpacing: "-0.02em" }}>
                           {item.role}
                         </div>
                         <CompanyLogo company={item.company} className="mt-3" />
                       </div>
                       <div className="md:col-span-6">
-                        <p className="text-white/45 text-sm leading-relaxed mb-5">{item.description}</p>
+                        <p className="text-white/55 text-sm leading-relaxed mb-5">{item.description}</p>
                         <div className="flex flex-wrap gap-2">
                           {item.focus.map((f) => (
-                            <span key={f} className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] uppercase tracking-wider text-white/45 group-hover:border-white/20 group-hover:text-white/70 transition-colors duration-300">
+                            <span key={f} className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] uppercase tracking-wider text-white/55 group-hover:border-white/20 group-hover:text-white/70 transition-colors duration-300">
                               {f}
                             </span>
                           ))}
@@ -342,7 +342,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
             <SectionHeading index="(02)" label="Method" title="How I Build Products" />
             <Reveal delay={0.15} className="md:pb-2 max-w-xs">
-              <p className="text-white/40 text-sm leading-relaxed">
+              <p className="text-white/60 text-sm leading-relaxed">
                 A disciplined process that moves from problem to production — without skipping the fundamentals.
               </p>
             </Reveal>
@@ -359,12 +359,12 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                   <div className="relative">
                     <div className="flex items-center justify-between mb-16 md:mb-24">
                       <span className="font-mono text-[11px] text-white/25">{card.num}</span>
-                      <ArrowUpRight size={16} className="text-white/20 group-hover:text-white/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
+                      <ArrowUpRight size={16} className="text-white/55 group-hover:text-white/70 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all duration-300" />
                     </div>
                     <h3 className="font-display text-white font-bold leading-tight mb-4" style={{ fontSize: "clamp(22px, 2.6vw, 32px)", letterSpacing: "-0.02em" }}>
                       {card.title}
                     </h3>
-                    <p className="text-white/45 text-sm leading-relaxed max-w-md">{card.desc}</p>
+                    <p className="text-white/55 text-sm leading-relaxed max-w-md">{card.desc}</p>
                   </div>
                 </div>
               </Reveal>
@@ -384,14 +384,14 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                 <div className="border-t border-white/20 pt-6">
                   <div className="flex items-center justify-between mb-8">
                     <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-white/80">{group.category}</span>
-                    <span className="font-mono text-[10px] text-white/20">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="font-mono text-[10px] text-white/55">{String(i + 1).padStart(2, "0")}</span>
                   </div>
                   <ul className="space-y-1">
                     {group.items.map((tech) => (
                       <li key={tech}>
                         <span className="group/tech flex items-center justify-between py-2.5 cursor-default">
                           <span className="text-white/50 group-hover/tech:text-white transition-colors duration-200 text-sm">{tech}</span>
-                          <span className="opacity-0 group-hover/tech:opacity-100 transition-opacity duration-200 font-mono text-[10px] text-white/40">→</span>
+                          <span className="opacity-0 group-hover/tech:opacity-100 transition-opacity duration-200 font-mono text-[10px] text-white/60">→</span>
                         </span>
                       </li>
                     ))}
@@ -409,7 +409,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-24">
             <SectionHeading index="(04)" label="Credentials" title="Certifications" />
             <Reveal delay={0.15} className="md:pb-2 max-w-xs">
-              <p className="text-white/40 text-sm leading-relaxed">
+              <p className="text-white/60 text-sm leading-relaxed">
                 Verified programs across computer science, frontend engineering, and backend development.
                 Click any certification to view its details.
               </p>
@@ -422,7 +422,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                 <div
                   role="button"
                   tabIndex={0}
-                  aria-label={`View ${cert.shortTitle} details`}
+
                   onClick={() => openCertification(cert)}
                   onKeyDown={(e) => handleCertKeyDown(e, cert)}
                   className="group relative h-full rounded-2xl overflow-hidden border border-white/[0.08] bg-neutral-900 cursor-pointer transition-colors duration-500 hover:border-white/25 focus:outline-none focus-visible:border-white/40"
@@ -448,8 +448,8 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                   {/* Body */}
                   <div className="p-7 md:p-8 border-t border-white/[0.08]">
                     <div className="flex items-center justify-between mb-3">
-                      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/35">{cert.issuer}</span>
-                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/20">{cert.platform}</span>
+                      <span className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/55">{cert.issuer}</span>
+                      <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-white/55">{cert.platform}</span>
                     </div>
                     <h3
                       className="font-display text-white font-bold leading-tight mb-3 transition-colors duration-300"
@@ -457,12 +457,12 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                     >
                       {cert.title}
                     </h3>
-                    <p className="text-white/45 text-sm leading-relaxed mb-6">{cert.summary}</p>
+                    <p className="text-white/55 text-sm leading-relaxed mb-6">{cert.summary}</p>
                     <div className="flex flex-wrap gap-2">
                       {cert.skills.slice(0, 4).map((skill) => (
                         <span
                           key={skill}
-                          className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] uppercase tracking-wider text-white/45 group-hover:border-white/20 group-hover:text-white/70 transition-colors duration-300"
+                          className="px-3 py-1.5 rounded-full bg-white/[0.04] border border-white/[0.08] font-mono text-[10px] uppercase tracking-wider text-white/55 group-hover:border-white/20 group-hover:text-white/70 transition-colors duration-300"
                         >
                           {skill}
                         </span>
@@ -501,7 +501,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
           </div>
 
           <Reveal delay={0.15} className="mt-12 max-w-lg">
-            <p className="text-white/45 leading-relaxed" style={{ fontSize: "clamp(15px, 1.35vw, 18px)" }}>
+            <p className="text-white/55 leading-relaxed" style={{ fontSize: "clamp(15px, 1.35vw, 18px)" }}>
               I help businesses and startups transform ideas into modern digital products through thoughtful
               design, scalable engineering, and product-focused execution.
             </p>
@@ -536,7 +536,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                   </a>
                 ))}
               </div>
-              <div className="font-mono text-[10px] text-white/20 uppercase tracking-[0.2em]">
+              <div className="font-mono text-[10px] text-white/55 uppercase tracking-[0.2em]">
                 © 2026 MULAB — Muaddh Alsway
               </div>
             </div>

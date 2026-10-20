@@ -2,7 +2,7 @@ export const trqStudioCaseStudy = {
   id: 'trq-studio',
   title: 'TRQ Studio',
   tagline: 'Bilingual Portfolio & Content Management Platform for Creative Agencies',
-  image: '/Projects/mockup/TRQ.png',
+  image: '/Projects/mockup/TRQ.webp',
   hero: {
     projectName: 'TRQ Studio',
     projectTagline: 'Where Architecture Meets Digital Excellence',
