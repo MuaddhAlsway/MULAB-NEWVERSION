@@ -886,7 +886,7 @@ function HeroSection({ onViewProjects }: { onViewProjects: () => void }) {
         </div>
         {["Creative", "Full-Stack", "Developer."].map((word, i) => (
           <div key={word} className="overflow-hidden">
-            <motion.h1 initial={{ y: "110%" }} animate={{ y: "0%" }} transition={{ duration: 1, delay: 0.4 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+            <motion.h1 initial={i === 2 ? { y: "0%" } : { y: "110%" }} animate={{ y: "0%" }} transition={i === 2 ? { duration: 0 } : { duration: 1, delay: 0.4 + i * 0.12, ease: [0.16, 1, 0.3, 1] }}
               className="font-display text-white leading-[0.88] block" style={{ fontSize: "clamp(52px, 10vw, 148px)", fontWeight: 800, letterSpacing: "-0.04em" }}>
               {word}
             </motion.h1>
@@ -2698,6 +2698,7 @@ export default function App() {
       {showContent && (
         <>
           <Nav currentPage={currentPage} onNavigate={handleNavigate} />
+          <main>
           <AnimatePresence mode="wait">
             {currentPage === "home" ? (
               <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}>
@@ -2739,6 +2740,7 @@ export default function App() {
               </motion.div>
             ) : null}
           </AnimatePresence>
+          </main>
         </>
       )}
     </div>
