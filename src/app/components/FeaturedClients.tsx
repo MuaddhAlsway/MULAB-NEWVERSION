@@ -50,7 +50,7 @@ const clientProjects: ClientProject[] = [
     description: 'Full-stack Fashion Storefront',
     tech: ['React 19', 'TypeScript', 'Express 5', 'MongoDB'],
     image: '/Projects/mockup/Fashion.png',
-    live: 'https://fashion-clientsiding-ten.vercel.app/',
+    live: 'https://fashion-clientsiding-ten.vercel.app/', linkedin: 'https://lnkd.in/p/dq6pVqaq',
     brand: 'MULAB'
   },
   {
