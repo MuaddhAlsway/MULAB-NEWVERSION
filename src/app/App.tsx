@@ -1934,8 +1934,8 @@ function FeaturedProjectSection({ project, onOpen }: { project: FullProject; onO
         {/* Tilt image */}
         <FadeIn delay={0.1}>
           <div ref={tiltRef} onMouseMove={onMove} onMouseLeave={onLeave} className="relative rounded-2xl overflow-hidden bg-neutral-900 cursor-none" style={{ transition: "transform 0.2s ease-out", aspectRatio: "4/3" }}>
-            <LazyImage src={project.image} alt={project.alt} className="object-cover grayscale" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-black/30 via-transparent to-transparent" />
+            <LazyImage src={project.image} alt={project.alt} className="object-cover" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
             <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end">
               <span className="font-mono text-[10px] text-white/60 uppercase tracking-widest">{project.category} — {project.year}</span>
             </div>
