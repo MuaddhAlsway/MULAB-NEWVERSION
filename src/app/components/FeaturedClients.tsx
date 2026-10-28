@@ -19,7 +19,7 @@ const clientProjects: ClientProject[] = [
     name: 'TRQ Studio',
     description: 'Modern Portfolio & CMS Platform',
     tech: ['Next.js', 'React', 'Tailwind', 'CMS'],
-    image: '/Projects/mockup/TRQ.webp',
+    image: '/Projects/mockup/TRQSTUDIOCOVER.png',
     github: 'https://github.com/MuaddhAlsway/TRQ-Archicator-Studio.git',
     live: 'https://trqstudio.com/',
     brand: 'MULAB'
@@ -29,7 +29,7 @@ const clientProjects: ClientProject[] = [
     name: 'TD Logistics',
     description: 'Logistics & Tracking Platform',
     tech: ['Next.js', 'TypeScript', 'SQLite', 'Tailwind'],
-    image: '/Projects/mockup/TD.webp',
+    image: '/Projects/mockup/tdlogsticCover.png',
     github: 'https://github.com/MuaddhAlsway/TD-cloudflare-deploy.git',
     live: 'https://tdlogistics.co/',
     brand: 'MIBDAAT AL-THELATH for advertising'
@@ -39,19 +39,18 @@ const clientProjects: ClientProject[] = [
     name: "Writer's Journey",
     description: 'Book Launch & Email Platform',
     tech: ['React', 'Express.js', 'Turso', 'Resend'],
-    image: '/Projects/mockup/WRITING.webp',
+    image: '/Projects/Authur.png',
     github: 'https://github.com/MuaddhAlsway/Writer-Website-Landing-Page.git',
     live: ' https://authorfsk.com/',
     brand: 'MIBDAAT AL-THELATH for advertising'
   },
   {
     id: 4,
-    name: 'Riyadah',
-    description: 'Accounting Firm Platform',
-    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
-    image: '/Projects/mockup/ALRYADH.webp',
-    github: 'https://github.com/MuaddhAlsway/Alryadah.git',
-    live: 'https://bc0161e1.riyadah-certified-accountants-saudi-arabia.pages.dev/',
+    name: 'FASHION',
+    description: 'Full-stack Fashion Storefront',
+    tech: ['React 19', 'TypeScript', 'Express 5', 'MongoDB'],
+    image: '/Projects/mockup/Fashion.png',
+    live: 'https://fashion-clientsiding-ten.vercel.app/',
     brand: 'MULAB'
   },
   {
@@ -59,7 +58,7 @@ const clientProjects: ClientProject[] = [
     name: 'Mesaha Lakum',
     description: 'Event Management Platform',
     tech: ['PHP', 'MySQL', 'JavaScript', 'HTML5', 'CSS3'],
-    image: '/Projects/mockup/LAKUM.webp',
+    image: '/Projects/mockup/lakumCover.png',
     github: 'https://github.com/MuaddhAlsway/LAKUMPremiumVersion.git',
     live: ' https://lakumartspace.com/',
     brand: 'MIBDAAT AL-THELATH for advertising'

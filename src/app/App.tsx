@@ -932,42 +932,28 @@ function MarqueeSection() {
 function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (project: FullProject) => void }) {
   const productionProjects = [
     {
-      id: 4,
-      name: 'MUCOMMERANCE',
-      description: 'Full-stack luxury fashion e-commerce platform',
-      tech: ['Cloudflare Workers', 'D1', 'React 18', 'Stripe', 'Shippo'],
-      image: '/Projects/mockup/MUCOMMERANCE (2).webp'
+      id: 2,
+      name: 'FASHION',
+      description: 'Full-stack fashion storefront with Express/TypeScript/MongoDB backend',
+      tech: ['React 19', 'Vite 8', 'Express 5', 'MongoDB', 'Clerk', 'Stripe'],
+      image: '/Projects/mockup/Fashion.png'
     },
     {
-      id: 5,
-      name: 'Nova-Ecommerance-Platform',
-      description: 'Production e-commerce platform with logistics system',
-      tech: ['Hono', 'Turso', 'React', 'Stripe', 'Shippo'],
-      image: '/Projects/mockup/nova.webp'
-    },
-{
-      id: 55,
+      id: 56,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
       image: '/Projects/quickshow01.webp'
     },
     {
-      id: 6,
-      name: 'Nexus Network Platform',
-      description: 'Full-stack enterprise-grade LinkedIn clone with real-time messaging, analytics, courses, jobs, and admin panel',
-      tech: ['React', 'TypeScript', 'Hono', 'Cloudflare', 'Turso', 'WebSocket'],
-      image: '/Projects/mockup/Nexus.webp'
-    },
-    {
-      id: 7,
+      id: 8,
       name: 'Forever E-Commerce',
       description: 'Production-grade MERN e-commerce platform with Stripe payments, Cloudinary media, and email marketing',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Cloudinary'],
       image: '/Projects/Forever.webp'
     },
     {
-      id: 8,
+      id: 9,
       name: 'Estate — Luxury Real Estate Platform',
       description: 'Production-oriented full-stack real-estate marketplace for Jeddah with secure user, agent, and admin workflows',
       tech: ['React 19', 'Express 5', 'Neon PostgreSQL', 'Drizzle ORM', 'Cloudinary', 'Render'],
@@ -993,18 +979,17 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
         </FadeIn>
       </div>
 
-      <div className="relative w-full overflow-hidden">
+      <div className="relative w-full overflow-hidden px-6 md:px-12 lg:px-20">
         <motion.div
-          className="flex gap-6 px-6 md:px-12 lg:px-20"
-          animate={{ x: [0, -(productionProjects.length * 520 + 24 * productionProjects.length)] }}
+          className="flex gap-6 w-max"
+          animate={{ x: ["0%", "-50%"] }}
           transition={{
             duration: 40,
             repeat: Infinity,
-            ease: 'linear',
-            repeatType: 'loop'
+            ease: 'linear'
           }}
         >
-          {[...Array(4)].map((_, setIndex) =>
+          {[...Array(2)].map((_, setIndex) =>
             productionProjects.map((project) => (
               <div
                 key={`${project.id}-${setIndex}`}
@@ -1741,13 +1726,13 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
             <div className="flex gap-4 overflow-x-auto pb-4" style={{ scrollbarWidth: "none" }}>
               {project.screenshots.map((src, i) => (
                 <button key={i} onClick={() => setImgIdx(i)} className={cn("flex-shrink-0 w-56 h-36 md:w-72 md:h-44 rounded-xl overflow-hidden border-2 transition-all duration-200", i === imgIdx ? "border-white/50" : "border-transparent opacity-60 hover:opacity-80")}>
-                  <LazyImage src={src} alt={`Screenshot ${i + 1}`} className="object-cover" />
+                  <LazyImage src={src} alt={`Screenshot ${i + 1}`} title={src.split('/').pop()?.replace(/\.[^.]+$/, '')} className="w-full h-full object-contain" />
                 </button>
               ))}
             </div>
             <div className="mt-4 rounded-2xl overflow-hidden h-64 md:h-80 bg-neutral-900">
               <AnimatePresence mode="wait">
-                <motion.img key={imgIdx} src={project.screenshots[imgIdx]} alt="" className="w-full h-full object-cover" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} />
+                <motion.img key={imgIdx} src={project.screenshots[imgIdx]} alt="" title={project.screenshots[imgIdx].split('/').pop()?.replace(/\.[^.]+$/, '')} className="w-full h-full object-contain" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }} />
               </AnimatePresence>
             </div>
           </div>
@@ -2276,12 +2261,12 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
             <div className="mb-16">
               <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 mb-5">Screenshots</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {project.screenshots.map((src, i) => (
-                  <div key={i} className={`rounded-2xl overflow-hidden bg-neutral-900 ${i === 0 ? "sm:col-span-2" : ""}`}>
-                    <LazyImage src={src} alt={`${project.title} screenshot ${i + 1}`} className="object-cover" />
-                  </div>
-                ))}
-              </div>
+              {project.screenshots.map((src, i) => (
+                <div key={i} className={`rounded-2xl overflow-hidden bg-neutral-900 ${i === 0 ? "sm:col-span-2" : ""}`}>
+                  <LazyImage src={src} alt={`${project.title} screenshot ${i + 1}`} title={src.split('/').pop()?.replace(/\.[^.]+$/, '')} className="w-full h-auto object-contain" style={{ aspectRatio: "auto" }} wrapperClassName="h-auto" />
+                </div>
+              ))}
+            </div>
             </div>
           )}
 
