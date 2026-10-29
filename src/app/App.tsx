@@ -939,6 +939,13 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       image: '/Projects/mockup/Fashion.png'
     },
     {
+      id: 3,
+      name: 'Mustang Garage',
+      description: 'Full-stack automotive collection and editorial platform',
+      tech: ['React 19', 'TypeScript', 'Express', 'MongoDB', 'Clerk', 'GSAP'],
+      image: '/Projects/mockup/MustangGarage.png'
+    },
+    {
       id: 56,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
