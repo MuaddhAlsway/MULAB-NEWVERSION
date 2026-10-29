@@ -1940,9 +1940,9 @@ function FeaturedProjectSection({ project, onOpen }: { project: FullProject; onO
 
         {/* Tilt image */}
         <FadeIn delay={0.1}>
-          <div ref={tiltRef} onMouseMove={onMove} onMouseLeave={onLeave} className="relative rounded-2xl overflow-hidden bg-neutral-900 cursor-none" style={{ transition: "transform 0.2s ease-out", aspectRatio: "4/3" }}>
-            <LazyImage src={project.image} alt={project.alt} className="object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent" />
+          <div ref={tiltRef} onMouseMove={onMove} onMouseLeave={onLeave} className="group relative rounded-2xl overflow-hidden bg-black cursor-none" style={{ transition: "transform 0.2s ease-out", aspectRatio: "4/3", background: "radial-gradient(ellipse at center, #171717 0%, #050505 72%)" }}>
+            <LazyImage src={project.image} alt={project.alt} className={`object-cover transition-all duration-700 ${project.id === 1 ? 'brightness-[0.62] contrast-110 group-hover:brightness-100 group-hover:contrast-100 group-hover:scale-105' : ''}`} />
+            <div className={`absolute inset-0 transition-opacity duration-700 ${project.id === 1 ? 'bg-black/20 group-hover:opacity-0' : 'bg-gradient-to-t from-black/40 via-black/10 to-transparent'}`} />
             <div className="absolute bottom-5 left-5 right-5 flex justify-between items-end">
               <span className="font-mono text-[10px] text-white/60 uppercase tracking-widest">{project.category} — {project.year}</span>
             </div>
