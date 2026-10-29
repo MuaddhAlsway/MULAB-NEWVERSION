@@ -523,16 +523,16 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
 
           <Reveal delay={0.3} className="mt-24 pt-8 border-t border-white/[0.08]">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div className="flex items-center gap-6">
+              <div className="flex flex-wrap items-center gap-x-6 gap-y-4">
                 {[
                   { icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" },
-                  { icon: Linkedin, label: "LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" },
+                  { icon: Linkedin, label: "Personal LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Linkedin, label: "MULAB · LinkedIn", url: "https://www.linkedin.com/company/muulab" },
                   { icon: Mail, label: "Email", url: "mailto:muaddhalsway@gmail.com" },
                 ].map(({ icon: Icon, label, url }) => (
                   <a key={label} href={url} target={url.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"
                     className="flex items-center gap-2 text-white/30 hover:text-white transition-colors duration-200 group">
                     <Icon size={14} />
-                    <span className="font-mono text-[10px] uppercase tracking-widest hidden sm:block">{label}</span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest">{label}</span>
                   </a>
                 ))}
               </div>
