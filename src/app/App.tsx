@@ -946,21 +946,28 @@ function ProductionProjectsSection({ onProjectClick }: { onProjectClick?: (proje
       image: '/Projects/mockup/MustangGarage.png'
     },
     {
-      id: 56,
+      id: 4,
+      name: 'The Table',
+      description: 'Full-stack restaurant ordering and operations platform with storefront, staff dashboards, QR ordering, and Stripe payments',
+      tech: ['React 19', 'TypeScript', 'Express 5', 'MongoDB', 'Clerk', 'Stripe'],
+      image: '/Projects/mockup/TheTable.jpeg'
+    },
+    {
+      id: 58,
       name: 'QuickShow Pro',
       description: 'Production movie ticket booking platform with live frontend, REST API, and admin panel',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'REST API', 'JWT'],
       image: '/Projects/quickshow01.webp'
     },
     {
-      id: 8,
+      id: 9,
       name: 'Forever E-Commerce',
       description: 'Production-grade MERN e-commerce platform with Stripe payments, Cloudinary media, and email marketing',
       tech: ['React', 'Node.js', 'Express', 'MongoDB', 'Stripe', 'Cloudinary'],
       image: '/Projects/Forever.webp'
     },
     {
-      id: 9,
+      id: 11,
       name: 'Estate — Luxury Real Estate Platform',
       description: 'Production-oriented full-stack real-estate marketplace for Jeddah with secure user, agent, and admin workflows',
       tech: ['React 19', 'Express 5', 'Neon PostgreSQL', 'Drizzle ORM', 'Cloudinary', 'Render'],
