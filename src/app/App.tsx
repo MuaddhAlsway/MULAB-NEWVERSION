@@ -30,6 +30,7 @@ interface Project {
   api?: string;
   backend?: string;
   linkedin?: string;
+  instagram?: string | string[];
   notion?: string;
   wiki?: string;
   diagram?: string;
@@ -60,6 +61,7 @@ interface FullProject {
   backendUrl?: string;
   featured: boolean;
   linkedinUrl?: string;
+  instagramUrls?: string[];
   notionUrl?: string;
   wikiUrl?: string;
   diagramUrl?: string;
@@ -87,6 +89,7 @@ const transformProject = (p: Project, idx: number) => ({
   apiUrl: p.api || undefined,
   backendUrl: p.backend || undefined,
   linkedinUrl: p.linkedin || undefined,
+  instagramUrls: p.instagram ? (Array.isArray(p.instagram) ? p.instagram : [p.instagram]) : undefined,
   notionUrl: p.notion || undefined,
   wikiUrl: p.wiki || undefined,
   diagramUrl: p.diagram || undefined,
@@ -1809,6 +1812,21 @@ function ProjectModal({ project, onClose, onViewFull }: { project: FullProject; 
                   <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
               )}
+
+              {/* Instagram */}
+              {project.instagramUrls && project.instagramUrls.length > 0 && (
+                project.instagramUrls.map((url, i) => (
+                  <a key={url} href={url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
+                    <div className="flex items-center gap-3">
+                      <Instagram size={16} className="text-white/60 group-hover:text-white transition-colors" />
+                      <span className="font-display text-white font-semibold text-sm">
+                        {project.instagramUrls!.length > 1 ? `Instagram Post ${String(i + 1).padStart(2, "0")}` : "Instagram Post"}
+                      </span>
+                    </div>
+                    <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
+                  </a>
+                ))
+              )}
               
               {/* Notion */}
               {project.notionUrl && project.notionUrl !== "#" && project.notionUrl !== undefined && (
@@ -2341,6 +2359,21 @@ function ProjectDetailPage({ project, onBack, onViewCaseStudy }: { project: Full
                   </div>
                   <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
                 </a>
+              )}
+
+              {/* Instagram */}
+              {project.instagramUrls && project.instagramUrls.length > 0 && (
+                project.instagramUrls.map((url, i) => (
+                  <a key={url} href={url} target="_blank" rel="noopener noreferrer" className="group flex items-center justify-between px-6 py-4 rounded-xl border border-white/10 bg-white/[0.02] hover:bg-white/[0.05] hover:border-white/20 transition-all duration-200">
+                    <div className="flex items-center gap-3">
+                      <Instagram size={16} className="text-white/60 group-hover:text-white transition-colors" />
+                      <span className="font-display text-white font-semibold text-sm">
+                        {project.instagramUrls!.length > 1 ? `Instagram Post ${String(i + 1).padStart(2, "0")}` : "Instagram Post"}
+                      </span>
+                    </div>
+                    <ArrowUpRight size={14} className="text-white/55 group-hover:text-white/60 transition-colors" />
+                  </a>
+                ))
               )}
               
               {/* Notion */}

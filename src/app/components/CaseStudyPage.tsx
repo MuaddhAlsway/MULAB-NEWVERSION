@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { motion, useScroll, useTransform, useSpring, useInView, useMotionValue, useSpring as useSpringMotion, AnimatePresence } from "motion/react";
-import { ChevronLeft, ExternalLink, Github, Linkedin, ArrowUpRight, AlertTriangle, Lightbulb, Code2, TrendingUp, CheckCircle2, Rocket, ArrowDown, ChevronRight, Eye } from "lucide-react";
+import { ChevronLeft, ExternalLink, Github, Linkedin, Instagram, ArrowUpRight, AlertTriangle, Lightbulb, Code2, TrendingUp, CheckCircle2, Rocket, ArrowDown, ChevronRight, Eye } from "lucide-react";
 import { tdLogisticsCaseStudy, projectScreenshots } from "../data/caseStudies";
 import { LazyImage } from "./LazyImage";
 
@@ -28,6 +28,7 @@ interface CaseStudyProject {
   githubUrl?: string;
   featured?: boolean;
   linkedinUrl?: string;
+  instagramUrls?: string[];
   notionUrl?: string;
   wikiUrl?: string;
   diagramUrl?: string;
@@ -560,6 +561,11 @@ function CinematicHero({ project, onBack }: { project: CaseStudyProject; onBack:
               <Linkedin size={12} /> LinkedIn Post
             </MagneticButton>
           )}
+          {project.instagramUrls && project.instagramUrls.map((url, i) => (
+            <MagneticButton key={url} href={url} className="flex items-center gap-2 px-5 py-2.5 rounded-full border border-white/15 bg-white/[0.04] hover:bg-white/[0.08] hover:border-white/30 text-white/65 hover:text-white font-mono text-[10px] uppercase tracking-[0.1em] transition-all duration-300" data-cursor-hover>
+              <Instagram size={12} /> Instagram{project.instagramUrls!.length > 1 ? ` ${String(i + 1).padStart(2, "0")}` : ""}
+            </MagneticButton>
+          ))}
         </motion.div>
       </motion.div>
 
@@ -1298,10 +1304,16 @@ function LearningsTimeline({ project }: { project: CaseStudyProject }) {
    ══════════════════════════════════════════════════════════════════════════════ */
 
 function LinksAndCTA({ project, onBack, nextProject }: { project: CaseStudyProject; onBack: () => void; nextProject?: NextProject | null }) {
+  const instagramLinks = project.instagramUrls || [];
   const links = [
     project.liveUrl && project.liveUrl !== "#" && { label: "Live Demo", url: project.liveUrl, icon: <ExternalLink size={18} /> },
     (project.githubUrl || project.github) && (project.githubUrl || project.github) !== "#" && { label: "Source Code", url: project.githubUrl || project.github || "#", icon: <Github size={18} /> },
     (project.linkedinUrl || project.linkedin) && (project.linkedinUrl || project.linkedin) !== "#" && { label: "LinkedIn Post", url: project.linkedinUrl || project.linkedin || "#", icon: <Linkedin size={18} /> },
+    ...instagramLinks.map((url, i) => ({
+      label: instagramLinks.length > 1 ? `Instagram Post ${String(i + 1).padStart(2, "0")}` : "Instagram Post",
+      url,
+      icon: <Instagram size={18} />,
+    })),
   ].filter(Boolean) as { label: string; url: string; icon: React.ReactNode }[];
 
   return (
