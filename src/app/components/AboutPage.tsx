@@ -1,6 +1,6 @@
 import { useRef, type KeyboardEvent, type ReactNode } from "react";
 import { motion, useInView } from "motion/react";
-import { ArrowUpRight, Github, Linkedin, Mail, ArrowDown, Award, ShieldCheck } from "lucide-react";
+import { ArrowUpRight, Github, Linkedin, Mail, ArrowDown, Award, ShieldCheck, Instagram } from "lucide-react";
 import { certifications, type Certification } from "../data/certifications";
 import { CompanyLogo } from "./ExperienceLogos";
 
@@ -527,6 +527,7 @@ export default function AboutPage({ onOpenCertification }: { onOpenCertification
                 {[
                   { icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" },
                   { icon: Linkedin, label: "Personal LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Linkedin, label: "MULAB · LinkedIn", url: "https://www.linkedin.com/company/muulab" },
+                   { icon: Instagram, label: "Instagram", url: "https://www.instagram.com/mu.lab.dev" },
                   { icon: Mail, label: "Email", url: "mailto:muaddhalsway@gmail.com" },
                 ].map(({ icon: Icon, label, url }) => (
                   <a key={label} href={url} target={url.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer"

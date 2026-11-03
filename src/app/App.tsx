@@ -1615,7 +1615,7 @@ function ContactSection() {
         </div>
         <div className="mt-20 pt-8 border-t border-white/[0.06] flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
-            {[{ icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" }, { icon: Linkedin, label: "Personal LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Linkedin, label: "MULAB · LinkedIn", url: "https://www.linkedin.com/company/muulab" }, { icon: Instagram, label: "Instagram", url: "#" }].map(({ icon: Icon, label, url }) => (
+            {[{ icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" }, { icon: Linkedin, label: "Personal LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Linkedin, label: "MULAB · LinkedIn", url: "https://www.linkedin.com/company/muulab" }, { icon: Instagram, label: "Instagram", url: "https://www.instagram.com/mu.lab.dev" }].map(({ icon: Icon, label, url }) => (
               <a key={label} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex items-center gap-2 text-white/50 hover:text-white transition-colors duration-200 group">
                 <Icon size={15} /><span className="font-mono text-[10px] uppercase tracking-widest">{label}</span>
               </a>
@@ -2187,7 +2187,7 @@ function ProjectsCTA() {
                 <Mail size={14} /><span className="font-mono text-sm">muaddhalsway@gmail.com</span><ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
               </a>
               <div className="flex flex-wrap items-center gap-x-5 gap-y-4">
-                {[{ icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" }, { icon: Linkedin, label: "Personal LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Linkedin, label: "MULAB · LinkedIn", url: "https://www.linkedin.com/company/muulab" }, { icon: Instagram, label: "Instagram", url: "#" }].map(({ icon: Icon, label, url }) => (
+                {[{ icon: Github, label: "GitHub", url: "https://github.com/MuaddhAlsway" }, { icon: Linkedin, label: "Personal LinkedIn", url: "https://www.linkedin.com/in/muaddh-alsway/" }, { icon: Linkedin, label: "MULAB · LinkedIn", url: "https://www.linkedin.com/company/muulab" }, { icon: Instagram, label: "Instagram", url: "https://www.instagram.com/mu.lab.dev" }].map(({ icon: Icon, label, url }) => (
                   <a key={label} href={url} target="_blank" rel="noopener noreferrer" aria-label={label} className="flex items-center gap-2 text-white/50 hover:text-white transition-colors"><Icon size={16} />{Icon === Linkedin && <span className="font-mono text-[10px] uppercase tracking-widest">{label}</span>}</a>
                 ))}
               </div>
