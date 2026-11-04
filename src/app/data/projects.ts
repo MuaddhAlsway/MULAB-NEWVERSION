@@ -64,6 +64,7 @@ export const projects: Project[] = [
     live: 'https://the-table-khaki.vercel.app/',
     backend: 'https://thetable-50sf.onrender.com/',
     notion: 'https://app.notion.com/p/Restaurant-Digital-Platform-Full-Stack-Website-Ordering-System-408e97a262dc81658720fab579c70b74?source=copy_link',
+    instagram: ['https://www.instagram.com/p/DfUNV4iDD-Z/?cplk=cXk4M3UzcmMxY2Vn', 'https://www.instagram.com/p/DfUOK9hjOp7/?exln=MW96ZGVicDVxbmM5dA=='],
     challenges: 'Building a complete restaurant platform that connects a public storefront with cashier, kitchen, driver, and admin workflows. The project required server-side price and fulfillment validation, Stripe-hosted checkout with signed webhook verification, Clerk authentication and role-based staff access, table QR ordering with token resolution, driver dispatch and handoff verification, reservation handling, and separate email, SMS, and push notification pipelines. Each order transition had to remain secure and consistent while the interface stayed simple for customers and fast for staff.',
     learnings: 'Strengthened full-stack product engineering with React 19, TypeScript, Express 5, MongoDB, and Mongoose. Practiced Clerk authentication and role-based access control, Zod validation, Stripe payment flows and signed webhooks, server-side pricing, table QR token workflows, staff dashboards, delivery handoff verification, transactional email and SMS delivery, Web Push with VAPID, and production deployment across Vercel and Render.'
   },
